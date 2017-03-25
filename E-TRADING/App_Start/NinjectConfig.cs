@@ -1,6 +1,7 @@
 ﻿using E_TRADING.Ninject.Core;
 using E_TRADING.Ninject.Modules;
 
+namespace E_TRADING
 {
     public class NinjectConfig
     {
