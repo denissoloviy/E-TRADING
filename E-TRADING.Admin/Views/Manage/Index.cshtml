@@ -12,31 +12,29 @@
     <dl class="dl-horizontal">
         <dt>Password:</dt>
         <dd>
-            [
             @if (Model.HasPassword)
             {
-                @Html.ActionLink("Change your password", "ChangePassword")
+                @Html.ActionLink("Change your password", "ChangePassword", new { }, new { @class = "btn btn-default" })
             }
             else
             {
                 @Html.ActionLink("Create", "SetPassword")
             }
-            ]
         </dd>
         <dt>External Logins:</dt>
         <dd>
-            @Model.Logins.Count [
-            @Html.ActionLink("Manage", "ManageLogins") ]
+            @Model.Logins.Count
+            @Html.ActionLink("Manage", "ManageLogins")
         </dd>
         @*
             Phone Numbers can used as a second factor of verification in a two-factor authentication system.
-             
+
              See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
                 for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-             
+
              Uncomment the following block after you have set up two-factor authentication
         *@
-        @*  
+        @*
             <dt>Phone Number:</dt>
             <dd>
                 @(Model.PhoneNumber ?? "None")

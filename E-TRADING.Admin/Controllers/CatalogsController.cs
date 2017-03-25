@@ -1,5 +1,4 @@
-﻿using E_TRADING.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,14 +6,9 @@ using System.Web.Mvc;
 
 namespace E_TRADING.Admin.Controllers
 {
-    public class HomeController : Controller
+    public class CatalogsController : Controller
     {
-        ApplicationDbContext _db;
-        public HomeController(ApplicationDbContext db)
-        {
-            _db = db;
-        }
-
+        // GET: Catalogs
         public ActionResult Index()
         {
             return View();
