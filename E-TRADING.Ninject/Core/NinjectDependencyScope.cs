@@ -28,7 +28,7 @@ namespace E_TRADING.Ninject.Core
         public void Dispose()
         {
             var disposable = _resolver as IDisposable;
-            disposable?.Dispose();
+            disposable.Dispose();
             _resolver = null;
         }
 

@@ -25,6 +25,7 @@ namespace E_TRADING
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/styles.css",
                       "~/Content/site.css"));
         }
     }
