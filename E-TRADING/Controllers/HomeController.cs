@@ -1,8 +1,7 @@
 ﻿using E_TRADING.Data;
-using System;
-using System.Collections.Generic;
+using E_TRADING.Data.Repositories;
+using E_TRADING.Models;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace E_TRADING.Controllers
@@ -10,13 +9,31 @@ namespace E_TRADING.Controllers
     public class HomeController : Controller
     {
         ApplicationDbContext _db;
-        public HomeController(ApplicationDbContext db)
+        ICategoryRepository _categoryRepository;
+        IProductRepository _productRepository;
+        public HomeController(ApplicationDbContext db,
+            ICategoryRepository categoryRepository,
+            IProductRepository productRepository)
         {
             _db = db;
+            _categoryRepository = categoryRepository;
+            _productRepository = productRepository;
         }
         public ActionResult Index()
         {
-            return View();
+            var result = new CategoryProductViewModel
+            {
+                Categories = _categoryRepository.FindBy(item => item.MasterCategoryId == null).ToList(),
+                Products = _productRepository.GetAll().Take(10).ToList()
+            };
+
+            //_productRepository.Add(new Data.Entities.Product
+            //{
+                
+            //});
+            //_productRepository.SaveChanges();
+
+            return View(result);
         }
 
         public ActionResult About()
