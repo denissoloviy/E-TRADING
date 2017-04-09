@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DLL", "DLL", "{D7194247-7F1
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-TRADING.Ninject", "E-TRADING.Ninject\E-TRADING.Ninject.csproj", "{64F856D1-3452-40A6-9FA7-6B1C9B4A4CBE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E-TRADING.Common", "E-TRADING.Common\E-TRADING.Common.csproj", "{11B29751-375B-40BD-9AE1-67449B294829}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{64F856D1-3452-40A6-9FA7-6B1C9B4A4CBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64F856D1-3452-40A6-9FA7-6B1C9B4A4CBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64F856D1-3452-40A6-9FA7-6B1C9B4A4CBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11B29751-375B-40BD-9AE1-67449B294829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11B29751-375B-40BD-9AE1-67449B294829}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11B29751-375B-40BD-9AE1-67449B294829}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11B29751-375B-40BD-9AE1-67449B294829}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,5 +56,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{857B8098-800F-494E-938F-E6E7C26B70C3} = {D7194247-7F18-4846-8D1B-9704C978027C}
 		{64F856D1-3452-40A6-9FA7-6B1C9B4A4CBE} = {D7194247-7F18-4846-8D1B-9704C978027C}
+		{11B29751-375B-40BD-9AE1-67449B294829} = {D7194247-7F18-4846-8D1B-9704C978027C}
 	EndGlobalSection
 EndGlobal

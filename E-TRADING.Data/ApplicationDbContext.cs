@@ -12,6 +12,8 @@ namespace E_TRADING.Data
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Auction> Auctions { get; set; }
+        public virtual DbSet<ShoppingCart> ShoppingCarts { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="Entities\Auction.cs" />
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Buyer.cs" />
     <Compile Include="Entities\Category.cs" />
@@ -93,7 +94,9 @@
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\Seller.cs" />
+    <Compile Include="Entities\ShoppingCart.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Managers\ApplicationRoleManager.cs" />
     <Compile Include="Managers\ApplicationUserManager.cs" />
     <Compile Include="Migrations\201703121152488_InitialCreate.cs" />
     <Compile Include="Migrations\201703121152488_InitialCreate.Designer.cs">
@@ -103,8 +106,13 @@
     <Compile Include="Migrations\201704062123541_InitialMigration.Designer.cs">
       <DependentUpon>201704062123541_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704091149185_AddAuctionAndShoppingCart.cs" />
+    <Compile Include="Migrations\201704091149185_AddAuctionAndShoppingCart.Designer.cs">
+      <DependentUpon>201704091149185_AddAuctionAndShoppingCart.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AuctionRepository.cs" />
     <Compile Include="Repositories\BuyerRepository.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\Generic\GenericRepository.cs" />
@@ -113,6 +121,7 @@
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\SellerRepository.cs" />
+    <Compile Include="Repositories\ShoppingCartRepository.cs" />
     <Compile Include="Services\EmailService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +138,15 @@
     <EmbeddedResource Include="Migrations\201704062123541_InitialMigration.resx">
       <DependentUpon>201704062123541_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704091149185_AddAuctionAndShoppingCart.resx">
+      <DependentUpon>201704091149185_AddAuctionAndShoppingCart.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\E-TRADING.Common\E-TRADING.Common.csproj">
+      <Project>{11B29751-375B-40BD-9AE1-67449B294829}</Project>
+      <Name>E-TRADING.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

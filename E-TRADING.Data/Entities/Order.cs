@@ -35,24 +35,42 @@ namespace E_TRADING.Data.Entities
         public virtual Buyer Buyer { get; set; }
     }
 
-    public enum OrderStatus // todo Дописати ще статуси транзакцій
+    public enum OrderStatus // todo Переглянути
     {
         /// <summary>
-        /// Транзакція успішно проведена
+        /// Успішно доставлено
         /// </summary>
-        [Display(Name = "Транзакція успішно проведена")]
+        [Display(Name = "Успішно доставлено")]
         Successful = 100,
 
         /// <summary>
-        /// Помилка транзакії
+        /// Помилка замовлення
         /// </summary>
-        [Display(Name = "Помилка транзакії")]
-        Failed = 100,
+        [Display(Name = "Помилка замовлення")]
+        Failed = 101,
 
         /// <summary>
-        /// Транзакція в обробці
+        /// Відміна замовлення
         /// </summary>
-        [Display(Name = "Транзакція в обробці")]
-        InProccess = 100,
+        [Display(Name = "Відміна замовлення покупцем")]
+        CanceledByBuyer = 102,
+
+        /// <summary>
+        /// Відміна замовлення
+        /// </summary>
+        [Display(Name = "Відміна замовлення продавцем")]
+        CanceledBySeller = 103,
+
+        /// <summary>
+        /// Замовлення в обробці
+        /// </summary>
+        [Display(Name = "Замовлення в обробці")]
+        InProccess = 104,
+
+        /// <summary>
+        /// Товар в дорозі
+        /// </summary>
+        [Display(Name = "Товар в дорозі")]
+        InShipping = 105
     }
 }
