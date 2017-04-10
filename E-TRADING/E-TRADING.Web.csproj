@@ -227,6 +227,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SellerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -313,6 +314,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Seller\_LeftMenu.cshtml" />
+    <Content Include="Views\Seller\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -324,6 +327,10 @@
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\E-TRADING.Common\E-TRADING.Common.csproj">
+      <Project>{11B29751-375B-40BD-9AE1-67449B294829}</Project>
+      <Name>E-TRADING.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\E-TRADING.Data\E-TRADING.Data.csproj">
       <Project>{857B8098-800F-494E-938F-E6E7C26B70C3}</Project>
       <Name>E-TRADING.Data</Name>
