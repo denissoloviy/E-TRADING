@@ -1,0 +1,16 @@
+﻿@model E_TRADING.Data.Entities.Product
+
+@{
+    ViewBag.Title = "Додавання товару";
+}
+<div class="content">
+    <div class="col-md-12">
+        <h2>@ViewBag.Title</h2>
+        @Html.ActionLink("Повернутись назад", "Products", "Seller", new { }, new { @class = "btn btn-default" })
+    </div>
+</div>
+<div class="clearfix"></div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

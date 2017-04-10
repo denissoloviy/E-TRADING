@@ -1,71 +1,80 @@
-﻿@model E_TRADING.Data.Entities.Seller
-    @{
-        ViewBag.Title = "Особистий кабінет";
-    }
-    @{Html.RenderPartial("_LeftMenu");}
-    <div class="content">
-        <div class="col-md-12">
-            <h2>@ViewBag.Title</h2>
-            <div>
-                <hr />
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.User.UserName)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.User.UserName)
-                    </dd>
+﻿@model E_TRADING.Models.SellerViewEditViewModel
+@{
+    ViewBag.Title = "Особистий кабінет";
+}
+@{Html.RenderPartial("_LeftMenu", Model.ProductsCount);}
+<div class="content">
+    <div class="col-md-12">
+        <h2>@ViewBag.Title</h2>
+        @Html.ActionLink("Редагувати", "Edit", "Seller", new { }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Змінити пароль", "ChangePassword", "Manage", new { }, new { @class = "btn btn-default" })
+        <div>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.User.FirstName)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.User.FirstName)
-                    </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.FirstName)
+                </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.User.LastName)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.User.LastName)
-                    </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.User.Address)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.User.Address)
-                    </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.User.PhoneNumber)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.User.PhoneNumber)
-                    </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Alias)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.Alias)
-                    </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PhoneNumber)
+                </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.OfficeAddress)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.OfficeAddress)
-                    </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Alias)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Alias)
+                </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.ContactPhone)
-                    </dt>
-                    <dd>
-                        @Html.DisplayFor(model => model.ContactPhone)
-                    </dd>
-                </dl>
-            </div>
+                <dt>
+                    @Html.DisplayNameFor(model => model.OfficeAddress)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.OfficeAddress)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ContactPhone)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ContactPhone)
+                </dd>
+            </dl>
         </div>
     </div>
-    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>

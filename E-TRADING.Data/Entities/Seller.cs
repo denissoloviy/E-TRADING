@@ -18,11 +18,7 @@ namespace E_TRADING.Data.Entities
 
         [DisplayName("Контактний номер телефону")]
         public string ContactPhone { get; set; }
-
-        //[Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        //[DisplayName("Користувач")]
-        //public string UserId { get; set; }
-        //[ForeignKey("UserId")]
+        
         [DisplayName("Користувач")]
         public virtual User User { get; set; }
 
