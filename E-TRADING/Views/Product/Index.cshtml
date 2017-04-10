@@ -4,26 +4,39 @@
     ViewBag.Title = Model.Name;
 }
 
-<h2>@Model.Name</h2>
-<div class='container-fluid'>
-    <div class="col-md-4 product-block">
-        <div class='container-fluid product-image-block'>
-            <img src='/Content/category-icon-png.png' />
+<h2></h2>
+<div class='container-fluid '>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">@Model.Name</h1>
         </div>
-    </div>
-    <div class="col-md-8">
-        <div class=''>
-            <h2 class="">@Model.Name</h2>
-        </div>
-        <div class=''>
-            <h4 class="">@Model.Description</h4>
-        </div>
-        <div class="">
-            @using (Html.BeginForm("BuyProduct", "Product"))
-            {
-                <input hidden="hidden" type="text" value="@Model.Id" />
-                <input type="submit" class="btn btn-default" value="Buy product" />
-            }  
+        <div class="panel-body">
+            <div class="col-md-4 product-block">
+                <div class='container-fluid product-image-block'>
+                    <img src='/Content/category-icon-png.png' />
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class=''>
+                    <h2 class="">@Model.Name  <span class="label label-primary">@Model.Amount Left!</span></h2>
+                </div>
+                <div class=''>
+                    <h4 class="">Price: @Model.Price</h4>
+                </div>
+                <div class="">
+                    @using (Html.BeginForm("BuyProduct", "Product", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        <input hidden="hidden" type="text" name="id" value="@Model.Id" />
+                        <input class="form-control input" type="number" placeholder="Set Amount" max="@Model.Amount" name="amount" />
+                        <input style="margin-top: 10px" type="button" class="form-control btn btn-success" value="Buy product" />
+                    }
+                </div>
+                <hr/>
+                <div class=''>
+                    <h4 class="">Description:</h4>
+                    <h5>@Model.Description</h5>
+                </div>
+            </div>
         </div>
     </div>
 </div>

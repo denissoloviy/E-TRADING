@@ -101,6 +101,7 @@ namespace E_TRADING.Controllers
                 Description = product.Description,
                 Amount = product.Amount,
                 AddedDate = product.AddedDate.DateTimeToFormatString(),
+                Category = product.Category.Name,
 
                 SellerId = product.SellerId,
                 SellerName = product.Seller.Alias

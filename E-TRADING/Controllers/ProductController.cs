@@ -3,6 +3,7 @@ using E_TRADING.Common.Extensions;
 using E_TRADING.Data.Entities;
 using E_TRADING.Data.Repositories;
 using E_TRADING.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,12 @@ namespace E_TRADING.Controllers
     public class ProductController : Controller
     {
         IProductRepository _productRepository;
+        ICategoryRepository _categoryRepository;
 
-        public ProductController(IProductRepository productRepository)
+        public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
         // GET: Product
         public ActionResult Index(string id)
@@ -27,6 +30,7 @@ namespace E_TRADING.Controllers
             {
                 return HttpNotFound("Product was not found");
             }
+
             return View(FillProductViewModel(product));
         }
 
@@ -39,7 +43,34 @@ namespace E_TRADING.Controllers
         [Authorize(Roles = UserRole.Seller)]
         public ActionResult AddProduct()
         {
+            var categoryList = new SelectList(_categoryRepository.FindBy(x => x.Categories.Count() == 0),
+                dataValueField: "Id", dataTextField: "Name");
+
+            ViewBag.Category = categoryList;
             return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = UserRole.Seller)]
+        public ActionResult AddProduct(ProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var product = new Product()
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Amount = model.Amount,
+                Price = model.Price,
+                SellerId = User.Identity.GetUserId(),
+                CategoryId = model.Category
+            };
+
+            _productRepository.Add(product);
+            _productRepository.SaveChanges();
+
+            return RedirectToAction("Index", "Seller");
         }
 
         #region Helpers
