@@ -1,24 +1,25 @@
-﻿using E_TRADING.Common;
-using E_TRADING.Common.Extensions;
+﻿using AutoMapper;
+using E_TRADING.Common;
+using E_TRADING.Common.Models;
 using E_TRADING.Data.Entities;
 using E_TRADING.Data.Repositories;
-using E_TRADING.Models;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace E_TRADING.Controllers
 {
     public class ProductController : Controller
     {
+        IMapper _mapper;
         IProductRepository _productRepository;
         ICategoryRepository _categoryRepository;
 
-        public ProductController(IProductRepository productRepository, ICategoryRepository categoryRepository)
+        public ProductController(IMapper mapper,
+            IProductRepository productRepository,
+            ICategoryRepository categoryRepository)
         {
+            _mapper = mapper;
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
         }
@@ -31,7 +32,7 @@ namespace E_TRADING.Controllers
                 return HttpNotFound("Product was not found");
             }
 
-            return View(FillProductViewModel(product));
+            return View(_mapper.Map<ProductViewModel>(product));
         }
 
         [HttpPost]
@@ -55,7 +56,13 @@ namespace E_TRADING.Controllers
         public ActionResult AddProduct(ProductViewModel model)
         {
             if (!ModelState.IsValid)
+            {
+                var categoryList = new SelectList(_categoryRepository.FindBy(x => x.Categories.Count() == 0),
+                    dataValueField: "Id", dataTextField: "Name");
+
+                ViewBag.Category = categoryList;
                 return View(model);
+            }
 
             var product = new Product()
             {
@@ -74,23 +81,6 @@ namespace E_TRADING.Controllers
         }
 
         #region Helpers
-
-        private ProductViewModel FillProductViewModel(Product product)
-        {
-            var model = new ProductViewModel
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Price = product.Price,
-                Description = product.Description,
-                Amount = product.Amount,
-                AddedDate = product.AddedDate.DateTimeToFormatString(),
-
-                SellerId = product.SellerId,
-                SellerName = product.Seller.User.UserName // product.Seller.Alias
-            };
-            return model;
-        }
 
         #endregion
     }

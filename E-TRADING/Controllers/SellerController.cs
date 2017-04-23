@@ -1,5 +1,7 @@
-﻿using E_TRADING.Common;
+﻿using AutoMapper;
+using E_TRADING.Common;
 using E_TRADING.Common.Extensions;
+using E_TRADING.Common.Models;
 using E_TRADING.Data.Entities;
 using E_TRADING.Data.Managers;
 using E_TRADING.Data.Repositories;
@@ -13,11 +15,14 @@ namespace E_TRADING.Controllers
     [Authorize(Roles = UserRole.Seller)]
     public class SellerController : Controller
     {
-        private readonly ApplicationUserManager _userManager;
-        private readonly ISellerRepository _sellerRepository;
-        public SellerController(ApplicationUserManager userManager,
+        IMapper _mapper;
+        ApplicationUserManager _userManager;
+        ISellerRepository _sellerRepository;
+        public SellerController(IMapper mapper,
+            ApplicationUserManager userManager,
             ISellerRepository sellerRepository)
         {
+            _mapper = mapper;
             _userManager = userManager;
             _sellerRepository = sellerRepository;
         }
@@ -59,7 +64,7 @@ namespace E_TRADING.Controllers
             var seller = GetSeller();
             var res = new ProductsViewModel
             {
-                Products = seller.Products.Select(item => FillProductViewModel(item)).ToList(),
+                Products = seller.Products.Select(item => _mapper.Map<ProductViewModel>(item)).ToList(),
                 ProductsCount = seller.Products.Sum(item => item.Amount)
             };
             return View(res);
@@ -82,31 +87,13 @@ namespace E_TRADING.Controllers
                 UserName = seller.User.UserName,
                 ProductsCount = seller.Products.Sum(item => item.Amount)
             };
-            return model;
+            return _mapper.Map<SellerViewEditViewModel>(seller);
         }
 
         private Seller GetSeller()
         {
             var userId = User.Identity.GetUserId();
             return _sellerRepository.FirstOrDefault(item => item.Id == userId);
-        }
-
-        private ProductViewModel FillProductViewModel(Product product)
-        {
-            var model = new ProductViewModel
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Price = product.Price,
-                Description = product.Description,
-                Amount = product.Amount,
-                AddedDate = product.AddedDate.DateTimeToFormatString(),
-                Category = product.Category.Name,
-
-                SellerId = product.SellerId,
-                SellerName = product.Seller.Alias
-            };
-            return model;
         }
 
         #endregion

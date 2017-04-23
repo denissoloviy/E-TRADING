@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace E_TRADING.Models
+namespace E_TRADING.Common.Models
 {
     public class ProductViewModel
     {
