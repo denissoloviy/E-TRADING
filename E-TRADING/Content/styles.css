@@ -1,4 +1,4 @@
-.searchblock
+.search-header
 {
     padding:20px;
     background-color:cornflowerblue;
@@ -19,7 +19,6 @@
     background: url(/Content/search-icon-png.png) no-repeat;
     background-size:contain;
     background-color:whitesmoke;
-
 }
 .category-block
 {
@@ -34,11 +33,16 @@
     background: url(/Content/category-icon-png.png) no-repeat;
     background-size:contain;
 }
-.product-block
+.product-block-single
 {
+    border:1px solid #000;
+    border-right:none;
     height:300px;
-    border: 1px solid #000;
     padding:10px;
+}
+.product-block-single:last-child
+{
+    border-right:1px solid #000;
 }
 .product-image-block
 {
@@ -64,4 +68,47 @@
 {
     cursor:pointer;
     
+}
+#category-list
+{
+    display:none;
+}
+.option-main-category
+{
+    font-style:italic;
+    font-weight:bold;
+}
+.option-sub-category
+{
+    padding-left:5px;
+}
+
+.product-block-shopping-cart
+{
+    min-height:400px;
+    border-bottom:1px solid #000;
+}
+.product-block-shopping-cart img
+{
+    width:100%;
+}
+
+.product-block-shopping-cart:last-child
+{
+    border-bottom:none;
+}
+.product-block-shopping-cart-cancel-button
+{
+    position:absolute;
+    top:0;
+    right:0;
+    background: url(/Content/cross-icon.png) no-repeat;
+    background-size:contain;
+    background-position:center;
+    height:30px;
+    width:30px;
+}
+.product-block-shopping-cart-cancel-button:hover
+{
+    cursor:pointer;
 }
