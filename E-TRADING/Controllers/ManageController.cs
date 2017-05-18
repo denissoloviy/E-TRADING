@@ -239,7 +239,7 @@ namespace E_TRADING.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Index", "Account", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
             return View(model);

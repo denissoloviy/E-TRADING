@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using E_TRADING.Data.Managers;
 using Microsoft.AspNet.Identity;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
-using System;
 
 namespace E_TRADING.Data.Entities
 {
@@ -25,14 +23,6 @@ namespace E_TRADING.Data.Entities
 
         [DisplayName("Адреса")]
         public string Address { get; set; }
-        
-        //public Guid? BuyerId { get; set; }
-        //[ForeignKey("BuyerId")]
-        //public virtual Buyer Buyer { get; set; }
-
-        //public Guid? SellerId { get; set; }
-        //[ForeignKey("SellerId")]
-        //public virtual Seller Seller { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(ApplicationUserManager manager)
         {

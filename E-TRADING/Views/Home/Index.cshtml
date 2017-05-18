@@ -31,7 +31,7 @@
                     <img src='/Content/category-icon-png.png' />
                 </div>
                 <div class='col-lg-12 product-small-description'>
-                    <a class='product-link'>@item.Name</a>
+                    @Html.ActionLink(item.Name, "Index", "Product", new { id = item.Id }, new { @class = "product-link" })
                     <p class='product-price'>@item.Price</p>
                 </div>
             </div>

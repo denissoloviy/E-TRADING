@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -141,6 +145,10 @@
     <ProjectReference Include="..\E-TRADING.Data\E-TRADING.Data.csproj">
       <Project>{857B8098-800F-494E-938F-E6E7C26B70C3}</Project>
       <Name>E-TRADING.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E-TRADING.Mapper\E-TRADING.Mapper.csproj">
+      <Project>{DDEC4373-5C50-47CE-A9AD-1D359E07A6C0}</Project>
+      <Name>E-TRADING.Mapper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

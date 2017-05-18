@@ -1,7 +1,9 @@
-﻿using E_TRADING.Data;
+﻿using AutoMapper;
+using E_TRADING.Data;
 using E_TRADING.Data.Entities;
 using E_TRADING.Data.Managers;
 using E_TRADING.Data.Repositories;
+using E_TRADING.Mapper.Configurations;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject.Modules;
 using Ninject.Web.Common;
@@ -12,6 +14,8 @@ namespace E_TRADING.Ninject.Modules
     {
         public override void Load()
         {
+            AutoMapperCoreConfiguration.Configure();
+            Bind<IMapper>().ToConstant(AutoMapper.Mapper.Instance).InSingletonScope();
             Bind<ApplicationDbContext>().ToSelf().InRequestScope();
             Bind<IBuyerRepository>().To<BuyerRepository>().InRequestScope();
             Bind<ICategoryRepository>().To<CategoryRepository>().InRequestScope();

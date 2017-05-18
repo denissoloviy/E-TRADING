@@ -1,0 +1,50 @@
+﻿@model E_TRADING.Common.Models.ProductsViewModel
+@{
+    ViewBag.Title = "Мої товари";
+}
+@{Html.RenderPartial("_LeftMenu", Model.ProductsCount);}
+<div class="content">
+    <div class="col-md-12">
+        <h2>@ViewBag.Title</h2>
+        @Html.ActionLink("Додати товар", "AddProduct", "Product", new { }, new { @class = "btn btn-success" })
+        <div>
+            <hr />
+            <table class="table margin-top-10">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().Name)</th>
+                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().Amount)</th>
+                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().Price)</th>
+                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().AddedDate)</th>
+                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().Category)</th>
+                        <th>Опції</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Products)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Amount</td>
+                            <td>@item.Price</td>
+                            <td>@item.AddedDate</td>
+                            <td>@item.Category</td>
+                            <td>
+                                <a class="btn btn-default" title="Детальна інформація" href="@Url.Action("Index", "Product", new { id = item.Id })">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </a>
+                                <a class="btn btn-default" title="Детальна інформація" href="@Url.Action("Edit", "Product", new { id = item.Id })">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                                <a class="btn btn-danger" title="Видалити запис" href="@Url.Action("Delete", "Product", new {id = item.Id })">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>

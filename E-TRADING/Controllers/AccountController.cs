@@ -11,11 +11,12 @@ using Microsoft.Owin.Security;
 using E_TRADING.Models;
 using E_TRADING.Data.Managers;
 using E_TRADING.Data.Entities;
+using E_TRADING.Common;
 
 namespace E_TRADING.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public partial class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -91,6 +92,16 @@ namespace E_TRADING.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+        }
+
+        public ActionResult Index()
+        {
+            var userId = User.Identity.GetUserId();
+            if (UserManager.IsInRole(userId, UserRole.Seller))
+            {
+                return RedirectToAction("Index", "Seller");
+            }
+            return RedirectToAction("Index", "Manage");
         }
 
         //
