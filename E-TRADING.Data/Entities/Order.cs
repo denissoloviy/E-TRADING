@@ -26,7 +26,7 @@ namespace E_TRADING.Data.Entities
 
         [NotMapped]
         [DisplayName("Номер замовлення")]
-        public string OrderNumberString => OrderNumber.ToString("D8");
+        public string OrderNumberString {get{return OrderNumber.ToString("D8");}}
 
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Товар")]

@@ -11,8 +11,8 @@ namespace E_TRADING.Common.Extensions
         {
             return enumValue.GetType()
                             .GetMember(enumValue.ToString())
-                            .FirstOrDefault()?
-                            .GetCustomAttribute<DisplayAttribute>()?.Name;
+                            .FirstOrDefault()
+                            .GetCustomAttribute<DisplayAttribute>().Name;
         }
     }
 }

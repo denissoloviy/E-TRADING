@@ -21,10 +21,10 @@ namespace E_TRADING.Data.Entities
 
         [NotMapped]
         [DisplayName("Код товару")]
-        public string ProductCodeString => ProductCode.ToString("D8");
+        public string ProductCodeString { get { return ProductCode.ToString("D8"); } }
 
         [DisplayName("Доступна к-сть")]
-        public int Amount { get; set; } = 1;
+        public int Amount { get; set; }
 
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Ціна")]

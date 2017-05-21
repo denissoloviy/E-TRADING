@@ -1,4 +1,4 @@
-﻿@model List<E_TRADING.Data.Entities.Category>
+﻿@model E_TRADING.Models.CategoryProductViewModel
 @{
     ViewBag.Title = "Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,25 +8,71 @@
     <form>
         <div class="col-lg-12 search-header">
             <div class='col-lg-5 '>
-                <input type='text' class='form-control searchfield button-image-search' />
+                <input placeholder="Search for a product name" type='text' name="SearchString" value="@ViewBag.SearchString" class='form-control searchfield button-image-search' />
             </div>
             <div class='col-lg-2' style="font-size: 15px;padding: 6px;">
                 <span>Choose your category</span>
             </div>
             <div class='col-lg-3'>
-                <select class="form-control">
-                    @foreach(var item in Model)
+                <select name="Category" class="form-control">
+                    <option selected value="">All</option>
+
+                    @foreach(var item in Model.Categories)
                     {
-                        <option>@item.Name</option>
+                        if(ViewBag.SelectedCategory == @item.Id)
+                        {
+                            <option value="@item.Id" selected>@item.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
                     }
                 </select>
             </div>
             <div class='col-lg-2'>
-                <button class="form-control btn btn-default button-image-search">
+                <button type="submit" class="form-control btn btn-default button-image-search">
                     Search 
                 </button>
             </div>
+            <div class="col-lg-3 search-field-price">
+                <div class="col-lg-12">
+                    <input onkeypress='return event.charCode >= 48 && event.charCode <= 57' placeholder="Min price" value="@ViewBag.PriceMin" type='text' name="PriceMin" class='form-control  ' />
+                </div>
+
+                <div class="col-lg-12">
+                    <input onkeypress='return event.charCode >= 48 && event.charCode <= 57'  placeholder="Max price" value="@ViewBag.PriceMax" type='text' name="PriceMax" class='form-control ' />
+                </div>
+   
+            </div>
         </div>
     </form>
+   
+   @if(!Model.Products.Any())
+   {
+       <p>No results,try another search, please</p>
+   }
+   @foreach (var item in Model.Products)
+    {
+        <div class="col-lg-12 product-block-shopping-cart">
+            <div class="col-lg-4">
+                <a href="@Url.Action("Index", "Product", new { id = item.Id }, null)">
+                    <img src='/Content/category-icon-png.png' />
+                </a>
+            </div>
+            <div class="col-lg-8" style="position:relative">
+                <div class="col-lg-12">
+                    <p><b>Name</b>: 
+                    <a href="@Url.Action("Index", "Product", new { id = item.Id }, null)">
+                     @item.Name
+                    </a>
+                    </p>
+                    <p><b>Category</b>: @item.Category.Name</p>
+                    <p><b>Price</b>: @item.Price</p>
+                    <p><b>Description</b>: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi non porta arcu. Integer euismod ipsum finibus erat fringilla, quis sodales nulla hendrerit. Aenean dictum erat vulputate, euismod eros eget, aliquet felis. Proin leo mi, scelerisque non ante et, egestas semper purus. Vestibulum semper nisi eu dictum egestas. Sed pharetra mauris nisl, sed tristique mi condimentum ut. Nullam felis dui, dignissim eu orci eu, gravida lobortis tellus. Integer finibus mattis auctor. Cras sed eleifend purus. Ut convallis sollicitudin metus, sed eleifend neque hendrerit id. Duis sagittis turpis id orci pulvinar, a mattis felis maximus. Sed ac est vel leo imperdiet sodales sit amet eget nisi.</p>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 

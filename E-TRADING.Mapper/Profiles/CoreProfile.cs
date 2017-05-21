@@ -41,13 +41,6 @@ namespace E_TRADING.Mapper.Profiles
                 .ForMember(dest => dest.ProductsCount, opt => opt.MapFrom(src =>
                     AutoMapper.Mapper.Map<BuyerProfileHelperViewModel>(src)));
 
-            CreateMap<Seller, SellerViewEditViewModel>()
-                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.User.Address))
-                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
-                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
-                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.User.PhoneNumber))
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName))
-                .ForMember(dest => dest.Helper, opt => opt.MapFrom(src => src.Products.Sum(item => item.Amount)));
 
             CreateMap<Buyer, BuyerViewEditViewModel>()
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.User.Address))
@@ -57,6 +50,15 @@ namespace E_TRADING.Mapper.Profiles
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName))
                 .ForMember(dest => dest.Helper, opt => opt.MapFrom(src =>
                     AutoMapper.Mapper.Map<BuyerProfileHelperViewModel>(src)));
+
+            CreateMap<Seller, SellerViewEditViewModel>()
+               .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.User.Address))
+               .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
+               .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
+               .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.User.PhoneNumber))
+               .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName))
+               .ForMember(dest => dest.Helper, opt => opt.MapFrom(src => src.Products.Sum(item => item.Amount)));
+
         }
     }
 }

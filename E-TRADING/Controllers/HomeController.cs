@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System;
 using E_TRADING.Data.Entities;
 
+
 namespace E_TRADING.Controllers
 {
     public class HomeController : Controller
@@ -52,10 +53,54 @@ namespace E_TRADING.Controllers
 
             return View(result);
         }
-        public ActionResult Search(string Category="")
+        public ActionResult Search(decimal? PriceMin,decimal? PriceMax,string Category="",string SearchString="")
         {
-            var Categories = _categoryRepository.FindBy(item => item.MasterCategoryId == null).ToList();
-            return View(Categories);
+            
+            var _products=_productRepository.GetAll();
+            var result = new CategoryProductViewModel
+            {
+                Categories = _categoryRepository.FindBy(item => item.MasterCategoryId == null).ToList(),
+            };
+
+            if (!String.IsNullOrEmpty(Category))
+            {
+                List<string> MainCategoryWithSubCategories = new List<string>();
+                Category cat = _categoryRepository.FindBy(item => item.Id == Category).First();
+                GetAllCategories(cat, ref MainCategoryWithSubCategories);
+
+                ViewBag.SelectedCategory = Category;
+                _products = _products.Where(p => MainCategoryWithSubCategories.Contains(p.CategoryId));
+            }
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                ViewBag.SearchString = SearchString;
+                _products = _products.Where(p => p.Name.Contains(SearchString));
+            }
+            if (PriceMin!=null)
+            {
+                ViewBag.PriceMin = PriceMin;
+                _products = _products.Where(p => p.Price >PriceMin);
+            }
+            if (PriceMax!=null)
+            {
+                ViewBag.PriceMax = PriceMax;
+                _products = _products.Where(p => p.Price < PriceMax);
+            }
+            result.Products = _products.ToList();
+            return View(result);
+        }
+        public void GetAllCategories(Category cat,ref List<string>CatWithSubCat)
+        {
+            if (cat.Categories.Count==0)
+                CatWithSubCat.Add(cat.Id);
+            else
+            {
+                CatWithSubCat.Add(cat.Id); 
+                foreach(var x in cat.Categories)
+                {
+                    GetAllCategories(x, ref CatWithSubCat);
+                }
+            }
         }
         public ActionResult ShoppingCart(string UserId="")
         {

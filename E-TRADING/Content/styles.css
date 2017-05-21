@@ -111,3 +111,17 @@
 {
     cursor:pointer;
 }
+.search-field-price
+{
+ margin-top:10px;
+}
+.search-field-price div
+{
+    padding-left:0;
+    margin: 5px 0;
+}
+.search-field-price span
+{
+    margin:5px 0;    line-height: 1.42857143;
+    padding:12px 0;
+}

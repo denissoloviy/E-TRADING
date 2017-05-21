@@ -24,7 +24,7 @@ namespace E_TRADING.Data.Repositories.Generic
 
         public virtual T FirstOrDefault(Expression<Func<T, bool>> predicate)
         {
-            return _dbSet.FirstOrDefault(predicate);
+            return _dbSet.FirstOrDefault(predicate); 
         }
 
         public virtual IQueryable<T> GetAll()
