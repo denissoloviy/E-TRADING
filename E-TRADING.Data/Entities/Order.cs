@@ -1,4 +1,4 @@
-﻿using System;
+﻿using E_TRADING.Common.OrderStatuses;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,6 +19,14 @@ namespace E_TRADING.Data.Entities
 
         [DisplayName("Адреса доставки")]
         public string ShippingAddress { get; set; }
+        
+        [DisplayName("Номер замовлення")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int OrderNumber { get; set; }
+
+        [NotMapped]
+        [DisplayName("Номер замовлення")]
+        public string OrderNumberString => OrderNumber.ToString("D8");
 
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Товар")]
@@ -33,44 +41,5 @@ namespace E_TRADING.Data.Entities
         [DisplayName("Покупець")]
         [ForeignKey("BuyerId")]
         public virtual Buyer Buyer { get; set; }
-    }
-
-    public enum OrderStatus // todo Переглянути
-    {
-        /// <summary>
-        /// Успішно доставлено
-        /// </summary>
-        [Display(Name = "Успішно доставлено")]
-        Successful = 100,
-
-        /// <summary>
-        /// Помилка замовлення
-        /// </summary>
-        [Display(Name = "Помилка замовлення")]
-        Failed = 101,
-
-        /// <summary>
-        /// Відміна замовлення
-        /// </summary>
-        [Display(Name = "Відміна замовлення покупцем")]
-        CanceledByBuyer = 102,
-
-        /// <summary>
-        /// Відміна замовлення
-        /// </summary>
-        [Display(Name = "Відміна замовлення продавцем")]
-        CanceledBySeller = 103,
-
-        /// <summary>
-        /// Замовлення в обробці
-        /// </summary>
-        [Display(Name = "Замовлення в обробці")]
-        InProccess = 104,
-
-        /// <summary>
-        /// Товар в дорозі
-        /// </summary>
-        [Display(Name = "Товар в дорозі")]
-        InShipping = 105
     }
 }

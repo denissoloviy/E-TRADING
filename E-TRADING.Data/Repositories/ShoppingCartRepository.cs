@@ -5,7 +5,6 @@ namespace E_TRADING.Data.Repositories
 {
     public interface IShoppingCartRepository : IGenericRepository<ShoppingCart>
     {
-        bool AddProduct(Product entity);
     }
 
     public class ShoppingCartRepository : GenericRepository<ShoppingCart>, IShoppingCartRepository
@@ -14,25 +13,6 @@ namespace E_TRADING.Data.Repositories
         public ShoppingCartRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
-        }
-
-        public override void Add(ShoppingCart entity)
-        {
-            if (!AddProduct(entity.Product))
-            {
-                base.Add(entity);
-            }
-        }
-
-        public bool AddProduct(Product entity)
-        {
-            var shoppingCart = FirstOrDefault(item => item.ProductId == entity.Id);
-            if (shoppingCart != null)
-            {
-                shoppingCart.Amount++;
-                return true;
-            }
-            return false;
         }
     }
 }

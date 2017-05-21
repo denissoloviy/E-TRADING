@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace E_TRADING.Common.Models
 {
-    public class SellerViewEditViewModel
+    public class BuyerViewEditViewModel : BuyerProfileHelperViewModel
     {
         [DisplayName("Ім'я користувача")]
         public string UserName { get; set; }
@@ -26,29 +27,19 @@ namespace E_TRADING.Common.Models
         [DisplayName("Адреса")]
         public string Address { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Псевдонім")]
-        public string Alias { get; set; }
-
-        [DisplayName("Адреса офісу")]
-        public string OfficeAddress { get; set; }
-
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Контактний номер телефону")]
-        public string ContactPhone { get; set; }
-
-        public SellerProfileHelperViewModel Helper { get; set; }
+        public BuyerProfileHelperViewModel Helper { get; set; }
     }
-
-    public class SellerProductsViewModel
+    
+    public class ShoppingCartViewModel
     {
         public ICollection<ProductViewModel> Products { get; set; }
-
-        public SellerProfileHelperViewModel Helper { get; set; }
+        public BuyerProfileHelperViewModel Helper { get; set; }
     }
 
-    public class SellerProfileHelperViewModel
+    public class BuyerProfileHelperViewModel
     {
-        public int ProductsCount { get; set; }
+        public int ActiveOrdersCount { get; set; }
+        public int InactiveOrdersCount { get; set; }
+        public int ShoppingCartCount { get; set; }
     }
 }

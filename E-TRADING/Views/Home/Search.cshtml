@@ -1,0 +1,32 @@
+﻿@model List<E_TRADING.Data.Entities.Category>
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>Search</h1>
+<div class='container' style='background:#eee'>
+    <form>
+        <div class="col-lg-12 search-header">
+            <div class='col-lg-5 '>
+                <input type='text' class='form-control searchfield button-image-search' />
+            </div>
+            <div class='col-lg-2' style="font-size: 15px;padding: 6px;">
+                <span>Choose your category</span>
+            </div>
+            <div class='col-lg-3'>
+                <select class="form-control">
+                    @foreach(var item in Model)
+                    {
+                        <option>@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div class='col-lg-2'>
+                <button class="form-control btn btn-default button-image-search">
+                    Search 
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
