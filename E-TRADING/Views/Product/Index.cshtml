@@ -18,22 +18,26 @@
             </div>
             <div class="col-md-8">
                 <div class=''>
-                    <h2 class="">@Model.Name  <span class="label label-primary">@Model.Amount Left!</span></h2>
+                    <h2 class="">@Model.Name  <span class="label label-primary">@Model.Amount залишилось!</span></h2>
                 </div>
                 <div class=''>
-                    <h4 class="">Price: @Model.Price</h4>
+                    <h4 class="">@Html.DisplayNameFor(model => model.Price): @Model.Price</h4>
                 </div>
                 <div class="">
-                    @using (Html.BeginForm("BuyProduct", "Product", FormMethod.Post, new { @class = "form-horizontal" }))
+                    @using (Html.BeginForm("Add", "ShoppingCart", FormMethod.Post, new { @class = "form-horizontal" }))
                     {
-                        <input hidden="hidden" type="text" name="id" value="@Model.Id" />
-                        <input class="form-control input" type="number" placeholder="Set Amount" max="@Model.Amount" name="amount" />
-                        <input style="margin-top: 10px" type="button" class="form-control btn btn-success" value="Buy product" />
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Id)
+                        <input class="form-control input" type="number" 
+                               onkeypress="return event.charCode >= 48 && event.charCode <= 57" 
+                               placeholder="@Html.DisplayNameFor(model => model.Amount)" 
+                               max="@Model.Amount" min="1" name="Amount" />
+                        <button type="submit" class="form-control btn btn-success" style="margin-top: 10px">Додати в кошик</button>
                     }
                 </div>
-                <hr/>
+                <hr />
                 <div class=''>
-                    <h4 class="">Description:</h4>
+                    <h4 class="">@Html.DisplayNameFor(model => model.Description)</h4>
                     <h5>@Model.Description</h5>
                 </div>
             </div>
@@ -43,7 +47,7 @@
 
 
 <div>
-    @Html.ActionLink("Back to List", "Index", "Home")
+    @Html.ActionLink("На головну", "Index", "Home")
 </div>
 
 @section Scripts {

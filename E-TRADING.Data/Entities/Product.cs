@@ -15,8 +15,16 @@ namespace E_TRADING.Data.Entities
         [DisplayName("Опис")]
         public string Description { get; set; }
 
+        [DisplayName("Код товару")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ProductCode { get; set; }
+
+        [NotMapped]
+        [DisplayName("Код товару")]
+        public string ProductCodeString => ProductCode.ToString("D8");
+
         [DisplayName("Доступна к-сть")]
-        public int Amount { get; set; }
+        public int Amount { get; set; } = 1;
 
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Ціна")]

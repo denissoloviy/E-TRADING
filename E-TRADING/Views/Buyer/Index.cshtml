@@ -1,4 +1,4 @@
-﻿@model E_TRADING.Common.Models.SellerViewEditViewModel
+﻿@model E_TRADING.Common.Models.BuyerViewEditViewModel
 @{
     ViewBag.Title = "Особистий кабінет";
 }
@@ -6,7 +6,7 @@
 <div class="content">
     <div class="col-md-12">
         <h2>@ViewBag.Title</h2>
-        @Html.ActionLink("Редагувати", "Edit", "Seller", new { }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Редагувати", "Edit", "Buyer", new { }, new { @class = "btn btn-default" })
         @Html.ActionLink("Змінити пароль", "ChangePassword", "Manage", new { }, new { @class = "btn btn-default" })
         <div>
             <hr />
@@ -51,27 +51,6 @@
                 </dt>
                 <dd>
                     @Html.DisplayFor(model => model.PhoneNumber)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Alias)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Alias)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.OfficeAddress)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.OfficeAddress)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.ContactPhone)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.ContactPhone)
                 </dd>
             </dl>
         </div>

@@ -101,6 +101,10 @@ namespace E_TRADING.Controllers
             {
                 return RedirectToAction("Index", "Seller");
             }
+            if (UserManager.IsInRole(userId, UserRole.Buyer))
+            {
+                return RedirectToAction("Index", "Buyer");
+            }
             return RedirectToAction("Index", "Manage");
         }
 

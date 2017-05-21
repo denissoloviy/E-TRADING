@@ -62,10 +62,13 @@ namespace E_TRADING.Controllers
         public ActionResult Products()
         {
             var seller = GetSeller();
-            var res = new ProductsViewModel
+            var res = new SellerProductsViewModel
             {
                 Products = seller.Products.Select(item => _mapper.Map<ProductViewModel>(item)).ToList(),
-                ProductsCount = seller.Products.Sum(item => item.Amount)
+                Helper = new SellerProfileHelperViewModel
+                {
+                    ProductsCount = seller.Products.Sum(item => item.Amount)
+                }
             };
             return View(res);
         }
@@ -75,18 +78,6 @@ namespace E_TRADING.Controllers
         private SellerViewEditViewModel FillSellerViewEditViewModel()
         {
             var seller = GetSeller();
-            var model = new SellerViewEditViewModel
-            {
-                Address = seller.User.Address,
-                Alias = seller.Alias,
-                ContactPhone = seller.ContactPhone,
-                FirstName = seller.User.FirstName,
-                LastName = seller.User.LastName,
-                OfficeAddress = seller.OfficeAddress,
-                PhoneNumber = seller.User.PhoneNumber,
-                UserName = seller.User.UserName,
-                ProductsCount = seller.Products.Sum(item => item.Amount)
-            };
             return _mapper.Map<SellerViewEditViewModel>(seller);
         }
 
