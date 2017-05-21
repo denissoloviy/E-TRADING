@@ -1,8 +1,53 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model IEnumerable<E_TRADING.Common.Models.OrderViewModel>
+@{
+    ViewBag.Title = "Останні замовлення";
 }
 
 <div class="jumbotron">
-    <h1>Головна</h1>
-    <p class="lead">Думаю тут можна вивести таблицю покупок(товар, ціна, продавець, покупець і т.д.)</p>
+    <h2>@ViewBag.Title</h2>
+    <div>
+        <hr />
+        <table class="table margin-top-10">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(m => m.FirstOrDefault().Name)</th>
+                    <th>@Html.DisplayNameFor(m => m.FirstOrDefault().Status)</th>
+                    <th>@Html.DisplayNameFor(m => m.FirstOrDefault().Amount)</th>
+                    <th>@Html.DisplayNameFor(m => m.FirstOrDefault().FullPrice)</th>
+                    <th>@Html.DisplayNameFor(m => m.FirstOrDefault().ShippingAddress)</th>
+                    <th>@Html.DisplayNameFor(m => m.FirstOrDefault().Buyer)</th>
+                    <th>@Html.DisplayNameFor(m => m.FirstOrDefault().Seller)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    if (Model.Count() > 0)
+                    {
+                        foreach (var order in Model)
+                        {
+                            <tr>
+                                <td>@order.Name</td>
+                                <td>@order.Status</td>
+                                <td>@order.Amount</td>
+                                <td>@order.FullPrice</td>
+                                <td>@order.ShippingAddress</td>
+                                <td>@order.Buyer</td>
+                                <td>@order.Seller</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7">
+                                <h3>Жодного замовлення не було зроблено</h3>
+                            </td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        </table>
+    </div>
+
 </div>

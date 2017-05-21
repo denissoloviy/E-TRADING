@@ -38,9 +38,21 @@ namespace E_TRADING.Mapper.Profiles
                     src.ShoppingCarts.Sum(item => item.Amount)));
 
             CreateMap<Seller, SellerProfileHelperViewModel>()
-                .ForMember(dest => dest.ProductsCount, opt => opt.MapFrom(src =>
+                .ForMember(dest => dest.ProductsCount, opt => opt.MapFrom(src => src.Products.Sum(item => item.Amount))
+				);
+            CreateMap<Seller, SellerViewEditViewModel>()
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.User.Address))
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.FirstName))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.LastName))
+                .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.User.PhoneNumber))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName))
+                .ForMember(dest => dest.Helper, opt => opt.MapFrom(src =>
                     AutoMapper.Mapper.Map<BuyerProfileHelperViewModel>(src)));
-
+            CreateMap<Order, OrderViewModel>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Product.Name))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+                .ForMember(dest => dest.Buyer, opt => opt.MapFrom(src => src.Buyer.User.UserName))
+                .ForMember(dest => dest.Seller, opt => opt.MapFrom(src => src.Product.Seller.User.UserName));
 
             CreateMap<Buyer, BuyerViewEditViewModel>()
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.User.Address))

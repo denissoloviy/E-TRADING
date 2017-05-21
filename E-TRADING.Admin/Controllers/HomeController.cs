@@ -1,5 +1,8 @@
-﻿using E_TRADING.Data;
+﻿using AutoMapper;
+using E_TRADING.Common.Models;
+using E_TRADING.Data;
 using E_TRADING.Data.Managers;
+using E_TRADING.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,18 +13,21 @@ namespace E_TRADING.Admin.Controllers
 {
     public class HomeController : Controller
     {
-        ApplicationDbContext _db;
+        IMapper _mapper;
         ApplicationUserManager _userManager;
-        public HomeController(ApplicationDbContext db,
-            ApplicationUserManager userManager)
+        IOrderRepository _orderRepository;
+        public HomeController(IMapper mapper, ApplicationUserManager userManager, IOrderRepository orderRepository)
         {
-            _db = db;
+            _mapper = mapper;
             _userManager = userManager;
+            _orderRepository = orderRepository;
         }
 
+        [Authorize(Roles = "SuperAdmin, Administrator")]
         public ActionResult Index()
         {
-            return View();
+            var products = _orderRepository.GetAll().ToList().Select(item => _mapper.Map<OrderViewModel>(item));
+            return View(products);
         }
     }
 }
