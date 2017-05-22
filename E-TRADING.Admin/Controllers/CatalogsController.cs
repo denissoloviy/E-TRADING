@@ -73,10 +73,23 @@ namespace E_TRADING.Admin.Controllers
             return Index(parentCategoty?.Id);
         }
 
-        // POST: Catalogs
+        // GET: Catalogs
+        [HttpGet]
         public ActionResult Edit(string id)
         {
-            return Index(id);
+            var catalog = _categoryRepository.FirstOrDefault(c => c.Id == id);
+            return View(catalog);
+        }
+
+        // POST: Catalogs
+        [HttpPost]
+        public ActionResult Edit(Category categoryData)
+        {
+            var catalog = _categoryRepository.FirstOrDefault(c => c.Id == categoryData.Id);
+            catalog.Name = categoryData.Name;
+            _categoryRepository.SaveChanges();
+
+            return Index(catalog?.MasterCategoryId);
         }
 
         // POST: Catalogs
