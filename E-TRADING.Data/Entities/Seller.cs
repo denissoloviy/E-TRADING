@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_TRADING.Data.Entities
 {
-    public class Seller : BaseEntity
+    public class Seller : BaseEntity, ISoftDelete
     {
         [Key, ForeignKey("User")]
         public override string Id { get; set; }
@@ -23,5 +24,7 @@ namespace E_TRADING.Data.Entities
 
         [DisplayName("Товари")]
         public virtual ICollection<Product> Products { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

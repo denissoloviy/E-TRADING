@@ -17,6 +17,7 @@ namespace E_TRADING.Data.Entities
         [DisplayName("Загальна ціна")]
         public decimal FullPrice { get; set; }
 
+        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Адреса доставки")]
         public string ShippingAddress { get; set; }
         

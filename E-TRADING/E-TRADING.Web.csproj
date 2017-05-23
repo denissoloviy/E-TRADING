@@ -337,6 +337,7 @@
     <Content Include="Views\Buyer\Edit.cshtml" />
     <Content Include="Views\Buyer\ShoppingCart.cshtml" />
     <Content Include="Views\Seller\Orders.cshtml" />
+    <Content Include="Views\Buyer\CreateOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

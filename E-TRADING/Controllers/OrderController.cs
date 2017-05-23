@@ -92,7 +92,38 @@ namespace E_TRADING.Controllers
                 FullPrice = item.Amount * item.Product.Price,
                 ProductId = item.ProductId,
                 ShippingAddress = buyer.User.Address,
-                Status = Common.OrderStatuses.OrderStatus.InProccess
+                Status = OrderStatus.InProccess
+            }).ToList();
+            return View(orders);
+            //foreach (var item in orders)
+            //{
+            //    _orderRepository.Add(item);
+            //}
+            //_orderRepository.SaveChanges();
+            //var shopCarts = buyer.ShoppingCarts.ToList();
+            //foreach (var item in shopCarts)
+            //{
+            //    _shoppingCartRepository.Delete(item);
+            //}
+            //_shoppingCartRepository.SaveChanges();
+            //return RedirectToAction("ActiveOrders");
+        }
+
+        [Authorize(Roles = UserRole.Buyer)]
+        [HttpPost]
+        public ActionResult CreateOrderConfirm(List<Order> model)
+        {
+            var userId = User.Identity.GetUserId();
+            var buyer = _buyerRepository.FirstOrDefault(item => item.Id == userId);
+            var orders = buyer.ShoppingCarts.Select(item =>
+            new Order
+            {
+                Amount = item.Amount,
+                BuyerId = buyer.Id,
+                FullPrice = item.Amount * item.Product.Price,
+                ProductId = item.ProductId,
+                ShippingAddress = buyer.User.Address,
+                Status = OrderStatus.InProccess
             });
             foreach (var item in orders)
             {

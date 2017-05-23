@@ -91,6 +91,7 @@
     <Compile Include="Entities\Buyer.cs" />
     <Compile Include="Entities\Category.cs" />
     <Compile Include="Entities\Image.cs" />
+    <Compile Include="Entities\ISoftDelete.cs" />
     <Compile Include="Entities\Order.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\Seller.cs" />
@@ -113,6 +114,14 @@
     <Compile Include="Migrations\201705201053034_AddCodesToOrderAndProduct.cs" />
     <Compile Include="Migrations\201705201053034_AddCodesToOrderAndProduct.Designer.cs">
       <DependentUpon>201705201053034_AddCodesToOrderAndProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705231936278_AddSmth.cs" />
+    <Compile Include="Migrations\201705231936278_AddSmth.Designer.cs">
+      <DependentUpon>201705231936278_AddSmth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705231951423_AddIsDeletedToEntities.cs" />
+    <Compile Include="Migrations\201705231951423_AddIsDeletedToEntities.Designer.cs">
+      <DependentUpon>201705231951423_AddIsDeletedToEntities.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -147,6 +156,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705201053034_AddCodesToOrderAndProduct.resx">
       <DependentUpon>201705201053034_AddCodesToOrderAndProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705231936278_AddSmth.resx">
+      <DependentUpon>201705231936278_AddSmth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705231951423_AddIsDeletedToEntities.resx">
+      <DependentUpon>201705231951423_AddIsDeletedToEntities.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
