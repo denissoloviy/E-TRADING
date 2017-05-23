@@ -53,6 +53,9 @@
                 <ul class="nav navbar-nav">
                     <li class="@ViewContext.ActionIsActive("Index")"><a href="@Url.Action("Index", "Seller")">Основні дані</a></li>
                     <li class="@ViewContext.ActionIsActive("Products")"><a href="@Url.Action("Products", "Seller")"><span>Мої товари&nbsp;</span><span class="badge">@Model.ProductsCount</span></a></li>
+                    <li class="@ViewContext.ActionIsActive("ActiveOrders")"><a href="@Url.Action("ActiveOrders", "Order")"><span>Активні замовлення&nbsp;</span><span class="badge">@Model.ActiveOrdersCount</span></a></li>
+                    <li class="@ViewContext.ActionIsActive("InactiveOrders")"><a href="@Url.Action("InactiveOrders", "Order")"><span>Архів замовлень&nbsp;</span><span class="badge">@Model.InactiveOrdersCount</span></a></li>
+                    <li class=""><a href="@Url.Action("Products", "Seller")"><span>Архів товарів&nbsp;</span><span class="badge">@Model.ProductsCount</span></a></li>
                 </ul>
             </div>
         </div>
