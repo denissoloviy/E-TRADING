@@ -28,7 +28,7 @@ namespace E_TRADING.Mapper.Profiles
                 .ForMember(dest => dest.SellerId, opt => opt.MapFrom(src => src.Product.SellerId))
                 .ForMember(dest => dest.SellerName, opt => opt.MapFrom(src => src.Product.Seller.Alias))
                 .ForMember(dest => dest.AddedDate, opt => opt.MapFrom(src => src.AddedDate.DateTimeToFormatString()));
-            
+
             CreateMap<Buyer, BuyerProfileHelperViewModel>()
                 .ForMember(dest => dest.ActiveOrdersCount, opt => opt.MapFrom(src =>
                     src.Orders.Where(item => StatusTypes.ActiveStatuses.Contains(item.Status)).Count()))

@@ -10,7 +10,7 @@ using E_TRADING.Admin.Models;
 using E_TRADING.Data.Managers;
 
 namespace E_TRADING.Admin.Controllers
-{
+{   
     [Authorize]
     public class ManageController : Controller
     {
