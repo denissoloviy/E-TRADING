@@ -114,6 +114,10 @@
     <Compile Include="Migrations\201705201053034_AddCodesToOrderAndProduct.Designer.cs">
       <DependentUpon>201705201053034_AddCodesToOrderAndProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705241916513_updatedImageEntity.cs" />
+    <Compile Include="Migrations\201705241916513_updatedImageEntity.Designer.cs">
+      <DependentUpon>201705241916513_updatedImageEntity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AuctionRepository.cs" />
@@ -147,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705201053034_AddCodesToOrderAndProduct.resx">
       <DependentUpon>201705201053034_AddCodesToOrderAndProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705241916513_updatedImageEntity.resx">
+      <DependentUpon>201705241916513_updatedImageEntity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

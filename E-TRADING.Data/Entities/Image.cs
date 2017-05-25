@@ -8,7 +8,11 @@ namespace E_TRADING.Data.Entities
     {
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Зображення")]
-        public string ImagePath { get; set; }
+        public int Index{ get; set; }
+
+        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
+        [DisplayName("Формат")]
+        public string Extention { get; set; }
 
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Товар")]

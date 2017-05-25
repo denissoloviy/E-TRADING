@@ -4,7 +4,10 @@ using E_TRADING.Common.Models;
 using E_TRADING.Data.Entities;
 using E_TRADING.Data.Repositories;
 using Microsoft.AspNet.Identity;
+using System;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace E_TRADING.Controllers
@@ -77,10 +80,48 @@ namespace E_TRADING.Controllers
             _productRepository.Add(product);
             _productRepository.SaveChanges();
 
-            return RedirectToAction("Index", "Seller");
+            return RedirectToAction("UploadImages");
         }
 
+        //[HttpPost]
+        //[Authorize(Roles =UserRole.Seller)]
+        //public ActionResult UploadImage(string id, HttpPostedFileBase image)
+        //{
+        //    var imageId = Guid.NewGuid();
+        //    var path = @"~/Content/Images/" + imageId;
+
+        //    if (image == null)
+        //        ModelState.AddModelError("ImageFile", "Виберіть зображення");
+
+        //    if (!ValidateFileExtension())
+        //    {
+        //        ModelState.AddModelError("ImageFile",
+        //            $"Виберіть файл відповідного формату: .bmp, .png, .jpg, .jpeg");
+        //    }
+        //    else
+        //    {
+        //        if (!string.IsNullOrEmpty(model.Image))
+        //        {
+        //            if (_fileManager.FileExists(Path.Combine(path, model.Image), true))
+        //            {
+        //                _fileManager.DeleteFile(Path.Combine(path, model.Image), true);
+        //            }
+        //        }
+        //        var fileName = news.Slug + Path.GetExtension(model.ImageFile.FileName);
+        //        _fileManager.UploadFile(model.ImageFile, path, fileName, true);
+        //        news.Image = fileName;
+        //    }
+
+        //    return View();
+        //}
+
         #region Helpers
+
+        private bool ValidateFileExtension(HttpPostedFileBase file)
+        {
+            var ext = Path.GetExtension(file.FileName);
+            return new string[]{ ".bmp", ".png", ".jpg", ".jpeg" }.Contains(Path.GetExtension(file.FileName));
+        }
 
         #endregion
     }
