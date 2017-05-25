@@ -33,4 +33,9 @@ namespace E_TRADING.Common.Models
         [DisplayName("Продавець")]
         public string Seller { get; set; }
     }
+
+    public class CreateOrderViewModel
+    {
+        //public List<E_TRADING.Data.Entities.Order> Model { get; set; }
+    }
 }

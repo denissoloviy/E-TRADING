@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_TRADING.Data.Entities
 {
-    public class Category : BaseEntity
+    public class Category : BaseEntity, ISoftDelete
     {
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Назва")]
@@ -20,5 +20,7 @@ namespace E_TRADING.Data.Entities
 
         [DisplayName("Підкатегорії")]
         public virtual ICollection<Category> Categories { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

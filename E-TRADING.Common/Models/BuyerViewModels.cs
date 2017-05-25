@@ -38,8 +38,8 @@ namespace E_TRADING.Common.Models
 
     public class BuyerProfileHelperViewModel
     {
+        public int ShoppingCartCount { get; set; }
         public int ActiveOrdersCount { get; set; }
         public int InactiveOrdersCount { get; set; }
-        public int ShoppingCartCount { get; set; }
     }
 }

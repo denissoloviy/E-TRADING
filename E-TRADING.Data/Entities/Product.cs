@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_TRADING.Data.Entities
 {
-    public class Product : BaseEntity
+    public class Product : BaseEntity, ISoftDelete
     {
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Назва")]
@@ -48,5 +48,7 @@ namespace E_TRADING.Data.Entities
         public virtual ICollection<Order> Orders { get; set; }
         [DisplayName("Зображення")]
         public  virtual ICollection<Image> Images { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }
