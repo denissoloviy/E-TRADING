@@ -115,17 +115,9 @@
     <Compile Include="Migrations\201705201053034_AddCodesToOrderAndProduct.Designer.cs">
       <DependentUpon>201705201053034_AddCodesToOrderAndProduct.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201705241916513_updatedImageEntity.cs" />
-    <Compile Include="Migrations\201705241916513_updatedImageEntity.Designer.cs">
-      <DependentUpon>201705241916513_updatedImageEntity.cs</DependentUpon>
-	</Compile>
-    <Compile Include="Migrations\201705231936278_AddSmth.cs" />
-    <Compile Include="Migrations\201705231936278_AddSmth.Designer.cs">
-      <DependentUpon>201705231936278_AddSmth.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705231951423_AddIsDeletedToEntities.cs" />
-    <Compile Include="Migrations\201705231951423_AddIsDeletedToEntities.Designer.cs">
-      <DependentUpon>201705231951423_AddIsDeletedToEntities.cs</DependentUpon>
+    <Compile Include="Migrations\201705261615002_AddedIsDeletedChangedImages.cs" />
+    <Compile Include="Migrations\201705261615002_AddedIsDeletedChangedImages.Designer.cs">
+      <DependentUpon>201705261615002_AddedIsDeletedChangedImages.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -161,14 +153,8 @@
     <EmbeddedResource Include="Migrations\201705201053034_AddCodesToOrderAndProduct.resx">
       <DependentUpon>201705201053034_AddCodesToOrderAndProduct.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705241916513_updatedImageEntity.resx">
-      <DependentUpon>201705241916513_updatedImageEntity.cs</DependentUpon>
-	</EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705231936278_AddSmth.resx">
-      <DependentUpon>201705231936278_AddSmth.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705231951423_AddIsDeletedToEntities.resx">
-      <DependentUpon>201705231951423_AddIsDeletedToEntities.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705261615002_AddedIsDeletedChangedImages.resx">
+      <DependentUpon>201705261615002_AddedIsDeletedChangedImages.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

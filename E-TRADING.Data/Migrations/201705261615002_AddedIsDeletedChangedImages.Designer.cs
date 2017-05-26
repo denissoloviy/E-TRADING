@@ -7,13 +7,13 @@ namespace E_TRADING.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddSmth : IMigrationMetadata
+    public sealed partial class AddedIsDeletedChangedImages : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddSmth));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedIsDeletedChangedImages));
         
         string IMigrationMetadata.Id
         {
-            get { return "201705231936278_AddSmth"; }
+            get { return "201705261615002_AddedIsDeletedChangedImages"; }
         }
         
         string IMigrationMetadata.Source
