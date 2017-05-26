@@ -339,10 +339,10 @@
     <Content Include="Views\Product\UploadImages.cshtml" />
     <Content Include="Views\Seller\Orders.cshtml" />
     <Content Include="Views\Buyer\CreateOrder.cshtml" />
+    <Content Include="Views\Buyer\Orders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ShoppingCart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

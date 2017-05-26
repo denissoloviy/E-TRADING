@@ -55,7 +55,8 @@ namespace E_TRADING.Mapper.Profiles
 
             CreateMap<Order, OrderViewModel>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Product.Name))
-                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.ToString()))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.GetName()))
+                .ForMember(dest => dest.StatusType, opt => opt.MapFrom(src => src.Status.GetStatusType()))
                 .ForMember(dest => dest.Buyer, opt => opt.MapFrom(src => src.Buyer.User.UserName))
                 .ForMember(dest => dest.Seller, opt => opt.MapFrom(src => src.Product.Seller.User.UserName));
 

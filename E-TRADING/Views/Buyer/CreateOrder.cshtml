@@ -1,48 +1,51 @@
-﻿@*@model List<E_TRADING.Data.Entities.Order>
+﻿@model List<E_TRADING.Data.Entities.Order>
 @{
     ViewBag.Title = "Оформлення замовлення";
 }
-@{Html.RenderPartial("../Buyer/_LeftMenu", Model.Helper);}
+@{Html.RenderPartial("../Buyer/_LeftMenu", ViewBag.Helper as E_TRADING.Common.Models.BuyerProfileHelperViewModel);}
 <div class="content">
     <div class="col-md-12">
         <h2>@ViewBag.Title</h2>
-        @Html.ActionLink("Оформити замовлення", "CreateOrder", "ShoppingCart", new { }, new { @class = "btn btn-success" })
-        @Html.ActionLink("Очистити корзину", "Clear", "ShoppingCart", new { }, new { @class = "btn btn-danger" })
+        @Html.ActionLink("Скасувати", "Index", "ShoppingCart", new { }, new { @class = "btn btn-danger" })
         <div>
             <hr />
-            <table class="table margin-top-10">
-                <thead>
-                    <tr>
-                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().Name)</th>
-                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().Amount)</th>
-                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().Price)</th>
-                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().AddedDate)</th>
-                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().Category)</th>
-                        <th>Опції</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Products)
-                    {
-                        <tr>
-                            <td>@item.Name</td>
-                            <td>@item.Amount</td>
-                            <td>@item.Price</td>
-                            <td>@item.AddedDate</td>
-                            <td>@item.Category</td>
-                            <td>
-                                <a class="btn btn-default" title="Детальна інформація" href="@Url.Action("Index", "Product", new { id = item.Id })">
-                                    <span class="glyphicon glyphicon-eye-open"></span>
-                                </a>
-                                <a class="btn btn-danger" title="Видалити запис" href="@Url.Action("Delete", "ShoppingCart", new { id = item.ShopCartId })">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            @using (Html.BeginForm("CreateOrderConfirm", "Order", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                for (var order = 0; order < Model.Count; order++)
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h1 class="panel-title">@Model[order].Product.Name x @Model[order].Amount</h1>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-4 product-block">
+                                <div class='container-fluid product-image-block'>
+                                    <img src='/Content/category-icon-png.png' />
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class=''>
+                                    <h4 class="">@Html.DisplayNameFor(model => Model[order].FullPrice): @Model[order].FullPrice</h4>
+                                </div>
+                                <div class="">
+                                    @Html.DisplayNameFor(model => Model[order].ShippingAddress)
+                                    @Html.EditorFor(model => Model[order].ShippingAddress, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                                    @Html.HiddenFor(model => Model[order].ProductId)
+                                </div>
+                                <hr />
+                                <div class=''>
+                                    <h4 class="">@Html.DisplayNameFor(model => Model[order].Product.Description)</h4>
+                                    <h5>@Model[order].Product.Description</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                }
+                <button type="submit" class="btn btn-success">Оформити замовлення</button>
+            }
         </div>
     </div>
 </div>
-<div class="clearfix"></div>*@
+<div class="clearfix"></div>

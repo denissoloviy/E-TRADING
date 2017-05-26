@@ -6,10 +6,8 @@ using E_TRADING.Data.Entities;
 using E_TRADING.Data.Managers;
 using E_TRADING.Data.Repositories;
 using Microsoft.AspNet.Identity;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace E_TRADING.Controllers
@@ -41,12 +39,14 @@ namespace E_TRADING.Controllers
         [Authorize(Roles = UserRole.Buyer + "," + UserRole.Seller)]
         public ActionResult ActiveOrders()
         {
+            ViewBag.Title = "Активні замовлення";
             var userId = User.Identity.GetUserId();
             if (_userManager.IsInRole(userId, UserRole.Buyer))
             {
                 var buyer = _buyerRepository.FirstOrDefault(item => item.Id == userId);
                 var orders = buyer.Orders.Where(item => StatusTypes.ActiveStatuses.Contains(item.Status));
-                var res = orders.Select(item => _mapper.Map<OrderViewModel>(item));
+                var res = orders.Select(item => _mapper.Map<OrderViewModel>(item)).ToList();
+                ViewBag.Helper = _mapper.Map<BuyerProfileHelperViewModel>(buyer);
                 return View("../Buyer/Orders", res);
             }
             else
@@ -55,18 +55,21 @@ namespace E_TRADING.Controllers
                 var orders = seller.Products.SelectMany(item => item.Orders)
                     .Where(item => StatusTypes.ActiveStatuses.Contains(item.Status));
                 var res = orders.Select(item => _mapper.Map<OrderViewModel>(item));
+                ViewBag.Helper = _mapper.Map<SellerProfileHelperViewModel>(seller);
                 return View("../Seller/Orders", res);
             }
         }
 
         public ActionResult InactiveOrders()
         {
+            ViewBag.Title = "Архів замовлень";
             var userId = User.Identity.GetUserId();
             if (_userManager.IsInRole(userId, UserRole.Buyer))
             {
                 var buyer = _buyerRepository.FirstOrDefault(item => item.Id == userId);
                 var orders = buyer.Orders.Where(item => StatusTypes.InactiveStatuses.Contains(item.Status));
                 var res = orders.Select(item => _mapper.Map<OrderViewModel>(item));
+                ViewBag.Helper = _mapper.Map<BuyerProfileHelperViewModel>(buyer);
                 return View("../Buyer/Orders", res);
             }
             else
@@ -75,6 +78,7 @@ namespace E_TRADING.Controllers
                 var orders = seller.Products.SelectMany(item => item.Orders)
                     .Where(item => StatusTypes.InactiveStatuses.Contains(item.Status));
                 var res = orders.Select(item => _mapper.Map<OrderViewModel>(item));
+                ViewBag.Helper = _mapper.Map<SellerProfileHelperViewModel>(seller);
                 return View("../Seller/Orders", res);
             }
         }
@@ -89,42 +93,38 @@ namespace E_TRADING.Controllers
             {
                 Amount = item.Amount,
                 BuyerId = buyer.Id,
+                Buyer = buyer,
                 FullPrice = item.Amount * item.Product.Price,
                 ProductId = item.ProductId,
+                Product = item.Product,
                 ShippingAddress = buyer.User.Address,
                 Status = OrderStatus.InProccess
             }).ToList();
-            return View(orders);
-            //foreach (var item in orders)
-            //{
-            //    _orderRepository.Add(item);
-            //}
-            //_orderRepository.SaveChanges();
-            //var shopCarts = buyer.ShoppingCarts.ToList();
-            //foreach (var item in shopCarts)
-            //{
-            //    _shoppingCartRepository.Delete(item);
-            //}
-            //_shoppingCartRepository.SaveChanges();
-            //return RedirectToAction("ActiveOrders");
+            ViewBag.Helper = _mapper.Map<BuyerProfileHelperViewModel>(buyer);
+            return View("../Buyer/CreateOrder", orders);
         }
 
         [Authorize(Roles = UserRole.Buyer)]
         [HttpPost]
-        public ActionResult CreateOrderConfirm(List<Order> model)
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateOrderConfirm(List<Order> order)
         {
             var userId = User.Identity.GetUserId();
             var buyer = _buyerRepository.FirstOrDefault(item => item.Id == userId);
-            var orders = buyer.ShoppingCarts.Select(item =>
-            new Order
+            var orders = new List<Order>();
+            foreach (var item in buyer.ShoppingCarts)
             {
-                Amount = item.Amount,
-                BuyerId = buyer.Id,
-                FullPrice = item.Amount * item.Product.Price,
-                ProductId = item.ProductId,
-                ShippingAddress = buyer.User.Address,
-                Status = OrderStatus.InProccess
-            });
+                var ord = order.FirstOrDefault(m => m.ProductId == item.ProductId);
+                orders.Add(new Order
+                {
+                    Amount = item.Amount,
+                    BuyerId = buyer.Id,
+                    FullPrice = item.Amount * item.Product.Price,
+                    ProductId = item.ProductId,
+                    ShippingAddress = ord.ShippingAddress,
+                    Status = OrderStatus.InProccess
+                });
+            }
             foreach (var item in orders)
             {
                 _orderRepository.Add(item);

@@ -79,6 +79,7 @@
     <Compile Include="Models\BuyerViewModels.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\SellerViewModels.cs" />
+    <Compile Include="OrderStatuses\OrderStatusType.cs" />
     <Compile Include="OrderStatuses\OrderStatus.cs" />
     <Compile Include="OrderStatuses\StatusTypes.cs" />
     <Compile Include="UserRole.cs" />

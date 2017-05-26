@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using E_TRADING.Common.OrderStatuses;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace E_TRADING.Common.Models
 {
     public class OrderViewModel
     {
-        [DisplayName("ID")]
-        public string Id { get; set; }
+        public string Id { get; set; }        
+        public string ProductId { get; set; }
 
         [DisplayName("Ім'я")]
         public string Name { get; set; }
 
         [DisplayName("Статус замовлення")]
-        public String Status { get; set; }
+        public string Status { get; set; }
+
+        public OrderStatusType StatusType { get; set; }
 
         [DisplayName("Кількість")]
         public int Amount { get; set; }
@@ -32,10 +30,5 @@ namespace E_TRADING.Common.Models
 
         [DisplayName("Продавець")]
         public string Seller { get; set; }
-    }
-
-    public class CreateOrderViewModel
-    {
-        //public List<E_TRADING.Data.Entities.Order> Model { get; set; }
     }
 }

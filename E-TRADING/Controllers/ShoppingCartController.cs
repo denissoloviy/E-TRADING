@@ -5,10 +5,7 @@ using E_TRADING.Common.OrderStatuses;
 using E_TRADING.Data.Entities;
 using E_TRADING.Data.Repositories;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace E_TRADING.Controllers
