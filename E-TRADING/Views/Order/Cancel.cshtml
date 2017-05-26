@@ -1,0 +1,30 @@
+﻿@model E_TRADING.Common.Models.OrderViewModel
+@{
+    ViewBag.Title = "Скачування замовлення";
+}
+<div class="content">
+    <div class="">
+        <div class="panel-heading">
+            Впевнені?
+        </div>
+        <div class="panel-body">
+            Необхідно підтвердити відміну замовлення: № @Model.OrderNumberString
+            <br />
+            <div>
+                <div class=''>
+                    <h1 class="panel-title">@Html.ActionLink(Model.Name, "Index", "Product", new { id = Model.ProductId }, new { style = "color:#337ab7;" }) x @Model.Amount</h1>
+                    <h4 class="">@Html.DisplayNameFor(model => model.FullPrice): @Model.FullPrice</h4>
+                </div>
+            </div>
+            <div>
+                @using (Html.BeginForm("CancelConfirm", "Order", FormMethod.Post, new { style = "display:inline-block" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.Id)
+                    <button type="submit" class="btn btn-success">Підтвердити</button>
+                }
+                @Html.ActionLink("Назад", "ActiveOrders", "Order", new { @class = "btn btn-danger" })
+            </div>
+        </div>
+    </div>
+</div>

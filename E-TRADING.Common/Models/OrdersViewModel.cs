@@ -12,9 +12,15 @@ namespace E_TRADING.Common.Models
         public string Name { get; set; }
 
         [DisplayName("Статус замовлення")]
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
 
         public OrderStatusType StatusType { get; set; }
+
+        [DisplayName("Номер замовлення")]
+        public string OrderNumberString { get; set; }
+
+        [DisplayName("Номер накладної")]
+        public string InvoiceNumber { get; set; }
 
         [DisplayName("Кількість")]
         public int Amount { get; set; }

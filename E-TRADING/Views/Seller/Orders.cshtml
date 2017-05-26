@@ -1,49 +1,72 @@
-﻿@model E_TRADING.Common.Models.OrderViewModel
-@{
-    ViewBag.Title = "Мої товари";
-}
-@{Html.RenderPartial("_LeftMenu", Model.ProductsCount);}
+﻿@using E_TRADING.Common.Extensions
+@using E_TRADING.Common.OrderStatuses
+@model List<E_TRADING.Common.Models.OrderViewModel>
+@{Html.RenderPartial("../Seller/_LeftMenu", ViewBag.Helper as E_TRADING.Common.Models.SellerProfileHelperViewModel);}
 <div class="content">
     <div class="col-md-12">
         <h2>@ViewBag.Title</h2>
-        @Html.ActionLink("Додати товар", "AddProduct", "Product", new { }, new { @class = "btn btn-success" })
         <div>
             <hr />
-            <table class="table margin-top-10">
-                <thead>
-                    <tr>
-                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().Name)</th>
-                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().Amount)</th>
-                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().Price)</th>
-                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().AddedDate)</th>
-                        <th>@Html.DisplayNameFor(m => m.Products.FirstOrDefault().Category)</th>
-                        <th>Опції</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Products)
-                    {
-                        <tr>
-                            <td>@item.Name</td>
-                            <td>@item.Amount</td>
-                            <td>@item.Price</td>
-                            <td>@item.AddedDate</td>
-                            <td>@item.Category</td>
-                            <td>
-                                <a class="btn btn-default" title="Детальна інформація" href="@Url.Action("Index", "Product", new { id = item.Id })">
-                                    <span class="glyphicon glyphicon-eye-open"></span>
-                                </a>
-                                <a class="btn btn-default" title="Детальна інформація" href="@Url.Action("Edit", "Product", new { id = item.Id })">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </a>
-                                <a class="btn btn-danger" title="Видалити запис" href="@Url.Action("Delete", "Product", new {id = item.Id })">
+            @foreach (var order in Model)
+            {
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div style="display:inline-block;" class="panel-title">@Html.ActionLink(order.Name, "Index", "Product", new { id = order.ProductId }, new { style = "color:#337ab7;" }) x @order.Amount</div>
+                        @if (order.Status == OrderStatus.InProccess)
+                        {
+                            <div style="float:right;">
+                                <a class="btn btn-danger" title="Відмінити замовлення" href="@Url.Action("Cancel", "Order", new { id = order.Id })">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                            </div>
+                        }
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-4 product-block">
+                            <div class='container-fluid product-image-block'>
+                                <img src='/Content/category-icon-png.png' />
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class=''>
+                                <h4 class="">@Html.DisplayNameFor(model => order.FullPrice): @order.FullPrice</h4>
+                            </div>
+                            <div class="">
+                                @Html.DisplayNameFor(model => order.ShippingAddress):
+                                @Html.DisplayFor(model => order.ShippingAddress, new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <hr />
+                            <div class="">
+                                @Html.DisplayNameFor(model => order.Status):
+                                <label class="@order.StatusType.GetCssClassName()">@order.Status.GetName()</label>
+                            </div>
+                            @if (!string.IsNullOrEmpty(order.InvoiceNumber))
+                            {
+                                <div class="">
+                                    @Html.DisplayNameFor(model => order.InvoiceNumber):
+                                    @Html.DisplayFor(model => order.InvoiceNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            }
+                            @if (order.Status == OrderStatus.InProccess)
+                            {
+                                using (Html.BeginForm("Confirm", "Order", FormMethod.Post, new { style = "display:inline-block" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    var id = order.Id;
+                                    @Html.HiddenFor(model => id)
+                                    <button type="submit" class="btn btn-success">Підтвердити</button>
+                                }
+                            }
+                            @if (order.Status == OrderStatus.Paid)
+                            {
+                                @Html.ActionLink("Підтвердити відправку", "Send", "Order", new { id = order.Id }, new { @class = "btn btn-success" })
+                            }
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            }
         </div>
     </div>
 </div>

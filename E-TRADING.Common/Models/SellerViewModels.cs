@@ -52,5 +52,6 @@ namespace E_TRADING.Common.Models
         public int ProductsCount { get; set; }
         public int ActiveOrdersCount { get; set; }
         public int InactiveOrdersCount { get; set; }
+        public int ArchiveProductsCount { get; set; }
     }
 }

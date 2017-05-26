@@ -64,13 +64,21 @@ namespace E_TRADING.Controllers
             var seller = GetSeller();
             var res = new SellerProductsViewModel
             {
-                Products = seller.Products.Select(item => _mapper.Map<ProductViewModel>(item)).ToList(),
-                Helper = new SellerProfileHelperViewModel
-                {
-                    ProductsCount = seller.Products.Sum(item => item.Amount)
-                }
+                Products = seller.Products.Where(item => !item.IsDeleted).Select(item => _mapper.Map<ProductViewModel>(item)).ToList(),
+                Helper = _mapper.Map<SellerProfileHelperViewModel>(seller)
             };
             return View(res);
+        }
+
+        public ActionResult ProductsArchive()
+        {
+            var seller = GetSeller();
+            var res = new SellerProductsViewModel
+            {
+                Products = seller.Products.Where(item => item.IsDeleted || item.Amount == 0).Select(item => _mapper.Map<ProductViewModel>(item)).ToList(),
+                Helper = _mapper.Map<SellerProfileHelperViewModel>(seller)
+            };
+            return View("Products", res);
         }
 
         #region Helpers

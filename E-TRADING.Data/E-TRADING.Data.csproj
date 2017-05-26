@@ -119,6 +119,10 @@
     <Compile Include="Migrations\201705261615002_AddedIsDeletedChangedImages.Designer.cs">
       <DependentUpon>201705261615002_AddedIsDeletedChangedImages.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705261820468_AddInvoiceNumberToOrder.cs" />
+    <Compile Include="Migrations\201705261820468_AddInvoiceNumberToOrder.Designer.cs">
+      <DependentUpon>201705261820468_AddInvoiceNumberToOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AuctionRepository.cs" />
@@ -155,6 +159,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705261615002_AddedIsDeletedChangedImages.resx">
       <DependentUpon>201705261615002_AddedIsDeletedChangedImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705261820468_AddInvoiceNumberToOrder.resx">
+      <DependentUpon>201705261820468_AddInvoiceNumberToOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

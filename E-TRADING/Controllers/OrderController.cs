@@ -20,13 +20,15 @@ namespace E_TRADING.Controllers
         ISellerRepository _sellerRepository;
         IOrderRepository _orderRepository;
         IShoppingCartRepository _shoppingCartRepository;
+        IProductRepository _productRepository;
 
         public OrderController(IMapper mapper,
             ApplicationUserManager userManager,
             IBuyerRepository buyerRepository,
             ISellerRepository sellerRepository,
             IOrderRepository orderRepository,
-            IShoppingCartRepository shoppingCartRepository)
+            IShoppingCartRepository shoppingCartRepository,
+            IProductRepository productRepository)
         {
             _mapper = mapper;
             _userManager = userManager;
@@ -34,6 +36,7 @@ namespace E_TRADING.Controllers
             _sellerRepository = sellerRepository;
             _orderRepository = orderRepository;
             _shoppingCartRepository = shoppingCartRepository;
+            _productRepository = productRepository;
         }
 
         [Authorize(Roles = UserRole.Buyer + "," + UserRole.Seller)]
@@ -54,12 +57,13 @@ namespace E_TRADING.Controllers
                 var seller = _sellerRepository.FirstOrDefault(item => item.Id == userId);
                 var orders = seller.Products.SelectMany(item => item.Orders)
                     .Where(item => StatusTypes.ActiveStatuses.Contains(item.Status));
-                var res = orders.Select(item => _mapper.Map<OrderViewModel>(item));
+                var res = orders.Select(item => _mapper.Map<OrderViewModel>(item)).ToList();
                 ViewBag.Helper = _mapper.Map<SellerProfileHelperViewModel>(seller);
                 return View("../Seller/Orders", res);
             }
         }
 
+        [Authorize(Roles = UserRole.Buyer + "," + UserRole.Seller)]
         public ActionResult InactiveOrders()
         {
             ViewBag.Title = "Архів замовлень";
@@ -68,7 +72,7 @@ namespace E_TRADING.Controllers
             {
                 var buyer = _buyerRepository.FirstOrDefault(item => item.Id == userId);
                 var orders = buyer.Orders.Where(item => StatusTypes.InactiveStatuses.Contains(item.Status));
-                var res = orders.Select(item => _mapper.Map<OrderViewModel>(item));
+                var res = orders.Select(item => _mapper.Map<OrderViewModel>(item)).ToList();
                 ViewBag.Helper = _mapper.Map<BuyerProfileHelperViewModel>(buyer);
                 return View("../Buyer/Orders", res);
             }
@@ -77,14 +81,14 @@ namespace E_TRADING.Controllers
                 var seller = _sellerRepository.FirstOrDefault(item => item.Id == userId);
                 var orders = seller.Products.SelectMany(item => item.Orders)
                     .Where(item => StatusTypes.InactiveStatuses.Contains(item.Status));
-                var res = orders.Select(item => _mapper.Map<OrderViewModel>(item));
+                var res = orders.Select(item => _mapper.Map<OrderViewModel>(item)).ToList();
                 ViewBag.Helper = _mapper.Map<SellerProfileHelperViewModel>(seller);
                 return View("../Seller/Orders", res);
             }
         }
 
         [Authorize(Roles = UserRole.Buyer)]
-        public ActionResult CreateOrder()
+        public ActionResult Create()
         {
             var userId = User.Identity.GetUserId();
             var buyer = _buyerRepository.FirstOrDefault(item => item.Id == userId);
@@ -105,9 +109,9 @@ namespace E_TRADING.Controllers
         }
 
         [Authorize(Roles = UserRole.Buyer)]
-        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateOrderConfirm(List<Order> order)
+        [HttpPost]
+        public ActionResult CreateConfirm(List<Order> order)
         {
             var userId = User.Identity.GetUserId();
             var buyer = _buyerRepository.FirstOrDefault(item => item.Id == userId);
@@ -124,7 +128,10 @@ namespace E_TRADING.Controllers
                     ShippingAddress = ord.ShippingAddress,
                     Status = OrderStatus.InProccess
                 });
+                var product = _productRepository.Find(item.ProductId);
+                product.Amount -= item.Amount;
             }
+            _productRepository.SaveChanges();
             foreach (var item in orders)
             {
                 _orderRepository.Add(item);
@@ -139,6 +146,126 @@ namespace E_TRADING.Controllers
             return RedirectToAction("ActiveOrders");
         }
 
+        [Authorize(Roles = UserRole.Seller)]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult Confirm(string id)
+        {
+            var order = _orderRepository.Find(id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            order.Status = OrderStatus.NeedToPay;
+            _orderRepository.SaveChanges();
+            return RedirectToAction("ActiveOrders");
+        }
+
+        [Authorize(Roles = UserRole.Buyer)]
+        public ActionResult Pay(string id)
+        {
+            var order = _orderRepository.Find(id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            return RedirectToAction("PayConfirm", new { id = id });
+        }
+
+        [Authorize(Roles = UserRole.Buyer)]
+        public ActionResult PayConfirm(string id)
+        {
+            var order = _orderRepository.Find(id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            order.Status = OrderStatus.Paid;
+            _orderRepository.SaveChanges();
+            return RedirectToAction("ActiveOrders");
+        }
+
+        [Authorize(Roles = UserRole.Seller)]
+        public ActionResult Send(string id)
+        {
+            var order = _orderRepository.Find(id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            var model = _mapper.Map<OrderViewModel>(order);
+            return View(model);
+        }
+
+        [Authorize(Roles = UserRole.Seller)]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult SendConfirm([System.Web.Http.FromBody]string id, [System.Web.Http.FromBody]string invoiceNumber)
+        {
+            var order = _orderRepository.Find(id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            order.Status = OrderStatus.InShipping;
+            order.InvoiceNumber = invoiceNumber;
+            _orderRepository.SaveChanges();
+            return RedirectToAction("ActiveOrders");
+        }
+
+        [Authorize(Roles = UserRole.Buyer)]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult DeliveryConfirm(string id)
+        {
+            var order = _orderRepository.Find(id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            order.Status = OrderStatus.Successful;
+            _orderRepository.SaveChanges();
+            return RedirectToAction("InactiveOrders");
+        }
+
+        [Authorize(Roles = UserRole.Buyer + "," + UserRole.Seller)]
+        public ActionResult Cancel(string id)
+        {
+            var order = _orderRepository.Find(id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            var model = _mapper.Map<OrderViewModel>(order);
+            return View(model);
+        }
+
+        [Authorize(Roles = UserRole.Buyer + "," + UserRole.Seller)]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult CancelConfirm(string id)
+        {
+            var order = _orderRepository.Find(id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            var userId = User.Identity.GetUserId();
+            if (_userManager.IsInRole(userId, UserRole.Buyer))
+            {
+                order.Status = OrderStatus.CanceledByBuyer;
+            }
+            else
+            {
+                order.Status = OrderStatus.CanceledBySeller;
+            }
+            _orderRepository.SaveChanges();
+            var product = _productRepository.Find(order.ProductId);
+            product.Amount += order.Amount;
+            _productRepository.SaveChanges();
+
+            return RedirectToAction("InactiveOrders");
+        }
 
         #region Helpers
 

@@ -1,0 +1,37 @@
+﻿@model E_TRADING.Common.Models.OrderViewModel
+@{
+    ViewBag.Title = "Відправка замовлення";
+}
+<div class="content">
+    <div class="">
+        <div class="panel-heading">
+            Впевнені?
+        </div>
+        <div class="panel-body">
+            Необхідно підтвердити відправку замовлення: № @Model.OrderNumberString
+            <div>
+                <div class=''>
+                    <h1 class="panel-title">@Html.ActionLink(Model.Name, "Index", "Product", new { id = Model.ProductId }, new { style = "color:#337ab7;" }) x @Model.Amount</h1>
+                    <h4 class="">@Html.DisplayNameFor(model => model.FullPrice): @Model.FullPrice</h4>
+                </div>
+                <hr />
+            </div>
+            @using (Html.BeginForm("SendConfirm", "Order", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-md-8">
+                    <div class=''>
+                        @Html.DisplayNameFor(model => model.InvoiceNumber)
+                        @Html.EditorFor(model => model.InvoiceNumber, new { htmlAttributes = new { @class = "form-control", required = "required", onkeypress = "return event.charCode >= 48 && event.charCode <= 57" } })
+                        @Html.HiddenFor(model => model.Id)
+                    </div>
+                    <br />
+                </div>
+                <div class="col-md-8">
+                    <button type="submit" class="btn btn-success">Підтвердити</button>
+                    @Html.ActionLink("Назад", "ActiveOrders", "Order", new { @class = "btn btn-danger" })
+                </div>
+            }
+        </div>
+    </div>
+</div>

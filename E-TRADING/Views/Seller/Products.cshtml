@@ -1,8 +1,8 @@
-﻿@model E_TRADING.Common.Models.ProductsViewModel
+﻿@model E_TRADING.Common.Models.SellerProductsViewModel
 @{
     ViewBag.Title = "Мої товари";
 }
-@{Html.RenderPartial("_LeftMenu", Model.ProductsCount);}
+@{Html.RenderPartial("_LeftMenu", Model.Helper);}
 <div class="content">
     <div class="col-md-12">
         <h2>@ViewBag.Title</h2>
@@ -33,10 +33,10 @@
                                 <a class="btn btn-default" title="Детальна інформація" href="@Url.Action("Index", "Product", new { id = item.Id })">
                                     <span class="glyphicon glyphicon-eye-open"></span>
                                 </a>
-                                <a class="btn btn-default" title="Детальна інформація" href="@Url.Action("Edit", "Product", new { id = item.Id })">
+                                <a class="btn btn-default" title="Редагувати" href="@Url.Action("Edit", "Product", new { id = item.Id })">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
-                                <a class="btn btn-danger" title="Видалити запис" href="@Url.Action("Delete", "Product", new {id = item.Id })">
+                                <a class="btn btn-danger" title="Видалити запис" href="@Url.Action("Delete", "Product", new { id = item.Id })">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </a>
                             </td>

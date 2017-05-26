@@ -9,7 +9,7 @@
         @Html.ActionLink("Скасувати", "Index", "ShoppingCart", new { }, new { @class = "btn btn-danger" })
         <div>
             <hr />
-            @using (Html.BeginForm("CreateOrderConfirm", "Order", FormMethod.Post))
+            @using (Html.BeginForm("CreateConfirm", "Order", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
                 for (var order = 0; order < Model.Count; order++)

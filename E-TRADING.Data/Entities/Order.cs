@@ -20,14 +20,17 @@ namespace E_TRADING.Data.Entities
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Адреса доставки")]
         public string ShippingAddress { get; set; }
-        
+
         [DisplayName("Номер замовлення")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderNumber { get; set; }
 
         [NotMapped]
         [DisplayName("Номер замовлення")]
-        public string OrderNumberString {get{return OrderNumber.ToString("D8");}}
+        public string OrderNumberString { get { return OrderNumber.ToString("D8"); } }
+        
+        [DisplayName("Номер накладної")]
+        public string InvoiceNumber { get; set; }
 
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Товар")]

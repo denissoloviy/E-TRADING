@@ -1,4 +1,5 @@
 ﻿@using E_TRADING.Common.Extensions
+@using E_TRADING.Common.OrderStatuses
 @model List<E_TRADING.Common.Models.OrderViewModel>
 @{Html.RenderPartial("../Buyer/_LeftMenu", ViewBag.Helper as E_TRADING.Common.Models.BuyerProfileHelperViewModel);}
 <div class="content">
@@ -10,7 +11,16 @@
             {
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h1 class="panel-title">@Html.ActionLink(order.Name, "Index", "Product", new { id = order.ProductId }, new { style = "color:#337ab7;" }) x @order.Amount</h1>
+                        <div style="display:inline-block;" class="panel-title">@Html.ActionLink(order.Name, "Index", "Product", new { id = order.ProductId }, new { style = "color:#337ab7;" }) x @order.Amount</div>
+                        @if (order.Status == OrderStatus.InProccess || order.Status == OrderStatus.NeedToPay)
+                        {
+                            <div style="float:right;">
+                                <a class="btn btn-danger" title="Відмінити замовлення" href="@Url.Action("Cancel", "Order", new { id = order.Id })">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                            </div>
+                        }
+                        <div class="clearfix"></div>
                     </div>
                     <div class="panel-body">
                         <div class="col-md-4 product-block">
@@ -29,8 +39,29 @@
                             <hr />
                             <div class="">
                                 @Html.DisplayNameFor(model => order.Status):
-                                <label class="@order.StatusType.GetCssClassName()">@order.Status</label>
+                                <label class="@order.StatusType.GetCssClassName()">@order.Status.GetName()</label>
                             </div>
+                            @if (!string.IsNullOrEmpty(order.InvoiceNumber))
+                            {
+                                <div class="">
+                                    @Html.DisplayNameFor(model => order.InvoiceNumber):
+                                    @Html.DisplayFor(model => order.InvoiceNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            }
+                            @if (order.Status == OrderStatus.NeedToPay)
+                            {
+                                @Html.ActionLink("Оплатити", "Pay", "Order", new { id = order.Id }, new { @class = "btn btn-success" })
+                            }
+                            @if (order.Status == OrderStatus.InShipping)
+                            {
+                                using (Html.BeginForm("DeliveryConfirm", "Order", FormMethod.Post, new { style = "display:inline-block" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    var id = order.Id;
+                                    @Html.HiddenFor(model => id)
+                                    <button type="submit" class="btn btn-success">Підтвердити отримання</button>
+                                }
+                            }
                         </div>
                     </div>
                 </div>
@@ -38,6 +69,5 @@
             }
         </div>
     </div>
-
 </div>
 <div class="clearfix"></div>

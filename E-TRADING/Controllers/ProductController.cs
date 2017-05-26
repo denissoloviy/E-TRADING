@@ -82,6 +82,13 @@ namespace E_TRADING.Controllers
 
             return RedirectToAction("UploadImages");
         }
+        
+        public ActionResult Delete(string id)
+        {
+            _productRepository.Delete(id);
+            _productRepository.SaveChanges();
+            return RedirectToAction("Products", "Seller");
+        }
 
         //[HttpPost]
         //[Authorize(Roles =UserRole.Seller)]

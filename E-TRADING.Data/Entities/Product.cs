@@ -47,7 +47,7 @@ namespace E_TRADING.Data.Entities
         [DisplayName("Замовлення")]
         public virtual ICollection<Order> Orders { get; set; }
         [DisplayName("Зображення")]
-        public  virtual ICollection<Image> Images { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
 
         public bool IsDeleted { get; set; }
     }

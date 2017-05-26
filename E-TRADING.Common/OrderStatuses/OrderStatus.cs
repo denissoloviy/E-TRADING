@@ -35,9 +35,9 @@ namespace E_TRADING.Common.OrderStatuses
         InProccess = 104,
 
         /// <summary>
-        /// Замовлення потребує оплати
+        /// Підтверджено продавцем, очікування оплати
         /// </summary>
-        [Display(Name = "Замовлення потребує оплати")]
+        [Display(Name = "Підтверджено продавцем, очікування оплати")]
         NeedToPay = 105,
 
         /// <summary>
