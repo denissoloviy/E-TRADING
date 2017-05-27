@@ -252,6 +252,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\category-icon-png.png" />
     <Content Include="Content\cross-icon.png" />
+    <Content Include="Content\no_available_image.png" />
     <Content Include="Content\search-icon-png.png" />
     <Content Include="Scripts\search.js" />
     <Content Include="Content\styles.css" />

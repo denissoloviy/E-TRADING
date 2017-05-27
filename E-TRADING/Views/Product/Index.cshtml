@@ -11,12 +11,27 @@
             <h1 class="panel-title">@Model.Name</h1>
         </div>
         <div class="panel-body">
-            <div class="col-md-4 product-block">
-                <div class='container-fluid product-image-block'>
-                    <img src='/Content/category-icon-png.png' />
+            <div class="col-md-5 product-block">
+                <div class='product-image-block jumbotron container-fluid' style="padding:15px 0">
+                    @if (Model.Images.Count > 0)
+                    {
+                        <div class="col-md-3">
+                            @foreach (var imageLink in Model.Images)
+                            {
+                                <img class="small-img" onclick="ChangeImage(event)" style="width:60px; padding-bottom: 10px" src="@imageLink" />
+                            }
+                        </div>
+                        <div class="col-md-9">
+                            <img id="main-img" style="max-width:285px" src="@Model.Images.FirstOrDefault()" />
+                        </div>
+                    }
+                    else
+                    {
+                        <img  src="~/Content/no_available_image.png" />
+                    }
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-7">
                 <div class=''>
                     <h2 class="">@Model.Name  <span class="label label-primary">@Model.Amount залишилось!</span></h2>
                 </div>
@@ -28,11 +43,11 @@
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(model => model.Id)
-                        <input class="form-control input" type="number" 
-                               onkeypress="return event.charCode >= 48 && event.charCode <= 57" 
-                               placeholder="@Html.DisplayNameFor(model => model.Amount)" 
+                        <input class="form-control input" type="number"
+                               onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                               placeholder="@Html.DisplayNameFor(model => model.Amount)"
                                max="@Model.Amount" min="1" name="Amount" />
-                        <button type="submit" class="form-control btn btn-success" style="margin-top: 10px">Додати в кошик</button>
+                            <button type="submit" class="form-control btn btn-success" style="margin-top: 10px">Додати в кошик</button>
                     }
                 </div>
                 <hr />
@@ -50,6 +65,8 @@
     @Html.ActionLink("На головну", "Index", "Home")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+<script>
+    function ChangeImage(event) {
+        $("#main-img").attr("src", $(event.target).attr("src"));
+    }
+</script>

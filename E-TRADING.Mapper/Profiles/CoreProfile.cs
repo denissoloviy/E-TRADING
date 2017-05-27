@@ -15,7 +15,8 @@ namespace E_TRADING.Mapper.Profiles
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name))
                 .ForMember(dest => dest.SellerId, opt => opt.MapFrom(src => src.SellerId))
                 .ForMember(dest => dest.SellerName, opt => opt.MapFrom(src => src.Seller.Alias))
-                .ForMember(dest => dest.AddedDate, opt => opt.MapFrom(src => src.AddedDate.DateTimeToFormatString()));
+                .ForMember(dest => dest.AddedDate, opt => opt.MapFrom(src => src.AddedDate.DateTimeToFormatString()))
+                .ForMember(dest => dest.Images, opt => opt.Ignore());
 
             CreateMap<ShoppingCart, ProductViewModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Product.Id))

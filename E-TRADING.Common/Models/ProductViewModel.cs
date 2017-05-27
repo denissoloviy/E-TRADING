@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace E_TRADING.Common.Models
@@ -15,9 +16,6 @@ namespace E_TRADING.Common.Models
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Опис")]
         public string Description { get; set; }
-
-        [DisplayName("Картинка")]
-        public string Image { get; set; }
 
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Кількість")]
@@ -36,5 +34,12 @@ namespace E_TRADING.Common.Models
 
         public string SellerId { get; set; }
         public string SellerName { get; set; }
+
+        public List<string> Images { get; set; }
+
+        public ProductViewModel()
+        {
+            Images = new List<string>();
+        }
     }
 }

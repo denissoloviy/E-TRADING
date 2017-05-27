@@ -35,10 +35,13 @@ namespace E_TRADING.Controllers
             var product = _productRepository.FirstOrDefault(p => p.Id == id);
             if (product == null)
             {
-                return HttpNotFound("Product was not found");
+                return HttpNotFound("Product was not found"); 
             }
+            var productModel = _mapper.Map<ProductViewModel>(product);
+            foreach (var img in product.Images)
+                productModel.Images.Add(@"/Content/ProductImages/" + img.Id + img.Extention);
 
-            return View(_mapper.Map<ProductViewModel>(product));
+            return View(productModel);
         }
 
         [HttpPost]
@@ -123,6 +126,9 @@ namespace E_TRADING.Controllers
                 return RedirectToAction("UploadImages", new { id = id });
 
             var product = _productRepository.FirstOrDefault(p => p.Id == id);
+
+            if(product.Images.Count > 5)
+                return RedirectToAction("UploadImages", new { id = id });
 
             var img = new Image()
             {
