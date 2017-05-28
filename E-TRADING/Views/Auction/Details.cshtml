@@ -1,0 +1,92 @@
+﻿@model E_TRADING.Common.Models.AuctionViewModel
+
+@{
+    ViewBag.Title = Model.Product.Name;
+}
+
+<h2></h2>
+<div class='container-fluid '>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">@Model.Product.Name</h1>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-5 product-block">
+                <div class='product-image-block jumbotron container-fluid' style="padding:15px 0">
+                    @if (Model.Product.Images.Count > 0)
+                    {
+                        <div class="col-md-3">
+                            @foreach (var imageLink in Model.Product.Images)
+                            {
+                                <img class="small-img" onclick="ChangeImage(event)" style="width:60px; padding-bottom: 10px" src="@imageLink" />
+                            }
+                        </div>
+                        <div class="col-md-9">
+                            <img id="main-img" style="max-width:285px" src="@Model.Product.Images.FirstOrDefault()" />
+                        </div>
+                    }
+                    else
+                    {
+                        <img src="~/Content/no_available_image.png" />
+                    }
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class=''>
+                    <h2 class="">@Model.Product.Name  <span class="label label-primary">@Model.Product.Amount</span></h2>
+                </div>
+                @if (!Model.IsStarted)
+                {
+                    <h4>Початок аукціону: @Model.DateStart. Кінець: @Model.DateEnd</h4>
+                }
+                else
+                {
+                    <div>
+                        @if (ViewBag.Errors != null)
+                        {
+                            <label class="text-danger">@ViewBag.Errors</label>
+                            <br />
+                        }
+                        Остання ставка: @Model.LastBid
+                        <br />
+                        Мінімальний крок: @Model.MinStep
+                        <br />
+                        @using (Html.BeginForm("Bid", "Auction", FormMethod.Post, new { @class = "form-horizontal", id = "bidForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => model.Id)
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                            <input class="form-control input" type="number"
+                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                   placeholder="Введіть вашу ставку" value="@(Model.LastBid + Model.MinStep)"
+                                   min="@(Model.LastBid + Model.MinStep)" name="NewBid" id="NewBid" />
+                            <button type="submit" class="btn btn-success" style="margin-top: 10px">Зробити ставку</button>
+                            <button type="button" onclick="BidMinimalStep();" class="btn btn-success" style="margin-top: 10px">Поставити @(Model.LastBid + Model.MinStep)</button>
+                            <script>
+                                function BidMinimalStep() {
+                                    var bid = @(Model.LastBid + Model.MinStep);
+                                    $("#NewBid").attr("value", bid);
+                                    $("#bidForm").submit();
+                                }
+                            </script>
+                        }
+                    </div>
+                }
+                <hr />
+                <div class=''>
+                    <h4 class="">@Html.DisplayNameFor(model => model.Product.Description)</h4>
+                    <h5>@Model.Product.Description</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("На головну", "Index", "Home")
+</div>
+
+<script>
+    function ChangeImage(event) {
+        $("#main-img").attr("src", $(event.target).attr("src"));
+    }
+</script>

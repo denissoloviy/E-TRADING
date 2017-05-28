@@ -18,21 +18,33 @@ namespace E_TRADING.Controllers
         IProductRepository _productRepository;
         ICategoryRepository _categoryRepository;
         IImageRepository _imageRepository;
+        IAuctionRepository _auctionRepository;
 
         public ProductController(IMapper mapper,
             IProductRepository productRepository,
             ICategoryRepository categoryRepository,
-            IImageRepository imageRepository)
+            IImageRepository imageRepository,
+            IAuctionRepository auctionRepository)
         {
             _mapper = mapper;
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
             _imageRepository = imageRepository;
+            _auctionRepository = auctionRepository;
         }
-        // GET: Product
+
         public ActionResult Index(string id)
         {
-            var product = _productRepository.FirstOrDefault(p => p.Id == id);
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            var auction = _auctionRepository.Find(id);
+            if (auction != null)
+            {
+                return RedirectToAction("Details", "Auction", new { id = id });
+            }
+            var product = _productRepository.Find(id);
             if (product == null)
             {
                 return HttpNotFound("Product was not found"); 

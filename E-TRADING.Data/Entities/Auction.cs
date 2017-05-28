@@ -13,15 +13,21 @@ namespace E_TRADING.Data.Entities
 
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Час старту аукціону")]
+        [DataType(DataType.DateTime)]
         public DateTime DateStart { get; set; }
 
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Час завершення аукціону")]
+        [DataType(DataType.DateTime)]
         public DateTime DateEnd { get; set; }
 
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [DisplayName("Мінімальний крок")]
         public decimal MinStep { get; set; }
+
+        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
+        [DisplayName("Початкова ціна")]
+        public decimal StartPrice { get; set; }
 
         [DisplayName("Остання ставка")]
         public decimal LastBid { get; set; }

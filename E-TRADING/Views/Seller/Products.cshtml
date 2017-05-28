@@ -36,6 +36,9 @@
                                 <a class="btn btn-default" title="Редагувати" href="@Url.Action("Edit", "Product", new { id = item.Id })">
                                     <span class="glyphicon glyphicon-pencil"></span>
                                 </a>
+                                <a class="btn btn-default" title="Створити аукціон" href="@Url.Action("Create", "Auction", new { id = item.Id })">
+                                    <span class="glyphicon glyphicon-hand-up"></span>
+                                </a>
                                 <a class="btn btn-danger" title="Видалити запис" href="@Url.Action("Delete", "Product", new { id = item.Id })">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </a>

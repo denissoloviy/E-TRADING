@@ -5,8 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - E-TRADING</title>
     @Styles.Render("~/Content/css")
+    <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />
     @Scripts.Render("~/bundles/modernizr")
 
+    @Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript" src="/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="/Scripts/moment-with-locales.min.js"></script>
+    @Scripts.Render("~/bundles/bootstrap")
+    <script type="text/javascript" src="/Scripts/bootstrap-datetimepicker.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -36,8 +42,6 @@
             <p>&copy; @DateTime.Now.Year - E-TRADING</p>
         </footer>
     </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/Search")
     @RenderSection("scripts", required: false)
 </body>

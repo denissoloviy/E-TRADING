@@ -1,0 +1,53 @@
+﻿@model List<E_TRADING.Common.Models.AuctionViewModel>
+@{
+    ViewBag.Title = "Мої аукціони";
+}
+@{Html.RenderPartial("../Seller/_LeftMenu", ViewBag.Helper as E_TRADING.Common.Models.SellerProfileHelperViewModel);}
+<div class="">
+    <div class="col-md-12">
+        <h2>@ViewBag.Title</h2>
+        <div>
+            <hr />
+            <table class="table margin-top-10">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(m => m.FirstOrDefault().ProductName)</th>
+                        <th>@Html.DisplayNameFor(m => m.FirstOrDefault().DateStart)</th>
+                        <th>@Html.DisplayNameFor(m => m.FirstOrDefault().DateEnd)</th>
+                        <th>@Html.DisplayNameFor(m => m.FirstOrDefault().StartPrice)</th>
+                        <th>@Html.DisplayNameFor(m => m.FirstOrDefault().MinStep)</th>
+                        <th>@Html.DisplayNameFor(m => m.FirstOrDefault().LastBid)</th>
+                        <th>@Html.DisplayNameFor(m => m.FirstOrDefault().BuyerName)</th>
+                        <th>Опції</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(item.ProductName, "Index", "Product", new { id = item.Id }, new { })</td>
+                            <td>@item.DateStart</td>
+                            <td>@item.DateEnd</td>
+                            <td>@item.StartPrice</td>
+                            <td>@item.MinStep</td>
+                            <td>@item.LastBid</td>
+                            <td>@item.BuyerName</td>
+                            <td>
+                                <a class="btn btn-default" title="Детальна інформація" href="@Url.Action("Details", "Auction", new { id = item.Id })">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </a>
+                                <a class="btn btn-default" title="Редагувати" href="@Url.Action("Edit", "Auction", new { id = item.Id })">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </a>
+                                <a class="btn btn-danger" title="Видалити запис" href="@Url.Action("Delete", "Auction", new { id = item.Id })">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
