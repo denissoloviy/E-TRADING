@@ -21,7 +21,18 @@
                         <div class="panel-body">
                             <div class="col-md-4 product-block">
                                 <div class='container-fluid product-image-block'>
-                                    <img style="width:230px" src='@Url.Content(order.MainImage)' />
+                                    @{
+                                        if (Model[order].Product.Images.Count > 0)
+                                        {
+                                            var minIndex = Model[order].Product.Images.Select(i => i.Index).Min();
+                                            var img = Model[order].Product.Images.FirstOrDefault(i => i.Index == minIndex);
+                                            <img style="width:100%;" src="@Url.Content("/Content/ProductImages/" + img.Id + img.Extention)" />
+                                        }
+                                        else
+                                        {
+                                            <img style="width:100%;" src="~/Content/no_available_image.png" />
+                                        }
+                                    }
                                 </div>
                             </div>
                             <div class="col-md-8">
