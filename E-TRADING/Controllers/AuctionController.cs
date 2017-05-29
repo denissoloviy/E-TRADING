@@ -108,13 +108,76 @@ namespace E_TRADING.Controllers
             _auctionRepository.SaveChanges();
             return RedirectToAction("Index");
         }
+        
+        [Authorize(Roles = UserRole.Seller)]
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            var auction = _auctionRepository.Find(id);
+            if (auction == null)
+            {
+                return HttpNotFound();
+            }
+            var isStarted = auction.DateStart.ConvertToUtcFromSiteTimeZone() <= DateTime.UtcNow;
+            if (isStarted)
+            {
+                TempData["Errors"] = "Аукціон розпочато, видалення неможливе";
+                return RedirectToAction("Details", new { id = id });
+            }
+            var res = _mapper.Map<AuctionViewModel>(auction);
+            res.IsStarted = isStarted;
+            var product = _productRepository.FirstOrDefault(p => p.Id == id);
+            res.Product = _mapper.Map<ProductViewModel>(product);
+            foreach (var img in product.Images)
+            {
+                res.Product.Images.Add(@"/Content/ProductImages/" + img.Id + img.Extention);
+            }
+            return View(res);
+        }
+
+        [Authorize(Roles = UserRole.Seller)]
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirm(string id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            var auction = _auctionRepository.Find(id);
+            if (auction == null)
+            {
+                return HttpNotFound();
+            }
+            var isStarted = auction.DateStart.ConvertToUtcFromSiteTimeZone() <= DateTime.UtcNow;
+            if (isStarted)
+            {
+                TempData["Errors"] = "Аукціон розпочато, видалення неможливе";
+                return RedirectToAction("Details", new { id = id });
+            }
+            _auctionRepository.Delete(auction);
+            _auctionRepository.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         [Authorize(Roles = UserRole.Seller + "," + UserRole.Buyer)]
         public ActionResult Details(string id)
         {
-            var auction = _auctionRepository.FirstOrDefault(item => item.Id == id);
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            var auction = _auctionRepository.Find(id);
+            if (auction == null)
+            {
+                return HttpNotFound();
+            }
             var res = _mapper.Map<AuctionViewModel>(auction);
-            res.IsStarted = auction.DateStart.ConvertToUtcFromSiteTimeZone() == DateTime.UtcNow;
+            res.IsStarted = auction.DateStart.ConvertToUtcFromSiteTimeZone() >= DateTime.UtcNow;
             var product = _productRepository.FirstOrDefault(p => p.Id == id);
             res.Product = _mapper.Map<ProductViewModel>(product);
             foreach (var img in product.Images)

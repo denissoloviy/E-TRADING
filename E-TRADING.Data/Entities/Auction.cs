@@ -41,8 +41,7 @@ namespace E_TRADING.Data.Entities
 
         [DisplayName("Товар")]
         public virtual Product Product { get; set; }
-
-        public bool IsArchived { get; set; }
+        
         public bool IsFinished { get; set; }
     }
 }
