@@ -131,6 +131,10 @@
     <Compile Include="Migrations\201705281610351_AddStartPriceToAuctionTable.Designer.cs">
       <DependentUpon>201705281610351_AddStartPriceToAuctionTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705291815513_FixedFieldsInAuction.cs" />
+    <Compile Include="Migrations\201705291815513_FixedFieldsInAuction.Designer.cs">
+      <DependentUpon>201705291815513_FixedFieldsInAuction.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AuctionRepository.cs" />
@@ -176,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705281610351_AddStartPriceToAuctionTable.resx">
       <DependentUpon>201705281610351_AddStartPriceToAuctionTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705291815513_FixedFieldsInAuction.resx">
+      <DependentUpon>201705291815513_FixedFieldsInAuction.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

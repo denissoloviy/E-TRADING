@@ -36,7 +36,7 @@ namespace E_TRADING.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
-            var auctions = _auctionRepository.FindBy(item => !item.IsDeleted && item.Product.Seller.User.Id == userId).ToList();
+            var auctions = _auctionRepository.FindBy(item => item.Product.Seller.User.Id == userId).ToList();
             var res = auctions.Select(item => _mapper.Map<AuctionViewModel>(item)).ToList();
             var seller = _sellerRepository.FirstOrDefault(item => item.Id == userId);
             ViewBag.Helper = _mapper.Map<SellerProfileHelperViewModel>(seller);

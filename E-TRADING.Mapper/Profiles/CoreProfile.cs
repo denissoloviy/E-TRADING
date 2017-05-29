@@ -50,7 +50,7 @@ namespace E_TRADING.Mapper.Profiles
             CreateMap<Seller, SellerProfileHelperViewModel>()
                 .ForMember(dest => dest.ProductsCount, opt => opt.MapFrom(src => src.Products.Where(item => !item.IsDeleted).Sum(item => item.Amount)))
                 .ForMember(dest => dest.ActiveAuctionsCount, opt => opt.MapFrom(src => src.Products
-                    .Where(item => !item.IsDeleted && context.Auctions.Any(au => au.Id == item.Id && !au.IsDeleted)).Count()))
+                    .Where(item => !item.IsDeleted && context.Auctions.Any(au => au.Id == item.Id)).Count()))
                 .ForMember(dest => dest.ActiveOrdersCount, opt => opt.MapFrom(src => src.Products.SelectMany(item => item.Orders)
                     .Where(item => StatusTypes.ActiveStatuses.Contains(item.Status)).Sum(item => item.Amount)))
                 .ForMember(dest => dest.InactiveOrdersCount, opt => opt.MapFrom(src => src.Products.SelectMany(item => item.Orders)
