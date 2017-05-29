@@ -37,7 +37,8 @@ namespace E_TRADING.Mapper.Profiles
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Product.Category.Name))
                 .ForMember(dest => dest.SellerId, opt => opt.MapFrom(src => src.Product.SellerId))
                 .ForMember(dest => dest.SellerName, opt => opt.MapFrom(src => src.Product.Seller.Alias))
-                .ForMember(dest => dest.AddedDate, opt => opt.MapFrom(src => src.AddedDate.DateTimeToFormatString()));
+                .ForMember(dest => dest.AddedDate, opt => opt.MapFrom(src => src.AddedDate.DateTimeToFormatString()))
+                .ForMember(dest => dest.MainImage, opt => opt.Ignore());
 
             CreateMap<Buyer, BuyerProfileHelperViewModel>()
                 .ForMember(dest => dest.ActiveOrdersCount, opt => opt.MapFrom(src =>

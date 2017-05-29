@@ -33,7 +33,18 @@
             {
                 <div class='col-lg-3 product-block-single'>
                     <div class='col-lg-12 product-image-block'>
-                        <img src='/Content/category-icon-png.png' />
+                        @{
+                            if (item.Images.Count > 0)
+                            {
+                                var minIndex = item.Images.Select(i => i.Index).Min();
+                                var img = item.Images.FirstOrDefault(i => i.Index == minIndex);
+                                <img style="width:100%;" src="@Url.Content("/Content/ProductImages/" + img.Id + img.Extention)" />
+                            }
+                            else
+                            {
+                                <img style="width:100%;" src="~/Content/no_available_image.png" />
+                            }
+                        }
                     </div>
                     <div class='col-lg-12 product-small-description'>
                         @Html.ActionLink(item.Name, "Index", "Product", new { id = item.Id }, new { @class = "product-link" })
