@@ -70,7 +70,8 @@ namespace E_TRADING.Mapper.Profiles
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Product.Name))
                 .ForMember(dest => dest.StatusType, opt => opt.MapFrom(src => src.Status.GetStatusType()))
                 .ForMember(dest => dest.Buyer, opt => opt.MapFrom(src => src.Buyer.User.UserName))
-                .ForMember(dest => dest.Seller, opt => opt.MapFrom(src => src.Product.Seller.User.UserName));
+                .ForMember(dest => dest.Seller, opt => opt.MapFrom(src => src.Product.Seller.User.UserName))
+                .ForMember(dest => dest.MainImage, opt => opt.Ignore());
 
             CreateMap<Buyer, BuyerViewEditViewModel>()
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.User.Address))
