@@ -23,8 +23,8 @@ namespace E_TRADING.Mapper.Profiles
 
             CreateMap<Auction, AuctionViewModel>()
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name))
-                .ForMember(dest => dest.DateStart, opt => opt.MapFrom(src => src.DateStart.DateTimeToFormatString()))
-                .ForMember(dest => dest.DateEnd, opt => opt.MapFrom(src => src.DateEnd.DateTimeToFormatString()))
+                .ForMember(dest => dest.DateStart, opt => opt.MapFrom(src => src.DateStart.ConvertToSiteZoneFromUtc().DateTimeToFormatString()))
+                .ForMember(dest => dest.DateEnd, opt => opt.MapFrom(src => src.DateEnd.ConvertToSiteZoneFromUtc().DateTimeToFormatString()))
                 .ForMember(dest => dest.BuyerName, opt => opt.MapFrom(src => src.LastBuyer.User.UserName));
 
             CreateMap<ShoppingCart, ProductViewModel>()

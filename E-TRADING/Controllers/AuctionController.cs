@@ -75,6 +75,9 @@ namespace E_TRADING.Controllers
             {
                 return View(model);
             }
+            model.DateStart = model.DateStart.ConvertToUtcFromSiteTimeZone();
+            model.DateEnd = model.DateEnd.ConvertToUtcFromSiteTimeZone();
+            model.LastBid = model.StartPrice;
             _auctionRepository.Add(model);
             _auctionRepository.SaveChanges();
             return RedirectToAction("Index");
@@ -92,6 +95,8 @@ namespace E_TRADING.Controllers
             {
                 return HttpNotFound();
             }
+            auction.DateStart = auction.DateStart.ConvertToSiteZoneFromUtc();
+            auction.DateEnd = auction.DateEnd.ConvertToSiteZoneFromUtc();
             ViewBag.ProductName = auction.Product.Name;
             return View(auction);
         }
@@ -106,6 +111,9 @@ namespace E_TRADING.Controllers
             {
                 return View(model);
             }
+            model.DateStart = model.DateStart.ConvertToUtcFromSiteTimeZone();
+            model.DateEnd = model.DateEnd.ConvertToUtcFromSiteTimeZone();
+            model.LastBid = model.StartPrice;
             _auctionRepository.Update(model);
             _auctionRepository.SaveChanges();
             return RedirectToAction("Index");
@@ -123,7 +131,7 @@ namespace E_TRADING.Controllers
             {
                 return HttpNotFound();
             }
-            var isStarted = auction.DateStart.ConvertToUtcFromSiteTimeZone() <= DateTime.UtcNow;
+            var isStarted = auction.DateStart <= DateTime.UtcNow;
             if (isStarted)
             {
                 TempData["Errors"] = "Аукціон розпочато, видалення неможливе";
@@ -155,7 +163,7 @@ namespace E_TRADING.Controllers
             {
                 return HttpNotFound();
             }
-            var isStarted = auction.DateStart.ConvertToUtcFromSiteTimeZone() <= DateTime.UtcNow;
+            var isStarted = auction.DateStart <= DateTime.UtcNow;
             if (isStarted)
             {
                 TempData["Errors"] = "Аукціон розпочато, видалення неможливе";
@@ -179,7 +187,6 @@ namespace E_TRADING.Controllers
                 return HttpNotFound();
             }
             var res = _mapper.Map<AuctionViewModel>(auction);
-            res.IsStarted = auction.DateStart.ConvertToUtcFromSiteTimeZone() >= DateTime.UtcNow;
             var product = _productRepository.FirstOrDefault(p => p.Id == id);
             res.Product = _mapper.Map<ProductViewModel>(product);
             foreach (var img in product.Images)
@@ -206,7 +213,7 @@ namespace E_TRADING.Controllers
                 TempData["Errors"] = "Аукціон не знайдено";
                 return RedirectToAction("Details", new { id = model.Id });
             }
-            if (auction.DateEnd.ConvertToUtcFromSiteTimeZone() < DateTime.UtcNow)
+            if (auction.DateEnd < DateTime.UtcNow)
             {
                 TempData["Errors"] = "Аукціон завершено";
                 return RedirectToAction("Details", new { id = model.Id });

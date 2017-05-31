@@ -139,6 +139,10 @@
     <Compile Include="Migrations\201705291837123_DeleteIsArchivedFromAuction.Designer.cs">
       <DependentUpon>201705291837123_DeleteIsArchivedFromAuction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705311526345_AddIsStartedToAuction.cs" />
+    <Compile Include="Migrations\201705311526345_AddIsStartedToAuction.Designer.cs">
+      <DependentUpon>201705311526345_AddIsStartedToAuction.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AuctionRepository.cs" />
@@ -190,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705291837123_DeleteIsArchivedFromAuction.resx">
       <DependentUpon>201705291837123_DeleteIsArchivedFromAuction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705311526345_AddIsStartedToAuction.resx">
+      <DependentUpon>201705311526345_AddIsStartedToAuction.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

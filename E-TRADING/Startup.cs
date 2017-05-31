@@ -1,4 +1,5 @@
-﻿using E_TRADING.Ninject.Core;
+﻿using E_TRADING.Jobs;
+using E_TRADING.Ninject.Core;
 using Microsoft.Owin;
 using Owin;
 
@@ -10,6 +11,8 @@ namespace E_TRADING
         public void Configuration(IAppBuilder app)
         {
             app.CreatePerOwinContext(() => NinjectWebCommon.ServiceLocator.BeginScope());
+            app.MapSignalR();
+            AuctionUpdaterSheduler.Start();
             ConfigureAuth(app);
         }
     }
