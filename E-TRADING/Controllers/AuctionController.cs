@@ -58,7 +58,9 @@ namespace E_TRADING.Controllers
             ViewBag.ProductName = product.Name;
             var model = new Auction
             {
-                Id = id
+                Id = id,
+                DateEnd = DateTime.UtcNow.ConvertToSiteZoneFromUtc(),
+                DateStart = DateTime.UtcNow.ConvertToSiteZoneFromUtc()
             };
             return View(model);
         }

@@ -42,7 +42,7 @@
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(model => model.Id)
-                        <button type="submit" class="btn btn-success" style="margin-top: 10px">Підтвердити</button>
+                        <button type="submit" class="btn btn-danger">Підтвердити</button>
                             @Html.ActionLink("Скасувати", "Index", "Auction", new { }, new { @class = "btn btn-default" })
                     }
                 </div>
