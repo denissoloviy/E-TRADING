@@ -9,6 +9,8 @@ namespace E_TRADING.Common.Models
         public bool IsStarted { get; set; }
         public bool IsFinished { get; set; }
 
+        public string TimeLeft { get; set; }
+
         [DisplayName("Час старту аукціону")]
         public string DateStart { get; set; }
         

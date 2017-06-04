@@ -224,6 +224,7 @@ namespace E_TRADING.Controllers
                 return RedirectToAction("Details", new { id = model.Id });
             }
             auction.LastBid = model.NewBid;
+            auction.BuyerId = User.Identity.GetUserId();
             _auctionRepository.SaveChanges();
 
             return RedirectToAction("Details", new { id = model.Id });

@@ -6,8 +6,6 @@
     nfi.NumberDecimalSeparator = ".";
     ViewBag.NextValue = (Model.LastBid + Model.MinStep).ToString(nfi);
 }
-
-<h2></h2>
 <div class='container-fluid '>
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -36,7 +34,7 @@
             </div>
             <div class="col-md-7">
                 <div class=''>
-                    <h2 class="">@Model.Product.Name  <span class="label label-primary">@Model.Product.Amount</span></h2>
+                    <h2 class="">@Model.Product.Name <span class="label label-primary">@Model.Product.Amount</span></h2>
                 </div>
                 @if (!Model.IsFinished)
                 {
@@ -54,10 +52,10 @@
                                 Остання ставка: <label id="last-bid">@Model.LastBid</label>. Покупець: <label id="last-buyer">@Model.BuyerName</label>
                             </div>
                             <br />
-                            Мінімальний крок: @Model.MinStep
+                            Мінімальний крок: <label id="min-step">@Model.MinStep</label>
                             <br />
                             <div>
-                                Залишилось часу: <label id="time-left">0</label>
+                                Залишилось часу: <label id="time-left">@Model.TimeLeft</label>
                             </div>
                             <br />
                             @using (Html.BeginForm("Bid", "Auction", FormMethod.Post, new { @class = "form-horizontal", id = "bidForm" }))
@@ -68,13 +66,15 @@
                                 <input class="form-control input" type="number"
                                        onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                                        placeholder="Введіть вашу ставку" value="@ViewBag.NextValue"
-                                       min="@ViewBag.NextValue" name="NewBid" id="NewBid" />
+                                       min="@ViewBag.NextValue" name="NewBid" id="new-bid" />
                                     <button type="submit" class="btn btn-success" style="margin-top: 10px">Зробити ставку</button>
-                                    <button type="button" onclick="BidMinimalStep();" class="btn btn-success" style="margin-top: 10px">Поставити @ViewBag.NextValue</button>
+                                    <button type="button" onclick="BidMinimalStep();" class="btn btn-success" style="margin-top: 10px" id="set-next-bid">Поставити @ViewBag.NextValue</button>
                                     <script>
                                         function BidMinimalStep() {
-                                            var bid = @ViewBag.NextValue;
-                                            $("#NewBid").attr("value", bid);
+                                            var lastBid = parseInt($('#last-bid').text());
+                                            var minStep = parseInt($('#min-step').text());
+                                            var bid = lastBid + minStep;
+                                            $("#new-bid").attr("value", bid);
                                             $("#bidForm").submit();
                                         }
                                     </script>
@@ -113,35 +113,43 @@
     }
 </script>
 <script>
-    $(function () {
-        var auction = $.connection.auctionHub;
-        $.connection.hub.start();
-        auction.client.refreshAuction = function (auctionId, newTime, lastBid, userName) {
-            if(auctionId=="@Model.Id"){
-                debugger;
-                $('#time-left').text(newTime);
-                $('#last-bid').text(lastBid);
-                $('#last-buyer').text(userName);
-            }
-        };
+    var auction = $.connection.auctionHub;
 
-        auction.client.finishAuction = function (auctionId) {
-            if(auctionId=="@Model.Id"){
-                $('#notBegin').css("display","block");
-                $('#isStarted').css("display","none");
-                $('#isFinished').css("display","block");
-                window.location.reload();
-            }
-        };
+    auction.client.finishAuction = function (auctionId) {
+        if(auctionId=="@Model.Id"){
+            $('#notBegin').css("display","block");
+            $('#isStarted').css("display","none");
+            $('#isFinished').css("display","block");
+            window.location.reload();
+        }
+    };
 
-        auction.client.beginAuction = function (auctionId) {
-            debugger;
-            if(auctionId=="@Model.Id"){
-                $('#notBegin').css("display","none");
-                $('#isStarted').css("display","block");
-                $('#isFinished').css("display","none");
-                window.location.reload();
-            }
-        };
-    });
+    auction.client.beginAuction = function (auctionId) {
+        if(auctionId=="@Model.Id"){
+            $('#notBegin').css("display","none");
+            $('#isStarted').css("display","block");
+            $('#isFinished').css("display","none");
+            window.location.reload(true);
+        }
+    };
+
+    auction.client.refreshAuction = function (auctionId, newTime, lastBid, userName) {
+        if(auctionId=="@Model.Id"){
+            $('#time-left').text(newTime);
+            $('#last-bid').text(lastBid);
+            $('#last-buyer').text(userName);
+            RefreshSums();
+        }
+    };
+    $.connection.hub.start({ transport: 'longPolling' });
+
+    function RefreshSums() {
+        var lastBid = parseInt($('#last-bid').text());
+        var minStep = parseInt($('#min-step').text());
+        var bid = lastBid + minStep;
+        $("#new-bid").attr("value", bid);
+        $("#new-bid").attr("min", bid);
+        $("#set-next-bid").text("Поставити " + bid);
+        
+    }
 </script>

@@ -4,6 +4,7 @@ using E_TRADING.Common.Models;
 using E_TRADING.Common.OrderStatuses;
 using E_TRADING.Data;
 using E_TRADING.Data.Entities;
+using System;
 using System.Linq;
 
 namespace E_TRADING.Mapper.Profiles
@@ -25,7 +26,8 @@ namespace E_TRADING.Mapper.Profiles
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name))
                 .ForMember(dest => dest.DateStart, opt => opt.MapFrom(src => src.DateStart.ConvertToSiteZoneFromUtc().DateTimeToFormatString()))
                 .ForMember(dest => dest.DateEnd, opt => opt.MapFrom(src => src.DateEnd.ConvertToSiteZoneFromUtc().DateTimeToFormatString()))
-                .ForMember(dest => dest.BuyerName, opt => opt.MapFrom(src => src.LastBuyer.User.UserName));
+                .ForMember(dest => dest.BuyerName, opt => opt.MapFrom(src => src.LastBuyer.User.UserName))
+                .ForMember(dest => dest.TimeLeft, opt => opt.MapFrom(src => (src.DateEnd - DateTime.UtcNow).ToString(@"hh\:mm\:ss")));
 
             CreateMap<ShoppingCart, ProductViewModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Product.Id))

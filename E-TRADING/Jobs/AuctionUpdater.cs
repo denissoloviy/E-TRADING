@@ -35,6 +35,10 @@ namespace E_TRADING.Jobs
                             var product = _db.Products.Find(auction.Id);
                             product.Amount -= product.Amount;
                         }
+                        else
+                        {
+                            auction.IsStarted = false;
+                        }
                     }
                     else if (auction.DateStart <= DateTime.UtcNow && auction.DateEnd >= DateTime.UtcNow && !auction.IsStarted)
                     {

@@ -7,9 +7,10 @@ namespace E_TRADING.Hubs
     {
         public static void RefreshAuction(string auctionId, DateTime auctionEndDate, decimal lastBid, string userName)
         {
-            var newTime = DateTime.UtcNow - auctionEndDate;
+            var newTime = auctionEndDate - DateTime.UtcNow;
+            var stringNextTime = newTime.ToString(@"hh\:mm\:ss");
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<AuctionHub>();
-            hubContext.Clients.All.refreshAuction(auctionId, newTime.ToString("HH:mm:ss"), lastBid, userName);
+            hubContext.Clients.All.refreshAuction(auctionId, stringNextTime, lastBid, userName);
         }
 
         public static void FinishAuction(string auctionId)
