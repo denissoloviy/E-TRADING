@@ -8,7 +8,9 @@ using E_TRADING.Data.Repositories;
 using E_TRADING.Data.Entities;
 using E_TRADING.Data.Managers;
 using E_TRADING.Admin.Models;
+using E_TRADING.Common;
 using Microsoft.AspNet.Identity;
+
 
 
 namespace E_TRADING.Admin.Controllers
@@ -42,9 +44,34 @@ namespace E_TRADING.Admin.Controllers
         // GET: Users/AdminUsers
         public ActionResult AdminUsers()
         {
+            var users = _userManager.Users.Where(x => x.Roles.Any(y => y.RoleId == "03c3e033-5fb8-458b-96d9-a3d614a8cbe9")).ToList();
+            return View(users);
+        }
+        public ActionResult AddAdmin()
+        {
             return View();
         }
-
+        public ActionResult DeleteAdmin(string id)
+        {
+            _userManager.Delete(_userManager.FindById(id));
+            return RedirectToAction("AdminUsers");
+        }
+        [HttpPost]
+        public  ActionResult AddAdmin(string email, string pass)
+        {
+            var user = new User { UserName = email, Email = email };
+            var result =  _userManager.Create(user, pass);
+            if (result.Succeeded)
+            {
+                _userManager.AddToRole(user.Id, UserRole.Administrator);
+                ViewBag.Succes = "Додано нового адміна!";
+            }
+            else
+            {
+                ViewBag.Error = result.Errors.First();
+            }
+            return View();
+        }
         #endregion
         #region UsersList
         public ActionResult UserList()

@@ -1,7 +1,75 @@
-﻿@{
-    ViewBag.Title = "AdminUsers";
-}
-<br />
+﻿@using E_TRADING.Data.Entities;
+@model List<User>
+    @{
+        ViewBag.Title = "AdminUsers";
+    }
+    <div class="jumbotron container-fluid">
+        <div class="panel panel-default" id="BuyerCatalog">
+            <div class="panel-heading">
+                Покупці
+            </div>
+            <div class="panel-body">
+                <table class="table margin-top-10">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>User name</th>
+                            <th>Ім'я</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            if (Model.Count() > 0)
+                            {
+                                foreach (var x in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @x.Email
+                                        </td>
+                                        <td>
+                                            @x.UserName
+                                        </td>
+                                        <td>
+                                            @x.FirstName
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-default" title="Редагувати" href="@Url.Action("ChangePassword", "Users", new { id = x.Id })">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                            </a>
+                                            <a class="btn btn-danger" title="Видалити" href="@Url.Action("DeleteAdmin", "Users", new { id = x.Id })">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                  
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="7">
+                                        <h3>Жодного Адміна не було створено</h3>
+                                    </td>
+                                </tr>
+                            }
 
-<p>Тут виведення в таблиці користувачів адмінів + фільтри + опції(видалення, блокування, редагування, зміна пароля) + додавання адмінів</p>
-<p>P.S. Ця вторінка повинна бути доступна лише для суперадміна(він буде один і його захардкодимо)</p>
+                        }
+                        <tr>
+                            <td>
+                                <a class="btn btn-success" title="Додати" href="@Url.Action("AddAdmin", "Users", new { })">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </a>
+                                Додати адміна
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>

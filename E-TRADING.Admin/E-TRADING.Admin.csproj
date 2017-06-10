@@ -332,6 +332,7 @@
     <Content Include="Views\Users\GetSellerInformation.cshtml" />
     <Content Include="Views\Users\GetBuyerInformation.cshtml" />
     <Content Include="Views\Users\ChangePassword.cshtml" />
+    <Content Include="Views\Users\AddAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
