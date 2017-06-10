@@ -15,16 +15,5 @@ namespace E_TRADING.Data.Repositories
         {
             _context = context;
         }
-
-        public override void Delete(Auction entity)
-        {
-            entity.IsDeleted = true;
-        }
-
-        public override void Delete(string id)
-        {
-            var entity = _context.Auctions.FirstOrDefault(x => x.Id == id);
-            entity.IsDeleted = true;
-        }
     }
 }

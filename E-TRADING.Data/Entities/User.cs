@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using E_TRADING.Data.Managers;
 using Microsoft.AspNet.Identity;
 using System.ComponentModel;
+using System;
 
 namespace E_TRADING.Data.Entities
 {
@@ -23,6 +24,12 @@ namespace E_TRADING.Data.Entities
 
         [DisplayName("Адреса")]
         public string Address { get; set; }
+
+        [DisplayName("По батькові")]
+        public string MiddleName { get; set; }
+
+        [DisplayName("Дата народження")]
+        public DateTime? BirthDate { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(ApplicationUserManager manager)
         {

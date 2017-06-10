@@ -48,7 +48,16 @@ namespace E_TRADING.Controllers
             {
                 var buyer = _buyerRepository.FirstOrDefault(item => item.Id == userId);
                 var orders = buyer.Orders.Where(item => StatusTypes.ActiveStatuses.Contains(item.Status));
-                var res = orders.Select(item => _mapper.Map<OrderViewModel>(item)).ToList();
+                var res = new List<OrderViewModel>();
+                foreach(var o in orders)
+                {
+                    var oModel = _mapper.Map<OrderViewModel>(o);
+                    var image = o.Product.Images.Count > 0 ?
+                        o.Product.Images.FirstOrDefault(i => i.Index == o.Product.Images.Select(s => s.Index).Min()) : null;
+                    oModel.MainImage = image != null ? "/Content/ProductImages/" + image.Id + image.Extention : "/Content/no_available_image.png";
+                    res.Add(oModel);
+                }
+
                 ViewBag.Helper = _mapper.Map<BuyerProfileHelperViewModel>(buyer);
                 return View("../Buyer/Orders", res);
             }
@@ -57,7 +66,15 @@ namespace E_TRADING.Controllers
                 var seller = _sellerRepository.FirstOrDefault(item => item.Id == userId);
                 var orders = seller.Products.SelectMany(item => item.Orders)
                     .Where(item => StatusTypes.ActiveStatuses.Contains(item.Status));
-                var res = orders.Select(item => _mapper.Map<OrderViewModel>(item)).ToList();
+                var res = new List<OrderViewModel>();
+                foreach (var o in orders)
+                {
+                    var oModel = _mapper.Map<OrderViewModel>(o);
+                    var image = o.Product.Images.Count > 0 ?
+                        o.Product.Images.FirstOrDefault(i => i.Index == o.Product.Images.Select(s => s.Index).Min()) : null;
+                    oModel.MainImage = image != null ? "/Content/ProductImages/" + image.Id + image.Extention : "/Content/no_available_image.png";
+                    res.Add(oModel);
+                }
                 ViewBag.Helper = _mapper.Map<SellerProfileHelperViewModel>(seller);
                 return View("../Seller/Orders", res);
             }
@@ -72,7 +89,15 @@ namespace E_TRADING.Controllers
             {
                 var buyer = _buyerRepository.FirstOrDefault(item => item.Id == userId);
                 var orders = buyer.Orders.Where(item => StatusTypes.InactiveStatuses.Contains(item.Status));
-                var res = orders.Select(item => _mapper.Map<OrderViewModel>(item)).ToList();
+                var res = new List<OrderViewModel>();
+                foreach (var o in orders)
+                {
+                    var oModel = _mapper.Map<OrderViewModel>(o);
+                    var image = o.Product.Images.Count > 0 ?
+                        o.Product.Images.FirstOrDefault(i => i.Index == o.Product.Images.Select(s => s.Index).Min()) : null;
+                    oModel.MainImage = image != null ? "/Content/ProductImages/" + image.Id + image.Extention : "/Content/no_available_image.png";
+                    res.Add(oModel);
+                }
                 ViewBag.Helper = _mapper.Map<BuyerProfileHelperViewModel>(buyer);
                 return View("../Buyer/Orders", res);
             }
@@ -81,7 +106,15 @@ namespace E_TRADING.Controllers
                 var seller = _sellerRepository.FirstOrDefault(item => item.Id == userId);
                 var orders = seller.Products.SelectMany(item => item.Orders)
                     .Where(item => StatusTypes.InactiveStatuses.Contains(item.Status));
-                var res = orders.Select(item => _mapper.Map<OrderViewModel>(item)).ToList();
+                var res = new List<OrderViewModel>();
+                foreach (var o in orders)
+                {
+                    var oModel = _mapper.Map<OrderViewModel>(o);
+                    var image = o.Product.Images.Count > 0 ?
+                        o.Product.Images.FirstOrDefault(i => i.Index == o.Product.Images.Select(s => s.Index).Min()) : null;
+                    oModel.MainImage = image != null ? "/Content/ProductImages/" + image.Id + image.Extention : "/Content/no_available_image.png";
+                    res.Add(oModel);
+                }
                 ViewBag.Helper = _mapper.Map<SellerProfileHelperViewModel>(seller);
                 return View("../Seller/Orders", res);
             }

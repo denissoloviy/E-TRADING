@@ -36,5 +36,8 @@ namespace E_TRADING.Common.Models
 
         [DisplayName("Продавець")]
         public string Seller { get; set; }
+
+        [DisplayName("Зображення")]
+        public string MainImage { get; set; }
     }
 }

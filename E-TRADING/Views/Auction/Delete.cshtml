@@ -1,0 +1,59 @@
+﻿@model E_TRADING.Common.Models.AuctionViewModel
+
+@{
+    ViewBag.Title = Model.Product.Name;
+}
+
+<h2></h2>
+<div class='container-fluid '>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">@Model.Product.Name</h1>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-5 product-block">
+                <div class='product-image-block jumbotron container-fluid' style="padding:15px 0">
+                    @if (Model.Product.Images.Count > 0)
+                    {
+                        <div class="col-md-3">
+                            @foreach (var imageLink in Model.Product.Images)
+                            {
+                                <img class="small-img" onclick="ChangeImage(event)" style="width:60px; padding-bottom: 10px" src="@imageLink" />
+                            }
+                        </div>
+                        <div class="col-md-9">
+                            <img id="main-img" style="max-width:285px" src="@Model.Product.Images.FirstOrDefault()" />
+                        </div>
+                    }
+                    else
+                    {
+                        <img src="~/Content/no_available_image.png" />
+                    }
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class=''>
+                    <h2 class="">@Model.Product.Name  <span class="label label-primary">@Model.Product.Amount</span></h2>
+                </div>
+                <h4>Початок аукціону: @Model.DateStart. Кінець: @Model.DateEnd</h4>
+                <div>
+                    <label>Необхідно підтвердити видалення аукціону</label>
+                    @using (Html.BeginForm("Delete", "Auction", FormMethod.Post, new { }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Id)
+                        <button type="submit" class="btn btn-danger">Підтвердити</button>
+                            @Html.ActionLink("Скасувати", "Index", "Auction", new { }, new { @class = "btn btn-default" })
+                    }
+                </div>
+                <hr />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function ChangeImage(event) {
+        $("#main-img").attr("src", $(event.target).attr("src"));
+    }
+</script>

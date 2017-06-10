@@ -36,7 +36,7 @@ namespace E_TRADING.Controllers
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
-            var auctions = _auctionRepository.FindBy(item => !item.IsDeleted && item.Product.Seller.User.Id == userId).ToList();
+            var auctions = _auctionRepository.FindBy(item => item.Product.Seller.User.Id == userId).ToList();
             var res = auctions.Select(item => _mapper.Map<AuctionViewModel>(item)).ToList();
             var seller = _sellerRepository.FirstOrDefault(item => item.Id == userId);
             ViewBag.Helper = _mapper.Map<SellerProfileHelperViewModel>(seller);
@@ -58,7 +58,9 @@ namespace E_TRADING.Controllers
             ViewBag.ProductName = product.Name;
             var model = new Auction
             {
-                Id = id
+                Id = id,
+                DateEnd = DateTime.UtcNow.ConvertToSiteZoneFromUtc(),
+                DateStart = DateTime.UtcNow.ConvertToSiteZoneFromUtc()
             };
             return View(model);
         }
@@ -73,6 +75,9 @@ namespace E_TRADING.Controllers
             {
                 return View(model);
             }
+            model.DateStart = model.DateStart.ConvertToUtcFromSiteTimeZone();
+            model.DateEnd = model.DateEnd.ConvertToUtcFromSiteTimeZone();
+            model.LastBid = model.StartPrice;
             _auctionRepository.Add(model);
             _auctionRepository.SaveChanges();
             return RedirectToAction("Index");
@@ -90,6 +95,8 @@ namespace E_TRADING.Controllers
             {
                 return HttpNotFound();
             }
+            auction.DateStart = auction.DateStart.ConvertToSiteZoneFromUtc();
+            auction.DateEnd = auction.DateEnd.ConvertToSiteZoneFromUtc();
             ViewBag.ProductName = auction.Product.Name;
             return View(auction);
         }
@@ -104,7 +111,65 @@ namespace E_TRADING.Controllers
             {
                 return View(model);
             }
+            model.DateStart = model.DateStart.ConvertToUtcFromSiteTimeZone();
+            model.DateEnd = model.DateEnd.ConvertToUtcFromSiteTimeZone();
+            model.LastBid = model.StartPrice;
             _auctionRepository.Update(model);
+            _auctionRepository.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        
+        [Authorize(Roles = UserRole.Seller)]
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            var auction = _auctionRepository.Find(id);
+            if (auction == null)
+            {
+                return HttpNotFound();
+            }
+            var isStarted = auction.DateStart <= DateTime.UtcNow;
+            if (isStarted)
+            {
+                TempData["Errors"] = "Аукціон розпочато, видалення неможливе";
+                return RedirectToAction("Details", new { id = id });
+            }
+            var res = _mapper.Map<AuctionViewModel>(auction);
+            res.IsStarted = isStarted;
+            var product = _productRepository.FirstOrDefault(p => p.Id == id);
+            res.Product = _mapper.Map<ProductViewModel>(product);
+            foreach (var img in product.Images)
+            {
+                res.Product.Images.Add(@"/Content/ProductImages/" + img.Id + img.Extention);
+            }
+            return View(res);
+        }
+
+        [Authorize(Roles = UserRole.Seller)]
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirm(string id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            var auction = _auctionRepository.Find(id);
+            if (auction == null)
+            {
+                return HttpNotFound();
+            }
+            var isStarted = auction.DateStart <= DateTime.UtcNow;
+            if (isStarted)
+            {
+                TempData["Errors"] = "Аукціон розпочато, видалення неможливе";
+                return RedirectToAction("Details", new { id = id });
+            }
+            _auctionRepository.Delete(auction);
             _auctionRepository.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -112,9 +177,16 @@ namespace E_TRADING.Controllers
         [Authorize(Roles = UserRole.Seller + "," + UserRole.Buyer)]
         public ActionResult Details(string id)
         {
-            var auction = _auctionRepository.FirstOrDefault(item => item.Id == id);
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            var auction = _auctionRepository.Find(id);
+            if (auction == null)
+            {
+                return HttpNotFound();
+            }
             var res = _mapper.Map<AuctionViewModel>(auction);
-            res.IsStarted = auction.DateStart.ConvertToUtcFromSiteTimeZone() == DateTime.UtcNow;
             var product = _productRepository.FirstOrDefault(p => p.Id == id);
             res.Product = _mapper.Map<ProductViewModel>(product);
             foreach (var img in product.Images)
@@ -141,7 +213,7 @@ namespace E_TRADING.Controllers
                 TempData["Errors"] = "Аукціон не знайдено";
                 return RedirectToAction("Details", new { id = model.Id });
             }
-            if (auction.DateEnd.ConvertToUtcFromSiteTimeZone() < DateTime.UtcNow)
+            if (auction.DateEnd < DateTime.UtcNow)
             {
                 TempData["Errors"] = "Аукціон завершено";
                 return RedirectToAction("Details", new { id = model.Id });
@@ -152,6 +224,7 @@ namespace E_TRADING.Controllers
                 return RedirectToAction("Details", new { id = model.Id });
             }
             auction.LastBid = model.NewBid;
+            auction.BuyerId = User.Identity.GetUserId();
             _auctionRepository.SaveChanges();
 
             return RedirectToAction("Details", new { id = model.Id });

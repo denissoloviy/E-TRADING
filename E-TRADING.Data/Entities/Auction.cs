@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_TRADING.Data.Entities
 {
-    public class Auction : BaseEntity, ISoftDelete
+    public class Auction : BaseEntity
     {
         [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
         [Key, ForeignKey("Product")]
@@ -42,6 +42,7 @@ namespace E_TRADING.Data.Entities
         [DisplayName("Товар")]
         public virtual Product Product { get; set; }
 
-        public bool IsDeleted { get; set; }
+        public bool IsStarted { get; set; }
+        public bool IsFinished { get; set; }
     }
 }

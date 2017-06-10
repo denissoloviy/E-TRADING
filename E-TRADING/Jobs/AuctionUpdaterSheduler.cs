@@ -1,9 +1,5 @@
 ﻿using Quartz;
 using Quartz.Impl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace E_TRADING.Jobs
 {
@@ -15,6 +11,16 @@ namespace E_TRADING.Jobs
             scheduler.Start();
 
             var job = JobBuilder.Create<AuctionUpdater>().Build();
+
+            var trigger = TriggerBuilder.Create()
+                .WithIdentity("Auction", "Auctions")
+                .StartNow()
+                .WithSimpleSchedule(x => x
+                    .WithIntervalInSeconds(10)
+                    .RepeatForever())
+                .Build();
+
+            scheduler.ScheduleJob(job, trigger);
         }
     }
 }

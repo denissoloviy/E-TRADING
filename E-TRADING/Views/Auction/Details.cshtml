@@ -1,10 +1,11 @@
 ﻿@model E_TRADING.Common.Models.AuctionViewModel
-
+@using System.Globalization
 @{
     ViewBag.Title = Model.Product.Name;
+    var nfi = new NumberFormatInfo();
+    nfi.NumberDecimalSeparator = ".";
+    ViewBag.NextValue = (Model.LastBid + Model.MinStep).ToString(nfi);
 }
-
-<h2></h2>
 <div class='container-fluid '>
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -33,43 +34,64 @@
             </div>
             <div class="col-md-7">
                 <div class=''>
-                    <h2 class="">@Model.Product.Name  <span class="label label-primary">@Model.Product.Amount</span></h2>
+                    <h2 class="">@Model.Product.Name <span class="label label-primary">@Model.Product.Amount</span></h2>
                 </div>
-                @if (!Model.IsStarted)
+                @if (!Model.IsFinished)
                 {
-                    <h4>Початок аукціону: @Model.DateStart. Кінець: @Model.DateEnd</h4>
+                    <div id="notBegin" style="display:@(Model.IsStarted ? "none" : "block")">
+                        <h4>Початок аукціону: @Model.DateStart. Кінець: @Model.DateEnd</h4>
+                    </div>
+                    <div id="isStarted" style="display:@(Model.IsStarted ? "block" : "none")">
+                        <div>
+                            @if (ViewBag.Errors != null)
+                            {
+                                <label class="text-danger">@ViewBag.Errors</label>
+                                <br />
+                            }
+                            <div>
+                                Остання ставка: <label id="last-bid">@Model.LastBid</label>. Покупець: <label id="last-buyer">@Model.BuyerName</label>
+                            </div>
+                            <br />
+                            Мінімальний крок: <label id="min-step">@Model.MinStep</label>
+                            <br />
+                            <div>
+                                Залишилось часу: <label id="time-left">@Model.TimeLeft</label>
+                            </div>
+                            <br />
+                            @using (Html.BeginForm("Bid", "Auction", FormMethod.Post, new { @class = "form-horizontal", id = "bidForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.HiddenFor(model => model.Id)
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                <input class="form-control input" type="number"
+                                       onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                       placeholder="Введіть вашу ставку" value="@ViewBag.NextValue"
+                                       min="@ViewBag.NextValue" name="NewBid" id="new-bid" />
+                                    <button type="submit" class="btn btn-success" style="margin-top: 10px">Зробити ставку</button>
+                                    <button type="button" onclick="BidMinimalStep();" class="btn btn-success" style="margin-top: 10px" id="set-next-bid">Поставити @ViewBag.NextValue</button>
+                                    <script>
+                                        function BidMinimalStep() {
+                                            var lastBid = parseInt($('#last-bid').text());
+                                            var minStep = parseInt($('#min-step').text());
+                                            var bid = lastBid + minStep;
+                                            $("#new-bid").attr("value", bid);
+                                            $("#bidForm").submit();
+                                        }
+                                    </script>
+                            }
+                        </div>
+                    </div>
+                    <div id="isFinished" style="display:none;">
+                        <h4>Аукціон завершено</h4>
+                    </div>
                 }
                 else
                 {
                     <div>
-                        @if (ViewBag.Errors != null)
-                        {
-                            <label class="text-danger">@ViewBag.Errors</label>
-                            <br />
-                        }
+                        <h4>Аукціон завершено</h4>
                         Остання ставка: @Model.LastBid
                         <br />
-                        Мінімальний крок: @Model.MinStep
-                        <br />
-                        @using (Html.BeginForm("Bid", "Auction", FormMethod.Post, new { @class = "form-horizontal", id = "bidForm" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            @Html.HiddenFor(model => model.Id)
-                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-                            <input class="form-control input" type="number"
-                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                   placeholder="Введіть вашу ставку" value="@(Model.LastBid + Model.MinStep)"
-                                   min="@(Model.LastBid + Model.MinStep)" name="NewBid" id="NewBid" />
-                            <button type="submit" class="btn btn-success" style="margin-top: 10px">Зробити ставку</button>
-                            <button type="button" onclick="BidMinimalStep();" class="btn btn-success" style="margin-top: 10px">Поставити @(Model.LastBid + Model.MinStep)</button>
-                            <script>
-                                function BidMinimalStep() {
-                                    var bid = @(Model.LastBid + Model.MinStep);
-                                    $("#NewBid").attr("value", bid);
-                                    $("#bidForm").submit();
-                                }
-                            </script>
-                        }
+                        Покупець @Model.BuyerName
                     </div>
                 }
                 <hr />
@@ -88,5 +110,46 @@
 <script>
     function ChangeImage(event) {
         $("#main-img").attr("src", $(event.target).attr("src"));
+    }
+</script>
+<script>
+    var auction = $.connection.auctionHub;
+
+    auction.client.finishAuction = function (auctionId) {
+        if(auctionId=="@Model.Id"){
+            $('#notBegin').css("display","block");
+            $('#isStarted').css("display","none");
+            $('#isFinished').css("display","block");
+            window.location.reload();
+        }
+    };
+
+    auction.client.beginAuction = function (auctionId) {
+        if(auctionId=="@Model.Id"){
+            $('#notBegin').css("display","none");
+            $('#isStarted').css("display","block");
+            $('#isFinished').css("display","none");
+            window.location.reload(true);
+        }
+    };
+
+    auction.client.refreshAuction = function (auctionId, newTime, lastBid, userName) {
+        if(auctionId=="@Model.Id"){
+            $('#time-left').text(newTime);
+            $('#last-bid').text(lastBid);
+            $('#last-buyer').text(userName);
+            RefreshSums();
+        }
+    };
+    $.connection.hub.start({ transport: 'longPolling' });
+
+    function RefreshSums() {
+        var lastBid = parseInt($('#last-bid').text());
+        var minStep = parseInt($('#min-step').text());
+        var bid = lastBid + minStep;
+        $("#new-bid").attr("value", bid);
+        $("#new-bid").attr("min", bid);
+        $("#set-next-bid").text("Поставити " + bid);
+        
     }
 </script>

@@ -12,6 +12,7 @@ using E_TRADING.Models;
 using E_TRADING.Data.Managers;
 using E_TRADING.Data.Entities;
 using E_TRADING.Common;
+using E_TRADING.Data.Repositories;
 
 namespace E_TRADING.Controllers
 {
@@ -20,9 +21,13 @@ namespace E_TRADING.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        IBuyerRepository _buyerRepository;
+        ISellerRepository _sellerRepository;
 
-        public AccountController()
+        public AccountController(IBuyerRepository buyerRepository, ISellerRepository sellerRepository)
         {
+            _buyerRepository = buyerRepository;
+            _sellerRepository = sellerRepository;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -168,10 +173,35 @@ namespace E_TRADING.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.UserName, Email = model.Email };
+                var user = new User
+                {
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    MiddleName = model.MiddleName,
+                    BirthDate = model.BirthDate,
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    if (model.IsBuyer)
+                    {
+                        UserManager.AddToRole(user.Id, UserRole.Buyer);
+                        _buyerRepository.Add(new Buyer { Id = user.Id });
+                        _buyerRepository.SaveChanges();
+                    }
+                    else
+                    {
+                        UserManager.AddToRole(user.Id, UserRole.Seller);
+                        _sellerRepository.Add(new Seller
+                        {
+                            Id = user.Id,
+                            ContactPhone = model.PhoneNumber,
+                            OfficeAddress = model.OfficeAddress
+                        });
+                        _sellerRepository.SaveChanges();
+                    }
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

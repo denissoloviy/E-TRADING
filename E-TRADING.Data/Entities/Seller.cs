@@ -16,9 +16,12 @@ namespace E_TRADING.Data.Entities
         [DisplayName("Адреса офісу")]
         public string OfficeAddress { get; set; }
 
+        [DisplayName("Номер паспорту")]
+        public string Passport { get; set; }
+
         [DisplayName("Контактний номер телефону")]
         public string ContactPhone { get; set; }
-        
+
         [DisplayName("Користувач")]
         public virtual User User { get; set; }
 

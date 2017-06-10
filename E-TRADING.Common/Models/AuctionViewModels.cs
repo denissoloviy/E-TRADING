@@ -7,6 +7,9 @@ namespace E_TRADING.Common.Models
     {
         public string Id { get; set; }
         public bool IsStarted { get; set; }
+        public bool IsFinished { get; set; }
+
+        public string TimeLeft { get; set; }
 
         [DisplayName("Час старту аукціону")]
         public string DateStart { get; set; }
@@ -28,8 +31,6 @@ namespace E_TRADING.Common.Models
         
         [DisplayName("Товар")]
         public string ProductName { get; set; }
-
-        public bool IsDeleted { get; set; }
 
         public ProductViewModel Product { get; set; }
     }

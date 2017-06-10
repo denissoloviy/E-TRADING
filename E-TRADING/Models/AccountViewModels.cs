@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace E_TRADING.Models
@@ -64,22 +65,50 @@ namespace E_TRADING.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "User Name")]
+        public bool IsBuyer { get; set; }
+
+        [Required]
+        [Display(Name = "Логін для входу")]
         public string UserName { get; set; }
+
+        [Required]
+        [Display(Name = "Ім'я")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Прізвище")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "По батькові")]
+        public string MiddleName { get; set; }
 
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [Phone]
+        [Display(Name = "Номер телефону")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "Дата народження")]
+        public DateTime? BirthDate { get; set; }
+
+        [Display(Name = "Номер паспорту")]
+        public string Passport { get; set; }
+
+        [Display(Name = "Адреса офісу")]
+        public string OfficeAddress { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }    
+        [Display(Name = "Пароль")]
+        public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Підтвердження паролю")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }

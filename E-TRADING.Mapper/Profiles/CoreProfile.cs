@@ -4,6 +4,7 @@ using E_TRADING.Common.Models;
 using E_TRADING.Common.OrderStatuses;
 using E_TRADING.Data;
 using E_TRADING.Data.Entities;
+using System;
 using System.Linq;
 
 namespace E_TRADING.Mapper.Profiles
@@ -23,9 +24,10 @@ namespace E_TRADING.Mapper.Profiles
 
             CreateMap<Auction, AuctionViewModel>()
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Name))
-                .ForMember(dest => dest.DateStart, opt => opt.MapFrom(src => src.DateStart.DateTimeToFormatString()))
-                .ForMember(dest => dest.DateEnd, opt => opt.MapFrom(src => src.DateEnd.DateTimeToFormatString()))
-                .ForMember(dest => dest.BuyerName, opt => opt.MapFrom(src => src.LastBuyer.User.UserName));
+                .ForMember(dest => dest.DateStart, opt => opt.MapFrom(src => src.DateStart.ConvertToSiteZoneFromUtc().DateTimeToFormatString()))
+                .ForMember(dest => dest.DateEnd, opt => opt.MapFrom(src => src.DateEnd.ConvertToSiteZoneFromUtc().DateTimeToFormatString()))
+                .ForMember(dest => dest.BuyerName, opt => opt.MapFrom(src => src.LastBuyer.User.UserName))
+                .ForMember(dest => dest.TimeLeft, opt => opt.MapFrom(src => (src.DateEnd - DateTime.UtcNow).ToString(@"hh\:mm\:ss")));
 
             CreateMap<ShoppingCart, ProductViewModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Product.Id))
@@ -50,7 +52,7 @@ namespace E_TRADING.Mapper.Profiles
             CreateMap<Seller, SellerProfileHelperViewModel>()
                 .ForMember(dest => dest.ProductsCount, opt => opt.MapFrom(src => src.Products.Where(item => !item.IsDeleted).Sum(item => item.Amount)))
                 .ForMember(dest => dest.ActiveAuctionsCount, opt => opt.MapFrom(src => src.Products
-                    .Where(item => !item.IsDeleted && context.Auctions.Any(au => au.Id == item.Id && !au.IsDeleted)).Count()))
+                    .Where(item => !item.IsDeleted && context.Auctions.Any(au => au.Id == item.Id)).Count()))
                 .ForMember(dest => dest.ActiveOrdersCount, opt => opt.MapFrom(src => src.Products.SelectMany(item => item.Orders)
                     .Where(item => StatusTypes.ActiveStatuses.Contains(item.Status)).Sum(item => item.Amount)))
                 .ForMember(dest => dest.InactiveOrdersCount, opt => opt.MapFrom(src => src.Products.SelectMany(item => item.Orders)
@@ -70,7 +72,8 @@ namespace E_TRADING.Mapper.Profiles
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Product.Name))
                 .ForMember(dest => dest.StatusType, opt => opt.MapFrom(src => src.Status.GetStatusType()))
                 .ForMember(dest => dest.Buyer, opt => opt.MapFrom(src => src.Buyer.User.UserName))
-                .ForMember(dest => dest.Seller, opt => opt.MapFrom(src => src.Product.Seller.User.UserName));
+                .ForMember(dest => dest.Seller, opt => opt.MapFrom(src => src.Product.Seller.User.UserName))
+                .ForMember(dest => dest.MainImage, opt => opt.Ignore());
 
             CreateMap<Buyer, BuyerViewEditViewModel>()
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.User.Address))
