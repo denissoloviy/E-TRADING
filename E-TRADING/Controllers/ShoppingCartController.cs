@@ -4,13 +4,14 @@ using E_TRADING.Common.Models;
 using E_TRADING.Common.OrderStatuses;
 using E_TRADING.Data.Entities;
 using E_TRADING.Data.Repositories;
+using E_TRADING.Web.Attributes;
 using Microsoft.AspNet.Identity;
 using System.Linq;
 using System.Web.Mvc;
 
 namespace E_TRADING.Controllers
 {
-    [Authorize(Roles = UserRole.Buyer)]
+    [AuthorizeDeleted(Roles = UserRole.Buyer)]
     public class ShoppingCartController : Controller
     {
         IMapper _mapper;
@@ -30,6 +31,7 @@ namespace E_TRADING.Controllers
 
         public ActionResult Index()
         {
+            ViewBag.Error = TempData["Error"];
             var buyer = GetBuyer();
             var res = new ShoppingCartViewModel
             {

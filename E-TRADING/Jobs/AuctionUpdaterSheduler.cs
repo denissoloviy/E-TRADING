@@ -16,7 +16,7 @@ namespace E_TRADING.Jobs
                 .WithIdentity("Auction", "Auctions")
                 .StartNow()
                 .WithSimpleSchedule(x => x
-                    .WithIntervalInSeconds(10)
+                    .WithIntervalInSeconds(1)
                     .RepeatForever())
                 .Build();
 

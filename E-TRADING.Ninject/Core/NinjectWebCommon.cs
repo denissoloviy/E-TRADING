@@ -70,7 +70,7 @@ namespace E_TRADING.Ninject.Core
                 config.DependencyResolver = new NinjectDependencyResolver(kernel);
                 return kernel;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 kernel.Dispose();
                 throw;

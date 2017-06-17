@@ -58,15 +58,17 @@
                                 Залишилось часу: <label id="time-left">@Model.TimeLeft</label>
                             </div>
                             <br />
-                            @using (Html.BeginForm("Bid", "Auction", FormMethod.Post, new { @class = "form-horizontal", id = "bidForm" }))
+                            @if (ViewBag.IsSeller != true)
                             {
-                                @Html.AntiForgeryToken()
-                                @Html.HiddenFor(model => model.Id)
-                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-                                <input class="form-control input" type="number"
-                                       onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                       placeholder="Введіть вашу ставку" value="@ViewBag.NextValue"
-                                       min="@ViewBag.NextValue" name="NewBid" id="new-bid" />
+                                using (Html.BeginForm("Bid", "Auction", FormMethod.Post, new { @class = "form-horizontal", id = "bidForm" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(model => model.Id)
+                                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                    <input class="form-control input" type="number"
+                                           onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                           placeholder="Введіть вашу ставку" value="@ViewBag.NextValue"
+                                           min="@ViewBag.NextValue" name="NewBid" id="new-bid" />
                                     <button type="submit" class="btn btn-success" style="margin-top: 10px">Зробити ставку</button>
                                     <button type="button" onclick="BidMinimalStep();" class="btn btn-success" style="margin-top: 10px" id="set-next-bid">Поставити @ViewBag.NextValue</button>
                                     <script>
@@ -78,6 +80,7 @@
                                             $("#bidForm").submit();
                                         }
                                     </script>
+                                }
                             }
                         </div>
                     </div>
@@ -116,25 +119,24 @@
     var auction = $.connection.auctionHub;
 
     auction.client.finishAuction = function (auctionId) {
-        if(auctionId=="@Model.Id"){
-            $('#notBegin').css("display","block");
-            $('#isStarted').css("display","none");
-            $('#isFinished').css("display","block");
-            window.location.reload();
+        if (auctionId == "@Model.Id") {
+            $('#notBegin').css("display", "block");
+            $('#isStarted').css("display", "none");
+            $('#isFinished').css("display", "block");
+            window.location.reload(false);
         }
     };
 
     auction.client.beginAuction = function (auctionId) {
-        if(auctionId=="@Model.Id"){
-            $('#notBegin').css("display","none");
-            $('#isStarted').css("display","block");
-            $('#isFinished').css("display","none");
-            window.location.reload(true);
+        if (auctionId == "@Model.Id") {
+            $('#notBegin').css("display", "none");
+            $('#isStarted').css("display", "block");
+            $('#isFinished').css("display", "none");
         }
     };
 
     auction.client.refreshAuction = function (auctionId, newTime, lastBid, userName) {
-        if(auctionId=="@Model.Id"){
+        if (auctionId == "@Model.Id") {
             $('#time-left').text(newTime);
             $('#last-bid').text(lastBid);
             $('#last-buyer').text(userName);
@@ -150,6 +152,5 @@
         $("#new-bid").attr("value", bid);
         $("#new-bid").attr("min", bid);
         $("#set-next-bid").text("Поставити " + bid);
-        
     }
 </script>

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -8,10 +7,11 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using E_TRADING.Admin.Models;
 using E_TRADING.Data.Managers;
+using E_TRADING.Common;
 
 namespace E_TRADING.Admin.Controllers
-{   
-    [Authorize]
+{
+    [Authorize(Roles = UserRole.SuperAdmin + ", " + UserRole.Administrator)]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

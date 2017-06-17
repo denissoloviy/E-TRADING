@@ -1,11 +1,13 @@
 ﻿using E_TRADING.Data.Entities;
 using E_TRADING.Data.Repositories.Generic;
 using System.Linq;
+using System;
 
 namespace E_TRADING.Data.Repositories
 {
     public interface ISellerRepository : IGenericRepository<Seller>
     {
+        void UnDelete(string id);
     }
 
     public class SellerRepository : GenericRepository<Seller>, ISellerRepository
@@ -25,6 +27,12 @@ namespace E_TRADING.Data.Repositories
         {
             var entity = _context.Sellers.FirstOrDefault(x => x.Id == id);
             entity.IsDeleted = true;
+        }
+
+        public void UnDelete(string id)
+        {
+            var entity = _context.Sellers.FirstOrDefault(x => x.Id == id);
+            entity.IsDeleted = false;
         }
     }
 }

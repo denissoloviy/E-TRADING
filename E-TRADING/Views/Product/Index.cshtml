@@ -27,7 +27,7 @@
                     }
                     else
                     {
-                        <img  src="~/Content/no_available_image.png" />
+                        <img src="~/Content/no_available_image.png" />
                     }
                 </div>
             </div>
@@ -38,18 +38,21 @@
                 <div class=''>
                     <h4 class="">@Html.DisplayNameFor(model => model.Price): @Model.Price</h4>
                 </div>
-                <div class="">
-                    @using (Html.BeginForm("Add", "ShoppingCart", FormMethod.Post, new { @class = "form-horizontal" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.HiddenFor(model => model.Id)
-                        <input class="form-control input" type="number"
-                               onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                               placeholder="@Html.DisplayNameFor(model => model.Amount)"
-                               max="@Model.Amount" min="1" name="Amount" />
+                @if (ViewBag.IsSeller != true)
+                {
+                    <div class="">
+                        @using (Html.BeginForm("Add", "ShoppingCart", FormMethod.Post, new { @class = "form-horizontal" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => model.Id)
+                            <input class="form-control input" type="number"
+                                   onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                   placeholder="@Html.DisplayNameFor(model => model.Amount)"
+                                   max="@Model.Amount" min="1" name="Amount" />
                             <button type="submit" class="form-control btn btn-success" style="margin-top: 10px">Додати в кошик</button>
-                    }
-                </div>
+                        }
+                    </div>
+                }
                 <hr />
                 <div class=''>
                     <h4 class="">@Html.DisplayNameFor(model => model.Description)</h4>

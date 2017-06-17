@@ -159,6 +159,7 @@
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\SellerRepository.cs" />
     <Compile Include="Repositories\ShoppingCartRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\EmailService.cs" />
   </ItemGroup>
   <ItemGroup>

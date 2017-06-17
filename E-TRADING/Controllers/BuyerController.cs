@@ -4,16 +4,14 @@ using E_TRADING.Common.Models;
 using E_TRADING.Data.Entities;
 using E_TRADING.Data.Managers;
 using E_TRADING.Data.Repositories;
+using E_TRADING.Web.Attributes;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace E_TRADING.Controllers
 {
-    [Authorize(Roles = UserRole.Buyer)]
+    [AuthorizeDeleted(Roles = UserRole.Buyer)]
     public class BuyerController : Controller
     {
         IMapper _mapper;

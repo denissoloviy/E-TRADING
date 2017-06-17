@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using E_TRADING.Data;
 using E_TRADING.Data.Repositories;
 using E_TRADING.Data.Entities;
 using E_TRADING.Data.Managers;
@@ -11,56 +8,48 @@ using E_TRADING.Admin.Models;
 using E_TRADING.Common;
 using Microsoft.AspNet.Identity;
 
-
-
 namespace E_TRADING.Admin.Controllers
 {
+    [Authorize(Roles = UserRole.SuperAdmin + ", " + UserRole.Administrator)]
     public class UsersController : Controller
     {
         IBuyerRepository _buyerRepository;
         ISellerRepository _sellerRepository;
         ApplicationUserManager _userManager;
-        public UsersController(  IBuyerRepository buyerRepository,ISellerRepository sellerRepository,ApplicationUserManager userManager)
+        IUserRepository _userRepository;
+        public UsersController(IBuyerRepository buyerRepository,
+            ISellerRepository sellerRepository,
+            ApplicationUserManager userManager,
+            IUserRepository userRepository)
         {
-             _buyerRepository=buyerRepository;
-             _sellerRepository=sellerRepository;
-             _userManager = userManager;
+            _buyerRepository = buyerRepository;
+            _sellerRepository = sellerRepository;
+            _userManager = userManager;
+            _userRepository = userRepository;
         }
-
-
-
-        #region Users
-
-        // GET: Users
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        #endregion
 
         #region AdminUsers
 
         // GET: Users/AdminUsers
+        [Authorize(Roles = UserRole.SuperAdmin)]
         public ActionResult AdminUsers()
         {
-            var users = _userManager.Users.Where(x => x.Roles.Any(y => y.RoleId == "03c3e033-5fb8-458b-96d9-a3d614a8cbe9")).ToList();
+            var users = _userRepository.GetApplicationUsersInRole(UserRole.Administrator).ToList();
             return View(users);
         }
+
+        [Authorize(Roles = UserRole.SuperAdmin)]
         public ActionResult AddAdmin()
         {
             return View();
         }
-        public ActionResult DeleteAdmin(string id)
-        {
-            _userManager.Delete(_userManager.FindById(id));
-            return RedirectToAction("AdminUsers");
-        }
+
+        [Authorize(Roles = UserRole.SuperAdmin)]
         [HttpPost]
-        public  ActionResult AddAdmin(string email, string pass)
+        public ActionResult AddAdmin(string email, string pass)
         {
             var user = new User { UserName = email, Email = email };
-            var result =  _userManager.Create(user, pass);
+            var result = _userManager.Create(user, pass);
             if (result.Succeeded)
             {
                 _userManager.AddToRole(user.Id, UserRole.Administrator);
@@ -72,8 +61,18 @@ namespace E_TRADING.Admin.Controllers
             }
             return View();
         }
+
+        [Authorize(Roles = UserRole.SuperAdmin)]
+        public ActionResult DeleteAdmin(string id)
+        {
+            _userManager.Delete(_userManager.FindById(id));
+            return RedirectToAction("AdminUsers");
+        }
+
         #endregion
+
         #region UsersList
+
         public ActionResult UserList()
         {
             var x = _buyerRepository.GetAll().ToList();
@@ -86,52 +85,77 @@ namespace E_TRADING.Admin.Controllers
 
             return View(z);
         }
+
         public ActionResult GetBuyerInformation(string id)
         {
-            if(String.IsNullOrEmpty(id))
+            if (String.IsNullOrEmpty(id))
             {
                 return UserList();
             }
             var buyer = _buyerRepository.FindBy(b => b.Id == id);
             return View(buyer.First());
         }
+
         public ActionResult GetSellerInformation(string id)
         {
             if (String.IsNullOrEmpty(id))
             {
                 return UserList();
             }
-            var seller = _sellerRepository.FindBy(s => s.Id == id);  
+            var seller = _sellerRepository.FindBy(s => s.Id == id);
             return View(seller.First());
         }
+
         public ActionResult BuyerDelete(string id)
         {
-            _buyerRepository.Delete(id);    
+            _buyerRepository.Delete(id);
             _buyerRepository.SaveChanges();
             return RedirectToAction("UserList");
-        }       
+        }
+
+        public ActionResult BuyerUnDelete(string id)
+        {
+            _buyerRepository.UnDelete(id);
+            _buyerRepository.SaveChanges();
+            return RedirectToAction("UserList");
+        }
+
         public ActionResult SellerDelete(string id)
         {
             _sellerRepository.Delete(id);
             _sellerRepository.SaveChanges();
             return RedirectToAction("UserList");
         }
-        public ActionResult ChangePassword(string id,string changed="false")
+        
+        public ActionResult SellerUnDelete(string id)
         {
-           if(String.IsNullOrEmpty(id))
-               return RedirectToAction("UserList");
-           if(changed=="true")
-               ViewBag.Message = "Password change succesfull";
-           ViewBag.UserId = id;
-           return View();
+            _sellerRepository.UnDelete(id);
+            _sellerRepository.SaveChanges();
+            return RedirectToAction("UserList");
         }
+
+        public ActionResult ChangePassword(string id, string changed = "false")
+        {
+            if (String.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("UserList");
+            }
+            if (changed == "true")
+            {
+                ViewBag.Message = "Password change succesfull";
+            }
+            ViewBag.UserId = id;
+            return View();
+        }
+
         [HttpPost]
-        public ActionResult ChangePassword(string id, string password,string changed="false")
+        public ActionResult ChangePassword(string id, string password, string changed = "false")
         {
             _userManager.RemovePassword(id);
             _userManager.AddPassword(id, password);
             return RedirectToAction("ChangePassword", new { id = id, changed = "true" });
-        }     
+        }
+
         #endregion
     }
 }

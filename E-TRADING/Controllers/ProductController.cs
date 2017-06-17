@@ -2,7 +2,9 @@
 using E_TRADING.Common;
 using E_TRADING.Common.Models;
 using E_TRADING.Data.Entities;
+using E_TRADING.Data.Managers;
 using E_TRADING.Data.Repositories;
+using E_TRADING.Web.Attributes;
 using Microsoft.AspNet.Identity;
 using System;
 using System.IO;
@@ -19,18 +21,21 @@ namespace E_TRADING.Controllers
         ICategoryRepository _categoryRepository;
         IImageRepository _imageRepository;
         IAuctionRepository _auctionRepository;
+        ApplicationUserManager _userManager;
 
         public ProductController(IMapper mapper,
             IProductRepository productRepository,
             ICategoryRepository categoryRepository,
             IImageRepository imageRepository,
-            IAuctionRepository auctionRepository)
+            IAuctionRepository auctionRepository,
+            ApplicationUserManager userManager)
         {
             _mapper = mapper;
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
             _imageRepository = imageRepository;
             _auctionRepository = auctionRepository;
+            _userManager = userManager;
         }
 
         public ActionResult Index(string id)
@@ -38,6 +43,11 @@ namespace E_TRADING.Controllers
             if (id == null)
             {
                 return HttpNotFound();
+            }
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                ViewBag.IsSeller = _userManager.IsInRole(userId, UserRole.Seller);
             }
             var auction = _auctionRepository.Find(id);
             if (auction != null)
@@ -51,7 +61,9 @@ namespace E_TRADING.Controllers
             }
             var productModel = _mapper.Map<ProductViewModel>(product);
             foreach (var img in product.Images)
+            {
                 productModel.Images.Add(@"/Content/ProductImages/" + img.Id + img.Extention);
+            }
 
             return View(productModel);
         }
@@ -62,7 +74,7 @@ namespace E_TRADING.Controllers
             return View();
         }
 
-        [Authorize(Roles = UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         public ActionResult AddProduct()
         {
             var categoryList = new SelectList(_categoryRepository.FindBy(x => x.Categories.Count() == 0),
@@ -73,7 +85,7 @@ namespace E_TRADING.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         public ActionResult AddProduct(ProductViewModel model)
         {
             if (!ModelState.IsValid)
@@ -100,7 +112,8 @@ namespace E_TRADING.Controllers
 
             return RedirectToAction("UploadImages", new { id = product.Id });
         }
-        
+
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         public ActionResult Delete(string id)
         {
             _productRepository.Delete(id);
@@ -109,7 +122,7 @@ namespace E_TRADING.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         public ActionResult UploadImages(string id)
         {
             var product = _productRepository.FirstOrDefault(p => p.Id == id);
@@ -123,7 +136,7 @@ namespace E_TRADING.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         public ActionResult UploadImages(string id, HttpPostedFileBase image)
         {
             var imageId = Guid.NewGuid();
@@ -161,6 +174,7 @@ namespace E_TRADING.Controllers
         }
 
         [HttpPost]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         public ActionResult EditImage(string id, string imageId, int? index)
         {
             var product = _productRepository.FirstOrDefault(p => p.Id == id);
@@ -173,6 +187,7 @@ namespace E_TRADING.Controllers
             return RedirectToAction("UploadImages", new { id = id });
         }
 
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         public ActionResult DeleteImage(string id)
         {
             var image = _imageRepository.FirstOrDefault(i => i.Id == id);

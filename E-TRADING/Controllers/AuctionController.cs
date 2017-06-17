@@ -3,7 +3,9 @@ using E_TRADING.Common;
 using E_TRADING.Common.Extensions;
 using E_TRADING.Common.Models;
 using E_TRADING.Data.Entities;
+using E_TRADING.Data.Managers;
 using E_TRADING.Data.Repositories;
+using E_TRADING.Web.Attributes;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -20,19 +22,22 @@ namespace E_TRADING.Controllers
         IProductRepository _productRepository;
         IAuctionRepository _auctionRepository;
         ISellerRepository _sellerRepository;
+        ApplicationUserManager _userManager;
         public AuctionController(IMapper mapper,
             IProductRepository productRepository,
             IAuctionRepository auctionRepository,
-            ISellerRepository sellerRepository)
+            ISellerRepository sellerRepository,
+            ApplicationUserManager userManager)
         {
             _mapper = mapper;
             _productRepository = productRepository;
             _auctionRepository = auctionRepository;
             _sellerRepository = sellerRepository;
+            _userManager = userManager;
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("ru-RU");
         }
 
-        [Authorize(Roles = UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
@@ -43,7 +48,7 @@ namespace E_TRADING.Controllers
             return View("../Seller/Auctions", res);
         }
 
-        [Authorize(Roles = UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         public ActionResult Create(string id)
         {
             if (id == null)
@@ -65,7 +70,7 @@ namespace E_TRADING.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         [HttpPost]
         [ActionName("Create")]
         [ValidateAntiForgeryToken]
@@ -83,7 +88,7 @@ namespace E_TRADING.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -101,7 +106,7 @@ namespace E_TRADING.Controllers
             return View(auction);
         }
 
-        [Authorize(Roles = UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         [HttpPost]
         [ActionName("Edit")]
         [ValidateAntiForgeryToken]
@@ -119,7 +124,7 @@ namespace E_TRADING.Controllers
             return RedirectToAction("Index");
         }
         
-        [Authorize(Roles = UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -148,7 +153,7 @@ namespace E_TRADING.Controllers
             return View(res);
         }
 
-        [Authorize(Roles = UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -174,7 +179,7 @@ namespace E_TRADING.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = UserRole.Seller + "," + UserRole.Buyer)]
+        [AuthorizeDeleted(Roles = UserRole.Seller + "," + UserRole.Buyer)]
         public ActionResult Details(string id)
         {
             if (id == null)
@@ -185,6 +190,11 @@ namespace E_TRADING.Controllers
             if (auction == null)
             {
                 return HttpNotFound();
+            }
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                ViewBag.IsSeller = _userManager.IsInRole(userId, UserRole.Seller);
             }
             var res = _mapper.Map<AuctionViewModel>(auction);
             var product = _productRepository.FirstOrDefault(p => p.Id == id);
@@ -197,7 +207,7 @@ namespace E_TRADING.Controllers
             return View(res);
         }
 
-        [Authorize(Roles = UserRole.Buyer)]
+        [AuthorizeDeleted(Roles = UserRole.Buyer)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Bid(BidModel model)

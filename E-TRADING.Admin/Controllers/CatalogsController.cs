@@ -1,18 +1,15 @@
 ﻿using AutoMapper;
-using E_TRADING.Common.Models;
-using E_TRADING.Data;
+using E_TRADING.Common;
 using E_TRADING.Data.Entities;
 using E_TRADING.Data.Managers;
 using E_TRADING.Data.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace E_TRADING.Admin.Controllers
 {
-    [Authorize(Roles = "SuperAdmin, Administrator")]
+    [Authorize(Roles = UserRole.SuperAdmin + ", " + UserRole.Administrator)]
     public class CatalogsController : Controller
     {
         IMapper _mapper;

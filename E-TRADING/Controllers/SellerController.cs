@@ -1,18 +1,17 @@
 ﻿using AutoMapper;
 using E_TRADING.Common;
-using E_TRADING.Common.Extensions;
 using E_TRADING.Common.Models;
 using E_TRADING.Data.Entities;
 using E_TRADING.Data.Managers;
 using E_TRADING.Data.Repositories;
-using E_TRADING.Models;
+using E_TRADING.Web.Attributes;
 using Microsoft.AspNet.Identity;
 using System.Linq;
 using System.Web.Mvc;
 
 namespace E_TRADING.Controllers
 {
-    [Authorize(Roles = UserRole.Seller)]
+    [AuthorizeDeleted(Roles = UserRole.Seller)]
     public class SellerController : Controller
     {
         IMapper _mapper;
@@ -64,7 +63,7 @@ namespace E_TRADING.Controllers
             var seller = GetSeller();
             var res = new SellerProductsViewModel
             {
-                Products = seller.Products.Where(item => !item.IsDeleted).Select(item => _mapper.Map<ProductViewModel>(item)).ToList(),
+                Products = seller.Products.Where(item => !item.IsDeleted && item.Amount > 0).Select(item => _mapper.Map<ProductViewModel>(item)).ToList(),
                 Helper = _mapper.Map<SellerProfileHelperViewModel>(seller)
             };
             return View(res);
@@ -78,6 +77,7 @@ namespace E_TRADING.Controllers
                 Products = seller.Products.Where(item => item.IsDeleted || item.Amount == 0).Select(item => _mapper.Map<ProductViewModel>(item)).ToList(),
                 Helper = _mapper.Map<SellerProfileHelperViewModel>(seller)
             };
+            ViewBag.IsArchive = true;
             return View("Products", res);
         }
 

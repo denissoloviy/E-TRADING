@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -11,10 +8,11 @@ using Microsoft.Owin.Security;
 using E_TRADING.Admin.Models;
 using E_TRADING.Data.Managers;
 using E_TRADING.Data.Entities;
+using E_TRADING.Common;
 
 namespace E_TRADING.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = UserRole.SuperAdmin)]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;

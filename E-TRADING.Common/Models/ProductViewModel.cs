@@ -34,6 +34,7 @@ namespace E_TRADING.Common.Models
 
         public string SellerId { get; set; }
         public string SellerName { get; set; }
+        public bool IsDeleted { get; set; }
 
         public List<string> Images { get; set; }
 

@@ -257,6 +257,7 @@
     <Compile Include="App_Start\NinjectConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Attributes\AuthorizeDeletedAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuctionController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -374,7 +375,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
-    <Content Include="Views\Home\ShoppingCart.cshtml" />
     <Content Include="Views\Seller\_LeftMenu.cshtml" />
     <Content Include="Views\Seller\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />

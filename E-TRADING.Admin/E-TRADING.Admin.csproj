@@ -239,6 +239,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CatalogsController.cs" />
+    <Compile Include="Controllers\HelperController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -325,7 +326,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\AdminUsers.cshtml" />
     <Content Include="Views\Catalogs\Edit.cshtml" />
     <Content Include="Views\Users\UserList.cshtml" />
@@ -333,13 +333,13 @@
     <Content Include="Views\Users\GetBuyerInformation.cshtml" />
     <Content Include="Views\Users\ChangePassword.cshtml" />
     <Content Include="Views\Users\AddAdmin.cshtml" />
+    <Content Include="Views\Shared\_Admins.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>

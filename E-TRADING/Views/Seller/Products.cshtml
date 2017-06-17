@@ -6,7 +6,10 @@
 <div class="content">
     <div class="col-md-12">
         <h2>@ViewBag.Title</h2>
-        @Html.ActionLink("Додати товар", "AddProduct", "Product", new { }, new { @class = "btn btn-success" })
+        @if (ViewBag.IsArchive != true)
+        {
+            @Html.ActionLink("Додати товар", "AddProduct", "Product", new { }, new { @class = "btn btn-success" })
+        }
         <div>
             <hr />
             <table class="table margin-top-10">
@@ -33,18 +36,24 @@
                                 <a class="btn btn-default" title="Детальна інформація" href="@Url.Action("Index", "Product", new { id = item.Id })">
                                     <span class="glyphicon glyphicon-eye-open"></span>
                                 </a>
-                                <a class="btn btn-default" title="Редагувати" href="@Url.Action("Edit", "Product", new { id = item.Id })">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </a>
-                                <a class="btn btn-default" title="Редагувати зображення" href="@Url.Action("UploadImages", "Product", new { id = item.Id })">
-                                    <span class="glyphicon glyphicon-picture"></span>
-                                </a>
-                                <a class="btn btn-default" title="Створити аукціон" href="@Url.Action("Create", "Auction", new { id = item.Id })">
-                                    <span class="glyphicon glyphicon-hand-up"></span>
-                                </a>
-                                <a class="btn btn-danger" title="Видалити запис" href="@Url.Action("Delete", "Product", new { id = item.Id })">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </a>
+                                @*@if (!item.IsDeleted)
+                                {
+                                    <a class="btn btn-default" title="Редагувати" href="@Url.Action("Edit", "Product", new { id = item.Id })">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </a>
+                                }*@
+                                @if (ViewBag.IsArchive != true)
+                                {
+                                    <a class="btn btn-default" title="Редагувати зображення" href="@Url.Action("UploadImages", "Product", new { id = item.Id })">
+                                        <span class="glyphicon glyphicon-picture"></span>
+                                    </a>
+                                    <a class="btn btn-default" title="Створити аукціон" href="@Url.Action("Create", "Auction", new { id = item.Id })">
+                                        <span class="glyphicon glyphicon-hand-up"></span>
+                                    </a>
+                                    <a class="btn btn-danger" title="Видалити запис" href="@Url.Action("Delete", "Product", new { id = item.Id })">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                }
                             </td>
                         </tr>
                     }

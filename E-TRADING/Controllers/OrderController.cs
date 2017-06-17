@@ -5,6 +5,7 @@ using E_TRADING.Common.OrderStatuses;
 using E_TRADING.Data.Entities;
 using E_TRADING.Data.Managers;
 using E_TRADING.Data.Repositories;
+using E_TRADING.Web.Attributes;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace E_TRADING.Controllers
             _productRepository = productRepository;
         }
 
-        [Authorize(Roles = UserRole.Buyer + "," + UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Buyer + "," + UserRole.Seller)]
         public ActionResult ActiveOrders()
         {
             ViewBag.Title = "Активні замовлення";
@@ -80,7 +81,7 @@ namespace E_TRADING.Controllers
             }
         }
 
-        [Authorize(Roles = UserRole.Buyer + "," + UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Buyer + "," + UserRole.Seller)]
         public ActionResult InactiveOrders()
         {
             ViewBag.Title = "Архів замовлень";
@@ -120,11 +121,18 @@ namespace E_TRADING.Controllers
             }
         }
 
-        [Authorize(Roles = UserRole.Buyer)]
+        [AuthorizeDeleted(Roles = UserRole.Buyer)]
         public ActionResult Create()
         {
             var userId = User.Identity.GetUserId();
             var buyer = _buyerRepository.FirstOrDefault(item => item.Id == userId);
+            foreach (var item in buyer.ShoppingCarts)
+            {
+                if (item.Product.Amount < item.Amount)
+                {
+                    TempData["Error"] = $"Недостатньо одиниць товару {item.Product.Name} для покупки";
+                }
+            }
             var orders = buyer.ShoppingCarts.Select(item =>
             new Order
             {
@@ -141,7 +149,7 @@ namespace E_TRADING.Controllers
             return View("../Buyer/CreateOrder", orders);
         }
 
-        [Authorize(Roles = UserRole.Buyer)]
+        [AuthorizeDeleted(Roles = UserRole.Buyer)]
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult CreateConfirm(List<Order> order)
@@ -179,7 +187,7 @@ namespace E_TRADING.Controllers
             return RedirectToAction("ActiveOrders");
         }
 
-        [Authorize(Roles = UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult Confirm(string id)
@@ -194,7 +202,7 @@ namespace E_TRADING.Controllers
             return RedirectToAction("ActiveOrders");
         }
 
-        [Authorize(Roles = UserRole.Buyer)]
+        [AuthorizeDeleted(Roles = UserRole.Buyer)]
         public ActionResult Pay(string id)
         {
             var order = _orderRepository.Find(id);
@@ -205,7 +213,7 @@ namespace E_TRADING.Controllers
             return RedirectToAction("PayConfirm", new { id = id });
         }
 
-        [Authorize(Roles = UserRole.Buyer)]
+        [AuthorizeDeleted(Roles = UserRole.Buyer)]
         public ActionResult PayConfirm(string id)
         {
             var order = _orderRepository.Find(id);
@@ -218,7 +226,7 @@ namespace E_TRADING.Controllers
             return RedirectToAction("ActiveOrders");
         }
 
-        [Authorize(Roles = UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         public ActionResult Send(string id)
         {
             var order = _orderRepository.Find(id);
@@ -230,7 +238,7 @@ namespace E_TRADING.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Seller)]
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult SendConfirm([System.Web.Http.FromBody]string id, [System.Web.Http.FromBody]string invoiceNumber)
@@ -246,7 +254,7 @@ namespace E_TRADING.Controllers
             return RedirectToAction("ActiveOrders");
         }
 
-        [Authorize(Roles = UserRole.Buyer)]
+        [AuthorizeDeleted(Roles = UserRole.Buyer)]
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult DeliveryConfirm(string id)
@@ -261,7 +269,7 @@ namespace E_TRADING.Controllers
             return RedirectToAction("InactiveOrders");
         }
 
-        [Authorize(Roles = UserRole.Buyer + "," + UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Buyer + "," + UserRole.Seller)]
         public ActionResult Cancel(string id)
         {
             var order = _orderRepository.Find(id);
@@ -273,7 +281,7 @@ namespace E_TRADING.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = UserRole.Buyer + "," + UserRole.Seller)]
+        [AuthorizeDeleted(Roles = UserRole.Buyer + "," + UserRole.Seller)]
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult CancelConfirm(string id)

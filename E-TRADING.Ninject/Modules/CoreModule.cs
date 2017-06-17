@@ -25,6 +25,7 @@ namespace E_TRADING.Ninject.Modules
             Bind<ISellerRepository>().To<SellerRepository>().InRequestScope();
             Bind<IAuctionRepository>().To<AuctionRepository>().InRequestScope();
             Bind<IShoppingCartRepository>().To<ShoppingCartRepository>().InRequestScope();
+            Bind<IUserRepository>().To<UserRepository>().InRequestScope();
             if (Kernel != null)
             {
                 Bind<ApplicationUserManager>()

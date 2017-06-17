@@ -57,7 +57,7 @@ namespace E_TRADING.Mapper.Profiles
                     .Where(item => StatusTypes.ActiveStatuses.Contains(item.Status)).Sum(item => item.Amount)))
                 .ForMember(dest => dest.InactiveOrdersCount, opt => opt.MapFrom(src => src.Products.SelectMany(item => item.Orders)
                     .Where(item => StatusTypes.InactiveStatuses.Contains(item.Status)).Sum(item => item.Amount)))
-                .ForMember(dest => dest.ArchiveProductsCount, opt => opt.MapFrom(src => src.Products.Where(item => item.IsDeleted || item.Amount == 0).Sum(item => item.Amount)));
+                .ForMember(dest => dest.ArchiveProductsCount, opt => opt.MapFrom(src => src.Products.Where(item => item.IsDeleted || item.Amount == 0).Count()));
 
             CreateMap<Seller, SellerViewEditViewModel>()
                 .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.User.Address))

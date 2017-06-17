@@ -3,12 +3,12 @@
     ViewBag.Title = "UserList";
 }
 <div class="jumbotron container-fluid">
-        <div class="col-lg-12 row">
-            <div class="center-block" style="width:184px;" >
-                <button class="btn btn-default choose-catalog active" style="width:90px" id="BuyerButton">Покупці</button>
-                <button class="btn btn-default choose-catalog" style="width:90px" id="SellerButton">Продавці</button>
-            </div>
+    <div class="col-lg-12 row">
+        <div class="center-block" style="width:184px;">
+            <button class="btn btn-default choose-catalog active" style="width:90px" id="BuyerButton">Покупці</button>
+            <button class="btn btn-default choose-catalog" style="width:90px" id="SellerButton">Продавці</button>
         </div>
+    </div>
     <div class="panel panel-default" id="BuyerCatalog">
         <div class="panel-heading">
             Покупці
@@ -17,7 +17,7 @@
             <table class="table margin-top-10">
                 <thead>
                     <tr>
-                        <th>Логин</th>
+                        <th>Логін</th>
                         <th>Телефон</th>
                         <th>Опції</th>
                     </tr>
@@ -42,9 +42,18 @@
                                         <a class="btn btn-default" title="Редагувати" href="@Url.Action("ChangePassword", "Users", new { id = buyer.User.Id })">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </a>
-                                        <a class="btn btn-danger" title="Видалити" href="@Url.Action("BuyerDelete", "Users", new { id = buyer.User.Id })">
-                                            <span class="glyphicon glyphicon-remove"></span>
-                                        </a>
+                                        @if (buyer.IsDeleted)
+                                        {
+                                            <a class="btn btn-success" title="Відновити" href="@Url.Action("BuyerUnDelete", "Users", new { id = buyer.User.Id })">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-danger" title="Видалити" href="@Url.Action("BuyerDelete", "Users", new { id = buyer.User.Id })">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </a>
+                                        }
                                     </td>
                                 </tr>
                             }
@@ -53,101 +62,103 @@
                         {
                             <tr>
                                 <td colspan="7">
-                                    <h3>Жодного байера не було створено</h3>
+                                    <h3>Жодного покупця не було створено</h3>
                                 </td>
                             </tr>
                         }
-
                     }
                 </tbody>
             </table>
-
         </div>
     </div>
-        <div class="panel panel-default" id="SellerCatalog" style="display:none;">
-            <div class="panel-heading">
-               Продавці
-
-            </div>
-            <div class="panel-body">
-                <table class="table margin-top-10">
-                    <thead>
-                        <tr>
-                            <th>Логин</th>
-                            <th>Телефон</th>
-                            <th>Опції</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            if (Model.Sellers.Count() > 0)
+    <div class="panel panel-default" id="SellerCatalog" style="display:none;">
+        <div class="panel-heading">
+            Продавці
+        </div>
+        <div class="panel-body">
+            <table class="table margin-top-10">
+                <thead>
+                    <tr>
+                        <th>Логін</th>
+                        <th>Телефон</th>
+                        <th>Опції</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        if (Model.Sellers.Count() > 0)
+                        {
+                            foreach (var seller in Model.Sellers)
                             {
-                                foreach (var seller in Model.Sellers)
-                                {
-                                    <tr>
-                                        <td>
-                                            @seller.User.UserName
-                                        </td>
-                                        <td>
-                                            @seller.User.PhoneNumber
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-default" title="Перейти" href="@Url.Action("GetSellerInformation", "Users", new { id = seller.Id })">
-                                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <tr>
+                                    <td>
+                                        @seller.User.UserName
+                                    </td>
+                                    <td>
+                                        @seller.User.PhoneNumber
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-default" title="Перейти" href="@Url.Action("GetSellerInformation", "Users", new { id = seller.Id })">
+                                            <span class="glyphicon glyphicon-eye-open"></span>
+                                        </a>
+                                        <a class="btn btn-default" title="Редагувати" href="@Url.Action("ChangePassword", "Users", new { id = seller.User.Id })">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </a>
+                                        @if (seller.IsDeleted)
+                                        {
+                                            <a class="btn btn-success" title="Відновити" href="@Url.Action("SellerUnDelete", "Users", new { id = seller.User.Id })">
+                                                <span class="glyphicon glyphicon-remove"></span>
                                             </a>
-                                            <a class="btn btn-default" title="Редагувати" href="@Url.Action("ChangePassword", "Users", new { id = seller.User.Id })">
-                                                <span class="glyphicon glyphicon-pencil"></span>
-                                            </a>
+                                        }
+                                        else
+                                        {
                                             <a class="btn btn-danger" title="Видалити" href="@Url.Action("SellerDelete", "Users", new { id = seller.User.Id })">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </a>
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                            else
-                            {
-                                <tr>
-                                    <td colspan="7" style="text-align:center">
-                                        <h3>Жодного продукту не було створено</h3>
+                                        }
                                     </td>
                                 </tr>
                             }
-
                         }
-                    </tbody>
-                </table>
-
-            </div>
+                        else
+                        {
+                            <tr>
+                                <td colspan="7" style="text-align:center">
+                                    <h3>Жодного продавця не було створено</h3>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
         </div>
+    </div>
 </div>
 
 @section Scripts {
-   <script> 
-    $(document).ready(function () {
-        ToggleView = function () {
-            if ($(this).hasClass('active'))
-            {
-                return;
-            }
-            else
-            {
-                $('.choose-catalog').removeClass("active");
-                $(this).addClass('active');
-                if ($(this).attr('id') == 'SellerButton') {
-                    $('#SellerCatalog').show();
-                    $('#BuyerCatalog').hide();
+    <script>
+        $(document).ready(function () {
+            ToggleView = function () {
+                if ($(this).hasClass('active')) {
+                    return;
                 }
                 else {
-                    $('#SellerCatalog').hide();
-                    $('#BuyerCatalog').show();
+                    $('.choose-catalog').removeClass("active");
+                    $(this).addClass('active');
+                    if ($(this).attr('id') == 'SellerButton') {
+                        $('#SellerCatalog').show();
+                        $('#BuyerCatalog').hide();
+                    }
+                    else {
+                        $('#SellerCatalog').hide();
+                        $('#BuyerCatalog').show();
+                    }
                 }
-            }
 
-        }
-        $('#SellerButton').on('click', ToggleView);
-        $('#BuyerButton').on('click', ToggleView);
-    });
-</script>
+            }
+            $('#SellerButton').on('click', ToggleView);
+            $('#BuyerButton').on('click', ToggleView);
+        });
+    </script>
 }
 

@@ -26,37 +26,36 @@ namespace E_TRADING.Controllers
             _productRepository = productRepository;
             _shoppingcartRepository = shoppingcartRepository;
         }
+
         public ActionResult Index()
         {
             Random x = new Random();
-            var Products = _productRepository.GetAll().ToList();
+            var Products = _productRepository.GetAll().Where(item => !item.IsDeleted && item.Amount > 0).ToList();
 
             List<Product> products = new List<Product>();
-            for (int i = 0; i < 4;i++)
+            for (int i = 0; i < 4; i++)
             {
-                var y = x.Next(0, Products.Count);
-                products.Add(Products[y]);
-                Products.RemoveAt(y);
+                if (Products.Count != 0)
+                {
+                    var y = x.Next(0, Products.Count);
+                    products.Add(Products[y]);
+                    Products.RemoveAt(y);
+                }
             }
-         
+
             var result = new CategoryProductViewModel
             {
                 Categories = _categoryRepository.FindBy(item => item.MasterCategoryId == null).ToList(),
                 Products = products
             };
 
-            //_productRepository.Add(new Data.Entities.Product
-            //{
-                
-            //});
-            //_productRepository.SaveChanges();
-
             return View(result);
         }
-        public ActionResult Search(decimal? PriceMin,decimal? PriceMax,string Category="",string SearchString="")
+
+        public ActionResult Search(decimal? PriceMin, decimal? PriceMax, string Category = "", string SearchString = "")
         {
-            
-            var _products=_productRepository.GetAll();
+
+            var _products = _productRepository.GetAll();
             var result = new CategoryProductViewModel
             {
                 Categories = _categoryRepository.FindBy(item => item.MasterCategoryId == null).ToList(),
@@ -76,12 +75,12 @@ namespace E_TRADING.Controllers
                 ViewBag.SearchString = SearchString;
                 _products = _products.Where(p => p.Name.Contains(SearchString));
             }
-            if (PriceMin!=null)
+            if (PriceMin != null)
             {
                 ViewBag.PriceMin = PriceMin;
-                _products = _products.Where(p => p.Price >PriceMin);
+                _products = _products.Where(p => p.Price > PriceMin);
             }
-            if (PriceMax!=null)
+            if (PriceMax != null)
             {
                 ViewBag.PriceMax = PriceMax;
                 _products = _products.Where(p => p.Price < PriceMax);
@@ -89,44 +88,19 @@ namespace E_TRADING.Controllers
             result.Products = _products.ToList();
             return View(result);
         }
-        public void GetAllCategories(Category cat,ref List<string>CatWithSubCat)
+
+        public void GetAllCategories(Category cat, ref List<string> CatWithSubCat)
         {
-            if (cat.Categories.Count==0)
+            if (cat.Categories.Count == 0)
                 CatWithSubCat.Add(cat.Id);
             else
             {
-                CatWithSubCat.Add(cat.Id); 
-                foreach(var x in cat.Categories)
+                CatWithSubCat.Add(cat.Id);
+                foreach (var x in cat.Categories)
                 {
                     GetAllCategories(x, ref CatWithSubCat);
                 }
             }
-        }
-        public ActionResult ShoppingCart(string UserId="")
-        {
-            Random x = new Random();
-            var Products = _productRepository.GetAll().ToList();
-
-            List<Product> products = new List<Product>();
-            for (int i = 0; i < 4;i++)
-            {
-                var y = x.Next(0, Products.Count);
-                products.Add(Products[y]);
-                Products.RemoveAt(y);
-            }
-            return View(products);
-        }
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-            return View();  
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }
