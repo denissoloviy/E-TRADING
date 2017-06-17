@@ -19,6 +19,7 @@
                     <tr>
                         <th>Логін</th>
                         <th>Телефон</th>
+                        <th>Користувач підтверджений</th>
                         <th>Опції</th>
                     </tr>
                 </thead>
@@ -81,6 +82,7 @@
                     <tr>
                         <th>Логін</th>
                         <th>Телефон</th>
+                        <th>Користувач підтверджений</th>
                         <th>Опції</th>
                     </tr>
                 </thead>
@@ -96,6 +98,9 @@
                                     </td>
                                     <td>
                                         @seller.User.PhoneNumber
+                                    </td>
+                                    <td>
+                                        @seller.IsConfirmed
                                     </td>
                                     <td>
                                         <a class="btn btn-default" title="Перейти" href="@Url.Action("GetSellerInformation", "Users", new { id = seller.Id })">

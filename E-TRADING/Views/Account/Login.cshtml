@@ -14,6 +14,21 @@
                 <h4>Use a local account to log in.</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                if (ViewBag.IsConfirmed == false)
+                {
+                    <div>
+                        User is not confirmed.
+                        @if (string.IsNullOrEmpty(ViewBag.ErrorMessage))
+                        {
+                            <span>Try again later</span>
+                        }
+                        else
+                        {
+                            <label>@ViewBag.ErrorMessage</label>
+                            @Html.ActionLink("Change personal data", "RegisterEdit", "Account", new { id = ViewBag.Id }, new { @class = "btn btn-default" })
+                        }
+                    </div>
+                }
                 <div class="form-group">
                     @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">

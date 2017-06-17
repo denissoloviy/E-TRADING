@@ -21,10 +21,13 @@ namespace E_TRADING.Controllers
         IBuyerRepository _buyerRepository;
         ISellerRepository _sellerRepository;
 
-        public AccountController(IBuyerRepository buyerRepository, ISellerRepository sellerRepository)
+        public AccountController(IBuyerRepository buyerRepository,
+            ISellerRepository sellerRepository,
+            ApplicationUserManager userManager)
         {
             _buyerRepository = buyerRepository;
             _sellerRepository = sellerRepository;
+            _userManager = userManager;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -77,7 +80,29 @@ namespace E_TRADING.Controllers
             {
                 return View(model);
             }
-
+            var findUser = await _userManager.FindByNameAsync(model.UserName);
+            if (findUser == null)
+            {
+                AddErrors(new IdentityResult("Incorrect login"));
+                return View(model);
+            }
+            var user = await _userManager.FindAsync(findUser.UserName, model.Password);
+            if (user == null)
+            {
+                AddErrors(new IdentityResult("Incorrect password"));
+                return View(model);
+            }
+            if (_userManager.IsInRole(findUser.Id, UserRole.Seller))
+            {
+                var seller = _sellerRepository.Find(findUser.Id);
+                if (!seller.IsConfirmed)
+                {
+                    ViewBag.IsConfirmed = false;
+                    ViewBag.ErrorMessage = seller.ErrorText;
+                    ViewBag.Id = findUser.Id;
+                    return View(model);
+                }
+            }
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
@@ -214,6 +239,51 @@ namespace E_TRADING.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        [AllowAnonymous]
+        public ActionResult RegisterEdit(string id)
+        {
+            var seller = _sellerRepository.Find(id);
+            var model = new RegisterEditViewModel
+            {
+                BirthDate = seller.User.BirthDate,
+                FirstName = seller.User.FirstName,
+                LastName = seller.User.LastName,
+                MiddleName = seller.User.MiddleName,
+                OfficeAddress = seller.OfficeAddress,
+                Passport = seller.Passport,
+                PhoneNumber = seller.User.PhoneNumber,
+                UserName = seller.User.UserName,
+                ErrorText = seller.ErrorText
+            };
+            return View(model);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult RegisterEdit(RegisterEditViewModel model)
+        {
+            var user = _userManager.Find(model.UserName, model.Password);
+            if (user == null)
+            {
+                AddErrors(new IdentityResult("Incorrect password"));
+                return View(model);
+            }
+            user.BirthDate = model.BirthDate;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.MiddleName = model.MiddleName;
+            user.PhoneNumber = model.PhoneNumber;
+            _userManager.Update(user);
+
+            var seller = _sellerRepository.Find(user.Id);
+            seller.OfficeAddress = model.OfficeAddress;
+            seller.Passport = model.Passport;
+            seller.ErrorText = "";
+            _sellerRepository.SaveChanges();
+
+            return RedirectToAction("Login");
         }
 
         //

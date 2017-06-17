@@ -334,6 +334,8 @@
     <Content Include="Views\Users\ChangePassword.cshtml" />
     <Content Include="Views\Users\AddAdmin.cshtml" />
     <Content Include="Views\Shared\_Admins.cshtml" />
+    <Content Include="Views\Users\Confirm.cshtml" />
+    <Content Include="Views\Shared\_Navbar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

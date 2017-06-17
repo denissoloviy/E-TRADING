@@ -113,6 +113,45 @@ namespace E_TRADING.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class RegisterEditViewModel
+    {
+        public string ErrorText { get; set; }
+        [Required]
+        [Display(Name = "Login")]
+        public string UserName { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Middle Name")]
+        public string MiddleName { get; set; }
+        
+        [Phone]
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "Birth Date")]
+        public DateTime? BirthDate { get; set; }
+
+        [Display(Name = "Passport number")]
+        public string Passport { get; set; }
+
+        [Display(Name = "Office Address")]
+        public string OfficeAddress { get; set; }
+    }
+
     public class ResetPasswordViewModel
     {
         [Required]

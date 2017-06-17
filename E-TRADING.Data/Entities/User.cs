@@ -15,7 +15,7 @@ namespace E_TRADING.Data.Entities
 
         [DisplayName("Номер телефону")]
         public override string PhoneNumber { get; set; }
-
+        
         [DisplayName("Ім'я")]
         public string FirstName { get; set; }
 

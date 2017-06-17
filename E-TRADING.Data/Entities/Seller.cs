@@ -22,6 +22,12 @@ namespace E_TRADING.Data.Entities
         [DisplayName("Контактний номер телефону")]
         public string ContactPhone { get; set; }
 
+        [DisplayName("Користувач підтверджений")]
+        public bool IsConfirmed { get; set; }
+
+        [DisplayName("Текст помилки")]
+        public string ErrorText { get; set; }
+
         [DisplayName("Користувач")]
         public virtual User User { get; set; }
 

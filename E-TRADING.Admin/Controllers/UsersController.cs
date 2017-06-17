@@ -88,22 +88,22 @@ namespace E_TRADING.Admin.Controllers
 
         public ActionResult GetBuyerInformation(string id)
         {
-            if (String.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id))
             {
                 return UserList();
             }
-            var buyer = _buyerRepository.FindBy(b => b.Id == id);
-            return View(buyer.First());
+            var buyer = _buyerRepository.Find(id);
+            return View(buyer);
         }
 
         public ActionResult GetSellerInformation(string id)
         {
-            if (String.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id))
             {
                 return UserList();
             }
-            var seller = _sellerRepository.FindBy(s => s.Id == id);
-            return View(seller.First());
+            var seller = _sellerRepository.Find(id);
+            return View(seller);
         }
 
         public ActionResult BuyerDelete(string id)
@@ -136,7 +136,7 @@ namespace E_TRADING.Admin.Controllers
 
         public ActionResult ChangePassword(string id, string changed = "false")
         {
-            if (String.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id))
             {
                 return RedirectToAction("UserList");
             }
@@ -154,6 +154,22 @@ namespace E_TRADING.Admin.Controllers
             _userManager.RemovePassword(id);
             _userManager.AddPassword(id, password);
             return RedirectToAction("ChangePassword", new { id = id, changed = "true" });
+        }
+
+        public ActionResult Confirm(string id)
+        {
+            var seller = _sellerRepository.Find(id);
+            return View(seller);
+        }
+
+        [HttpPost]
+        public ActionResult Confirm(string id, string errorText, bool isConfirmed = false)
+        {
+            var seller = _sellerRepository.Find(id);
+            seller.IsConfirmed = isConfirmed;
+            seller.ErrorText = errorText;
+            _sellerRepository.SaveChanges();
+            return RedirectToAction("GetSellerInformation", new { id = id });
         }
 
         #endregion

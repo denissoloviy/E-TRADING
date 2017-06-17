@@ -12,12 +12,17 @@ namespace E_TRADING.Admin.Controllers
         {
             _userManager = userManager;
         }
-
-        // GET: Helper
+        
         public ActionResult SuperAdminPage()
         {
             var userId = User.Identity.GetUserId();
             return PartialView("_Admins", _userManager.IsInRole(userId, UserRole.SuperAdmin));
+        }
+
+        public ActionResult Navbar()
+        {
+            var userId = User.Identity.GetUserId();
+            return PartialView("_Navbar", _userManager.IsInRole(userId, UserRole.SuperAdmin));
         }
     }
 }

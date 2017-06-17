@@ -396,6 +396,7 @@
     <Content Include="Views\Auction\Details.cshtml" />
     <Content Include="Views\Auction\Edit.cshtml" />
     <Content Include="Views\Auction\Delete.cshtml" />
+    <Content Include="Views\Account\RegisterEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

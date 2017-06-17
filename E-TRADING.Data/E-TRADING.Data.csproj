@@ -147,6 +147,14 @@
     <Compile Include="Migrations\201706032312348_addedForRegis.Designer.cs">
       <DependentUpon>201706032312348_addedForRegis.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706171115594_AddIsConfirmedToUser.cs" />
+    <Compile Include="Migrations\201706171115594_AddIsConfirmedToUser.Designer.cs">
+      <DependentUpon>201706171115594_AddIsConfirmedToUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706171124518_AddIsConfirmedToSeller.cs" />
+    <Compile Include="Migrations\201706171124518_AddIsConfirmedToSeller.Designer.cs">
+      <DependentUpon>201706171124518_AddIsConfirmedToSeller.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AuctionRepository.cs" />
@@ -205,6 +213,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706032312348_addedForRegis.resx">
       <DependentUpon>201706032312348_addedForRegis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706171115594_AddIsConfirmedToUser.resx">
+      <DependentUpon>201706171115594_AddIsConfirmedToUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706171124518_AddIsConfirmedToSeller.resx">
+      <DependentUpon>201706171124518_AddIsConfirmedToSeller.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
