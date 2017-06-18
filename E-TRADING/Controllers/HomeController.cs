@@ -102,5 +102,10 @@ namespace E_TRADING.Controllers
                 }
             }
         }
+
+        public ActionResult About()
+        {
+            return View();
+        }
     }
 }

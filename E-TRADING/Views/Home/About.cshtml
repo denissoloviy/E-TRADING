@@ -1,7 +1,45 @@
 ﻿@{
     ViewBag.Title = "About";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<!-- Image Header -->
+<div class="w3-display-container w3-animate-opacity">
+    <img src="~/Content/about/img/about-header.jpg" alt="boat" style="width:100%;min-height:350px;max-height:600px;">
+</div>
 
-<p>Use this area to provide additional information.</p>
+<!-- Team Container -->
+<div class="w3-container w3-padding-64 w3-center" id="team">
+    <h2>OUR TEAM</h2>
+    <p>Meet the team - our office rats:</p>
+
+    <div class="w3-row">
+        <br>
+
+        <div class="w3-quarter">
+            <img src="~/Content/about/img/denis.png" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
+            <h3>Denis Soloviy</h3>
+            <p>Developer</p>
+        </div>
+
+        <div class="w3-quarter">
+            <img src="~/Content/about/img/yurii.png" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
+            <h3>Yurii Hanzha</h3>
+            <p>Developer</p>
+        </div>
+
+        <div class="w3-quarter">
+            <img src="~/Content/about/img/max.png" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
+            <h3>Max Topchii</h3>
+            <p>Developer</p>
+        </div>
+
+        <div class="w3-quarter">
+            <img src="~/Content/about/img/yarik.png" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
+            <h3>Yarik Krukovskii</h3>
+            <p>Developer</p>
+        </div>
+
+    </div>
+</div>
+@section Styles {
+    @Styles.Render("~/Content/about")
+}

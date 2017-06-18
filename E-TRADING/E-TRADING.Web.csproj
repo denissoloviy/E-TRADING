@@ -280,6 +280,14 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\about\css\font-awesome.min.css" />
+    <Content Include="Content\about\css\w3-theme-black.css" />
+    <Content Include="Content\about\css\w3.css" />
+    <Content Include="Content\about\img\about-header.jpg" />
+    <Content Include="Content\about\img\denis.png" />
+    <Content Include="Content\about\img\max.png" />
+    <Content Include="Content\about\img\yarik.png" />
+    <Content Include="Content\about\img\yurii.png" />
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />

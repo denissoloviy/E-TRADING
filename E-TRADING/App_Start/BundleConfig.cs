@@ -29,6 +29,11 @@ namespace E_TRADING
                       "~/Content/bootstrap.css",
                       "~/Content/styles.css",
                       "~/Content/site.css"));
+            
+            bundles.Add(new StyleBundle("~/Content/about").Include(
+                      "~/Content/about/css/font-awesome.min.css",
+                      "~/Content/about/css/w3-theme-black.css",
+                      "~/Content/about/css/w3.css"));
         }
     }
 }
