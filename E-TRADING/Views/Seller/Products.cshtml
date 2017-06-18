@@ -33,7 +33,7 @@
                             <td>@item.AddedDate</td>
                             <td>@item.Category</td>
                             <td>
-                                <a class="btn btn-default" title="Детальна інформація" href="@Url.Action("Index", "Product", new { id = item.Id })">
+                                <a class="btn btn-default" title="More information" href="@Url.Action("Index", "Product", new { id = item.Id })">
                                     <span class="glyphicon glyphicon-eye-open"></span>
                                 </a>
                                 @*@if (!item.IsDeleted)
@@ -44,13 +44,13 @@
                                 }*@
                                 @if (ViewBag.IsArchive != true)
                                 {
-                                    <a class="btn btn-default" title="Редагувати зображення" href="@Url.Action("UploadImages", "Product", new { id = item.Id })">
+                                    <a class="btn btn-default" title="Edit image" href="@Url.Action("UploadImages", "Product", new { id = item.Id })">
                                         <span class="glyphicon glyphicon-picture"></span>
                                     </a>
-                                    <a class="btn btn-default" title="Створити аукціон" href="@Url.Action("Create", "Auction", new { id = item.Id })">
+                                    <a class="btn btn-default" title="Create auction" href="@Url.Action("Create", "Auction", new { id = item.Id })">
                                         <span class="glyphicon glyphicon-hand-up"></span>
                                     </a>
-                                    <a class="btn btn-danger" title="Видалити запис" href="@Url.Action("Delete", "Product", new { id = item.Id })">
+                                    <a class="btn btn-danger" title="Delete" href="@Url.Action("Delete", "Product", new { id = item.Id })">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </a>
                                 }

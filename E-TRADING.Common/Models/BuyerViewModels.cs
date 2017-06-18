@@ -6,24 +6,24 @@ namespace E_TRADING.Common.Models
 {
     public class BuyerViewEditViewModel : BuyerProfileHelperViewModel
     {
-        [DisplayName("Ім'я користувача")]
+        [DisplayName("User name")]
         public string UserName { get; set; }
 
         [DisplayName("Email")]
         public string Email { get; set; }
 
-        [DisplayName("Номер телефону")]
+        [DisplayName("Phone number")]
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Ім'я")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Прізвище")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Last name")]
         public string LastName { get; set; }
 
-        [DisplayName("Адреса")]
+        [DisplayName("Addres")]
         public string Address { get; set; }
 
         public BuyerProfileHelperViewModel Helper { get; set; }

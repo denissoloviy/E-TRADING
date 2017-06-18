@@ -10,28 +10,28 @@ namespace E_TRADING.Data.Entities
     {
         [Key, ForeignKey("User")]
         public override string Id { get; set; }
-        [DisplayName("Псевдонім")]
+        [DisplayName("Alias")]
         public string Alias { get; set; }
 
-        [DisplayName("Адреса офісу")]
+        [DisplayName("Office addres")]
         public string OfficeAddress { get; set; }
 
-        [DisplayName("Номер паспорту")]
+        [DisplayName("Passport number")]
         public string Passport { get; set; }
 
-        [DisplayName("Контактний номер телефону")]
+        [DisplayName("Contact number")]
         public string ContactPhone { get; set; }
 
-        [DisplayName("Користувач підтверджений")]
+        [DisplayName("User confirmed")]
         public bool IsConfirmed { get; set; }
 
-        [DisplayName("Текст помилки")]
+        [DisplayName("Error message")]
         public string ErrorText { get; set; }
 
-        [DisplayName("Користувач")]
+        [DisplayName("User")]
         public virtual User User { get; set; }
 
-        [DisplayName("Товари")]
+        [DisplayName("Products")]
         public virtual ICollection<Product> Products { get; set; }
 
         public bool IsDeleted { get; set; }

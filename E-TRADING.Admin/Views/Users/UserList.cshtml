@@ -5,22 +5,22 @@
 <div class="jumbotron container-fluid">
     <div class="col-lg-12 row">
         <div class="center-block" style="width:184px;">
-            <button class="btn btn-default choose-catalog active" style="width:90px" id="BuyerButton">Покупці</button>
-            <button class="btn btn-default choose-catalog" style="width:90px" id="SellerButton">Продавці</button>
+            <button class="btn btn-default choose-catalog active" style="width:90px" id="BuyerButton">Buyers</button>
+            <button class="btn btn-default choose-catalog" style="width:90px" id="SellerButton">Sellers</button>
         </div>
     </div>
     <div class="panel panel-default" id="BuyerCatalog">
         <div class="panel-heading">
-            Покупці
+            Buyers
         </div>
         <div class="panel-body">
             <table class="table margin-top-10">
                 <thead>
                     <tr>
-                        <th>Логін</th>
-                        <th>Телефон</th>
-                        <th>Користувач підтверджений</th>
-                        <th>Опції</th>
+                        <th>Login</th>
+                        <th>Phone number</th>
+                        <th>User confirmed</th>
+                        <th>Options</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,21 +37,21 @@
                                         @buyer.User.PhoneNumber
                                     </td>
                                     <td>
-                                        <a class="btn btn-default" title="Перейти" href="@Url.Action("GetBuyerInformation", "Users", new { id = buyer.Id })">
+                                        <a class="btn btn-default" title="Go to" href="@Url.Action("GetBuyerInformation", "Users", new { id = buyer.Id })">
                                             <span class="glyphicon glyphicon-eye-open"></span>
                                         </a>
-                                        <a class="btn btn-default" title="Редагувати" href="@Url.Action("ChangePassword", "Users", new { id = buyer.User.Id })">
+                                        <a class="btn btn-default" title="Edit" href="@Url.Action("ChangePassword", "Users", new { id = buyer.User.Id })">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </a>
                                         @if (buyer.IsDeleted)
                                         {
-                                            <a class="btn btn-success" title="Відновити" href="@Url.Action("BuyerUnDelete", "Users", new { id = buyer.User.Id })">
+                                            <a class="btn btn-success" title="Restore" href="@Url.Action("BuyerUnDelete", "Users", new { id = buyer.User.Id })">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </a>
                                         }
                                         else
                                         {
-                                            <a class="btn btn-danger" title="Видалити" href="@Url.Action("BuyerDelete", "Users", new { id = buyer.User.Id })">
+                                            <a class="btn btn-danger" title="Delete" href="@Url.Action("BuyerDelete", "Users", new { id = buyer.User.Id })">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </a>
                                         }
@@ -63,7 +63,7 @@
                         {
                             <tr>
                                 <td colspan="7">
-                                    <h3>Жодного покупця не було створено</h3>
+                                    <h3>No buyers found</h3>
                                 </td>
                             </tr>
                         }
@@ -74,16 +74,16 @@
     </div>
     <div class="panel panel-default" id="SellerCatalog" style="display:none;">
         <div class="panel-heading">
-            Продавці
+            Sellers
         </div>
         <div class="panel-body">
             <table class="table margin-top-10">
                 <thead>
                     <tr>
-                        <th>Логін</th>
-                        <th>Телефон</th>
-                        <th>Користувач підтверджений</th>
-                        <th>Опції</th>
+                        <th>Login</th>
+                        <th>Phone number</th>
+                        <th>User confirmed</th>
+                        <th>Options</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -103,21 +103,21 @@
                                         @seller.IsConfirmed
                                     </td>
                                     <td>
-                                        <a class="btn btn-default" title="Перейти" href="@Url.Action("GetSellerInformation", "Users", new { id = seller.Id })">
+                                        <a class="btn btn-default" title="Go to" href="@Url.Action("GetSellerInformation", "Users", new { id = seller.Id })">
                                             <span class="glyphicon glyphicon-eye-open"></span>
                                         </a>
-                                        <a class="btn btn-default" title="Редагувати" href="@Url.Action("ChangePassword", "Users", new { id = seller.User.Id })">
+                                        <a class="btn btn-default" title="Edit" href="@Url.Action("ChangePassword", "Users", new { id = seller.User.Id })">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </a>
                                         @if (seller.IsDeleted)
                                         {
-                                            <a class="btn btn-success" title="Відновити" href="@Url.Action("SellerUnDelete", "Users", new { id = seller.User.Id })">
+                                            <a class="btn btn-success" title="Restore" href="@Url.Action("SellerUnDelete", "Users", new { id = seller.User.Id })">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </a>
                                         }
                                         else
                                         {
-                                            <a class="btn btn-danger" title="Видалити" href="@Url.Action("SellerDelete", "Users", new { id = seller.User.Id })">
+                                            <a class="btn btn-danger" title="Delete" href="@Url.Action("SellerDelete", "Users", new { id = seller.User.Id })">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </a>
                                         }
@@ -129,7 +129,7 @@
                         {
                             <tr>
                                 <td colspan="7" style="text-align:center">
-                                    <h3>Жодного продавця не було створено</h3>
+                                    <h3>No sellers found</h3>
                                 </td>
                             </tr>
                         }

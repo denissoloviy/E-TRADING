@@ -5,8 +5,8 @@
 @{Html.RenderPartial("_LeftMenu", Model.Helper);}
 <div class="content">
     <div class="col-md-12">
-        <h2>Редагування особистих даних</h2>
-        @Html.ActionLink("Повернутись назад", "Index", "Seller", new { }, new { @class = "btn btn-default" })
+        <h2>Personal data edit</h2>
+        @Html.ActionLink("Go back", "Index", "Seller", new { }, new { @class = "btn btn-default" })
         @using (Html.BeginForm("Edit", "Seller", FormMethod.Post))
         {
             @Html.AntiForgeryToken()
@@ -73,7 +73,7 @@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <button type="submit" class="btn btn-primary">Зберегти</button>
-                        @Html.ActionLink("Змінити пароль", "ChangePassword", "Manage", new { }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Change Password", "ChangePassword", "Manage", new { }, new { @class = "btn btn-default" })
                     </div>
                 </div>
             </div>

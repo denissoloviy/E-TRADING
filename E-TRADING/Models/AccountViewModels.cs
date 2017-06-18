@@ -68,19 +68,19 @@ namespace E_TRADING.Models
         public bool IsBuyer { get; set; }
 
         [Required]
-        [Display(Name = "Логін для входу")]
+        [Display(Name = "Login")]
         public string UserName { get; set; }
 
         [Required]
-        [Display(Name = "Ім'я")]
+        [Display(Name = "Name")]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Прізвище")]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
         [Required]
-        [Display(Name = "По батькові")]
+        [Display(Name = "Patronymic")]
         public string MiddleName { get; set; }
 
         [Required]
@@ -89,26 +89,26 @@ namespace E_TRADING.Models
         public string Email { get; set; }
 
         [Phone]
-        [Display(Name = "Номер телефону")]
+        [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "Дата народження")]
+        [Display(Name = "Birth date")]
         public DateTime? BirthDate { get; set; }
 
-        [Display(Name = "Номер паспорту")]
+        [Display(Name = "Passport number")]
         public string Passport { get; set; }
 
-        [Display(Name = "Адреса офісу")]
+        [Display(Name = "Office addres")]
         public string OfficeAddress { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Підтвердження паролю")]
+        [Display(Name = "Password confirmation")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }

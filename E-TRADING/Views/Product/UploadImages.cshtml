@@ -6,7 +6,7 @@
 <div class="jumbotron container-fluid">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h4>Завантажити зображення для @ViewBag.ProductName</h4>
+            <h4>Add an image for @ViewBag.ProductName</h4>
         </div>
         <div class="panel-body">
             <section id="upload-image-section">
@@ -24,14 +24,14 @@
                     <div class="form-group" style="float:left">
                         <div class="col-lg-2 ">
                             <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Завантажити" class="btn btn-default" />
+                                <input type="submit" value="Add" class="btn btn-default" />
                             </div>
                         </div>
                     </div>
                 }
             </section>
             <section id="next-step">
-                <a style="float:right;" class="btn btn-success" title="Вперед" href="@Url.Action("Index", "Seller")">
+                <a style="float:right;" class="btn btn-success" title="Go" href="@Url.Action("Index", "Seller")">
                     <span class="glyphicon glyphicon-arrow-right"></span>
                 </a>
             </section>
@@ -40,9 +40,9 @@
                 <table class="table margin-top-10">
                     <thead>
                         <tr>
-                            <th>Зображення</th>
-                            <th>Індекс</th>
-                            <th>Опції</th>
+                            <th>Image</th>
+                            <th>Index</th>
+                            <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,7 +78,7 @@
                                             }
                                         </td>
                                         <td>
-                                            <a class="btn btn-danger" title="Видалити зображення" href="@Url.Action("DeleteImage", "Product", new { id = image.Id })">
+                                            <a class="btn btn-danger" title="Delete image" href="@Url.Action("DeleteImage", "Product", new { id = image.Id })">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </a>
                                         </td>
@@ -89,7 +89,7 @@
                             {
                                 <tr>
                                     <td colspan="3">
-                                        <h4 style="text-align:center">Жодного зображення не було додано</h4>
+                                        <h4 style="text-align:center">No images found</h4>
                                     </td>
                                 </tr>
                             }

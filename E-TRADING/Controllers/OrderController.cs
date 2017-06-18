@@ -43,7 +43,7 @@ namespace E_TRADING.Controllers
         [AuthorizeDeleted(Roles = UserRole.Buyer + "," + UserRole.Seller)]
         public ActionResult ActiveOrders()
         {
-            ViewBag.Title = "Активні замовлення";
+            ViewBag.Title = "Active orders";
             var userId = User.Identity.GetUserId();
             if (_userManager.IsInRole(userId, UserRole.Buyer))
             {
@@ -84,7 +84,7 @@ namespace E_TRADING.Controllers
         [AuthorizeDeleted(Roles = UserRole.Buyer + "," + UserRole.Seller)]
         public ActionResult InactiveOrders()
         {
-            ViewBag.Title = "Архів замовлень";
+            ViewBag.Title = "Orders Archive";
             var userId = User.Identity.GetUserId();
             if (_userManager.IsInRole(userId, UserRole.Buyer))
             {
@@ -130,7 +130,7 @@ namespace E_TRADING.Controllers
             {
                 if (item.Product.Amount < item.Amount)
                 {
-                    TempData["Error"] = $"Недостатньо одиниць товару {item.Product.Name} для покупки";
+                    TempData["Error"] = $"Not enough : {item.Product.Name} to create an order";
                 }
             }
             var orders = buyer.ShoppingCarts.Select(item =>

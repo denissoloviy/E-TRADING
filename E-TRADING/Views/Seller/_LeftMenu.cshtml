@@ -51,12 +51,12 @@
         <div class="navbar navbar-default" role="navigation">
             <div id="menu" class="navbar-collapse collapse sidebar-navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="@ViewContext.RouteIsActive("Index", "Seller")"><a href="@Url.Action("Index", "Seller")">Основні дані</a></li>
-                    <li class="@ViewContext.ActionIsActive("Products")"><a href="@Url.Action("Products", "Seller")"><span>Мої товари&nbsp;</span><span class="badge">@Model.ProductsCount</span></a></li>
-                    <li class="@ViewContext.RouteIsActive("Index", "Auction")"><a href="@Url.Action("Index", "Auction")"><span>Мої аукціони&nbsp;</span><span class="badge">@Model.ActiveAuctionsCount</span></a></li>
-                    <li class="@ViewContext.ActionIsActive("ActiveOrders")"><a href="@Url.Action("ActiveOrders", "Order")"><span>Активні замовлення&nbsp;</span><span class="badge">@Model.ActiveOrdersCount</span></a></li>
-                    <li class="@ViewContext.ActionIsActive("InactiveOrders")"><a href="@Url.Action("InactiveOrders", "Order")"><span>Архів замовлень&nbsp;</span><span class="badge">@Model.InactiveOrdersCount</span></a></li>
-                    <li class="@ViewContext.ActionIsActive("ProductsArchive")"><a href="@Url.Action("ProductsArchive", "Seller")"><span>Архів товарів&nbsp;</span><span class="badge">@Model.ArchiveProductsCount</span></a></li>
+                    <li class="@ViewContext.RouteIsActive("Index", "Seller")"><a href="@Url.Action("Index", "Seller")">Main data</a></li>
+                    <li class="@ViewContext.ActionIsActive("Products")"><a href="@Url.Action("Products", "Seller")"><span>My products&nbsp;</span><span class="badge">@Model.ProductsCount</span></a></li>
+                    <li class="@ViewContext.RouteIsActive("Index", "Auction")"><a href="@Url.Action("Index", "Auction")"><span>My auctions&nbsp;</span><span class="badge">@Model.ActiveAuctionsCount</span></a></li>
+                    <li class="@ViewContext.ActionIsActive("ActiveOrders")"><a href="@Url.Action("ActiveOrders", "Order")"><span>Active order&nbsp;</span><span class="badge">@Model.ActiveOrdersCount</span></a></li>
+                    <li class="@ViewContext.ActionIsActive("InactiveOrders")"><a href="@Url.Action("InactiveOrders", "Order")"><span>Orders archive&nbsp;</span><span class="badge">@Model.InactiveOrdersCount</span></a></li>
+                    <li class="@ViewContext.ActionIsActive("ProductsArchive")"><a href="@Url.Action("ProductsArchive", "Seller")"><span>Products archive&nbsp;</span><span class="badge">@Model.ArchiveProductsCount</span></a></li>
                 </ul>
             </div>
         </div>

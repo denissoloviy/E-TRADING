@@ -17,7 +17,7 @@ namespace E_TRADING.Data.Entities
             AddedDate = DateTime.UtcNow;
         }
 
-        [DisplayName("Дата створення")]
+        [DisplayName("Creation date")]
         public DateTime AddedDate
         {
             get { return DateTime.SpecifyKind(_addedDate, DateTimeKind.Utc); }

@@ -6,8 +6,8 @@
 <div class="content">
     <div class="col-md-12">
         <h2>@ViewBag.Title</h2>
-        @Html.ActionLink("Оформити замовлення", "Create", "Order", new { }, new { @class = "btn btn-success" })
-        @Html.ActionLink("Очистити корзину", "Clear", "ShoppingCart", new { }, new { @class = "btn btn-danger" })
+        @Html.ActionLink("Create order", "Create", "Order", new { }, new { @class = "btn btn-success" })
+        @Html.ActionLink("Clear shopping cart", "Clear", "ShoppingCart", new { }, new { @class = "btn btn-danger" })
         <div>
             <hr />
             @if (ViewBag.Error != null)
@@ -37,10 +37,10 @@
                             <td>@item.AddedDate</td>
                             <td>@item.Category</td>
                             <td>
-                                <a class="btn btn-default" title="Детальна інформація" href="@Url.Action("Index", "Product", new { id = item.Id })">
+                                <a class="btn btn-default" title="More information" href="@Url.Action("Index", "Product", new { id = item.Id })">
                                     <span class="glyphicon glyphicon-eye-open"></span>
                                 </a>
-                                <a class="btn btn-danger" title="Видалити запис" href="@Url.Action("Delete", "ShoppingCart", new { id = item.ShopCartId })">
+                                <a class="btn btn-danger" title="Delete" href="@Url.Action("Delete", "ShoppingCart", new { id = item.ShopCartId })">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </a>
                             </td>

@@ -10,25 +10,25 @@ namespace E_TRADING.Data.Entities
 {
     public class User : IdentityUser
     {
-        [DisplayName("Ім'я користувача")]
+        [DisplayName("Name")]
         public override string UserName { get; set; }
 
-        [DisplayName("Номер телефону")]
+        [DisplayName("Phone number")]
         public override string PhoneNumber { get; set; }
         
-        [DisplayName("Ім'я")]
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
 
-        [DisplayName("Прізвище")]
+        [DisplayName("Last name")]
         public string LastName { get; set; }
 
-        [DisplayName("Адреса")]
+        [DisplayName("Addres")]
         public string Address { get; set; }
 
-        [DisplayName("По батькові")]
+        [DisplayName("Patronymic")]
         public string MiddleName { get; set; }
 
-        [DisplayName("Дата народження")]
+        [DisplayName("Birth date")]
         public DateTime? BirthDate { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(ApplicationUserManager manager)

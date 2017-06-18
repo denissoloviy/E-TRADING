@@ -13,8 +13,8 @@
                     <thead>
                         <tr>
                             <th>Email</th>
-                            <th>User name</th>
-                            <th>Ім'я</th>
+                            <th>Username</th>
+                            <th>Name</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -31,14 +31,14 @@
                                         <td>
                                             @x.UserName
                                         </td>
-                                        <td>
+                                        <td>    
                                             @x.FirstName
                                         </td>
                                         <td>
-                                            <a class="btn btn-default" title="Редагувати" href="@Url.Action("ChangePassword", "Users", new { id = x.Id })">
+                                            <a class="btn btn-default" title="Edit" href="@Url.Action("ChangePassword", "Users", new { id = x.Id })">
                                                 <span class="glyphicon glyphicon-pencil"></span>
                                             </a>
-                                            <a class="btn btn-danger" title="Видалити" href="@Url.Action("DeleteAdmin", "Users", new { id = x.Id })">
+                                            <a class="btn btn-danger" title="Delete" href="@Url.Action("DeleteAdmin", "Users", new { id = x.Id })">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </a>
                                         </td>
@@ -50,7 +50,7 @@
                             {
                                 <tr>
                                     <td colspan="7">
-                                        <h3>Жодного Адміна не було створено</h3>
+                                        <h3>No admin found</h3>
                                     </td>
                                 </tr>
                             }
@@ -58,10 +58,10 @@
                         }
                         <tr>
                             <td>
-                                <a class="btn btn-success" title="Додати" href="@Url.Action("AddAdmin", "Users", new { })">
+                                <a class="btn btn-success" title="Add" href="@Url.Action("AddAdmin", "Users", new { })">
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </a>
-                                Додати адміна
+                               Add an admin
                             </td>
                             <td></td>
                             <td></td>

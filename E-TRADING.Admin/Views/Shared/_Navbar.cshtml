@@ -2,11 +2,11 @@
 <ul class="nav navbar-nav">
     @if (Model)
     {
-        <li>@Html.ActionLink("Каталоги", "Index", "Catalogs")</li>
+        <li>@Html.ActionLink("Catalogs", "Index", "Catalogs")</li>
     }
     @if (!Model)
     {
-        <li>@Html.ActionLink("Менеджмент користувачів", "UserList", "Users")</li>
+        <li>@Html.ActionLink("Users managment", "UserList", "Users")</li>
     }
 </ul>
 @Html.Partial("_LoginPartial")

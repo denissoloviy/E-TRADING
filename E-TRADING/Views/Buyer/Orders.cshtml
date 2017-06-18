@@ -15,7 +15,7 @@
                         @if (order.Status == OrderStatus.InProccess || order.Status == OrderStatus.NeedToPay)
                         {
                             <div style="float:right;">
-                                <a class="btn btn-danger" title="Відмінити замовлення" href="@Url.Action("Cancel", "Order", new { id = order.Id })">
+                                <a class="btn btn-danger" title="Delete order" href="@Url.Action("Cancel", "Order", new { id = order.Id })">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </a>
                             </div>

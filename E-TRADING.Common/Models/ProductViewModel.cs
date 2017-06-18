@@ -9,27 +9,27 @@ namespace E_TRADING.Common.Models
         public string Id { get; set; }        
         public string ShopCartId { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Ім'я")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Name")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Опис")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Description")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Кількість")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Amount")]
         public int Amount { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Ціна")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Price")]
         public decimal Price { get; set; }
 
-        [DisplayName("Дата додавання")]
+        [DisplayName("Date added")]
         public string AddedDate { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Категорія")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Category")]
         public string Category { get; set; }
 
         public string SellerId { get; set; }

@@ -35,14 +35,14 @@
                 <div class=''>
                     <h2 class="">@Model.Product.Name  <span class="label label-primary">@Model.Product.Amount</span></h2>
                 </div>
-                <h4>Початок аукціону: @Model.DateStart. Кінець: @Model.DateEnd</h4>
+                <h4>Auction start: @Model.DateStart. End: @Model.DateEnd</h4>
                 <div>
-                    <label>Необхідно підтвердити видалення аукціону</label>
+                    <label>Please confirm that you want to delete the auction</label>
                     @using (Html.BeginForm("Delete", "Auction", FormMethod.Post, new { }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(model => model.Id)
-                        <button type="submit" class="btn btn-danger">Підтвердити</button>
+                        <button type="submit" class="btn btn-danger">Confirm</button>
                             @Html.ActionLink("Скасувати", "Index", "Auction", new { }, new { @class = "btn btn-default" })
                     }
                 </div>

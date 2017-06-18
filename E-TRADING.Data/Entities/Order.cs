@@ -7,42 +7,42 @@ namespace E_TRADING.Data.Entities
 {
     public class Order : BaseEntity
     {
-        [DisplayName("Статус замовлення")]
+        [DisplayName("Order status")]
         public OrderStatus Status { get; set; }
 
-        [DisplayName("Кількість")]
+        [DisplayName("Amount")]
         public int Amount { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Загальна ціна")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Full price")]
         public decimal FullPrice { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Адреса доставки")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Delivery addres")]
         public string ShippingAddress { get; set; }
 
-        [DisplayName("Номер замовлення")]
+        [DisplayName("Order number")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderNumber { get; set; }
 
         [NotMapped]
-        [DisplayName("Номер замовлення")]
+        [DisplayName("Order number")]
         public string OrderNumberString { get { return OrderNumber.ToString("D8"); } }
         
-        [DisplayName("Номер накладної")]
+        [DisplayName("Invoice number")]
         public string InvoiceNumber { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Товар")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Product")]
         public string ProductId { get; set; }
-        [DisplayName("Товар")]
+        [DisplayName("Product")]
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Покупець")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Buyer")]
         public string BuyerId { get; set; }
-        [DisplayName("Покупець")]
+        [DisplayName("Buyer")]
         [ForeignKey("BuyerId")]
         public virtual Buyer Buyer { get; set; }
     }

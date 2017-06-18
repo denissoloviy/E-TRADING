@@ -139,7 +139,7 @@ namespace E_TRADING.Controllers
             var isStarted = auction.DateStart <= DateTime.UtcNow;
             if (isStarted)
             {
-                TempData["Errors"] = "Аукціон розпочато, видалення неможливе";
+                TempData["Errors"] = "Auction has already started, delete unavailable";
                 return RedirectToAction("Details", new { id = id });
             }
             var res = _mapper.Map<AuctionViewModel>(auction);
@@ -171,7 +171,7 @@ namespace E_TRADING.Controllers
             var isStarted = auction.DateStart <= DateTime.UtcNow;
             if (isStarted)
             {
-                TempData["Errors"] = "Аукціон розпочато, видалення неможливе";
+                TempData["Errors"] = "Auction has already started, delete unavailable";
                 return RedirectToAction("Details", new { id = id });
             }
             _auctionRepository.Delete(auction);
@@ -214,23 +214,23 @@ namespace E_TRADING.Controllers
         {
             if (!ModelState.IsValid)
             {
-                TempData["Errors"] = "Некоректно введені дані";
+                TempData["Errors"] = "Entered data is incorrect";
                 return RedirectToAction("Details", new { id = model.Id });
             }
             var auction = _auctionRepository.FirstOrDefault(item => item.Id == model.Id);
             if (auction == null)
             {
-                TempData["Errors"] = "Аукціон не знайдено";
+                TempData["Errors"] = "No auction found";
                 return RedirectToAction("Details", new { id = model.Id });
             }
             if (auction.DateEnd < DateTime.UtcNow)
             {
-                TempData["Errors"] = "Аукціон завершено";
+                TempData["Errors"] = "Auction has ended";
                 return RedirectToAction("Details", new { id = model.Id });
             }
             if (model.NewBid < auction.LastBid + auction.MinStep)
             {
-                TempData["Errors"] = $"Мінімальний крок {auction.MinStep}";
+                TempData["Errors"] = $"Min step is {auction.MinStep}";
                 return RedirectToAction("Details", new { id = model.Id });
             }
             auction.LastBid = model.NewBid;

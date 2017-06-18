@@ -39,7 +39,7 @@
                 @if (!Model.IsFinished)
                 {
                     <div id="notBegin" style="display:@(Model.IsStarted ? "none" : "block")">
-                        <h4>Початок аукціону: @Model.DateStart. Кінець: @Model.DateEnd</h4>
+                        <h4>Auction start: @Model.DateStart. End: @Model.DateEnd</h4>
                     </div>
                     <div id="isStarted" style="display:@(Model.IsStarted ? "block" : "none")">
                         <div>
@@ -49,13 +49,13 @@
                                 <br />
                             }
                             <div>
-                                Остання ставка: <label id="last-bid">@Model.LastBid</label>. Покупець: <label id="last-buyer">@Model.BuyerName</label>
+                                Last bid: <label id="last-bid">@Model.LastBid</label>. Buyer: <label id="last-buyer">@Model.BuyerName</label>
                             </div>
                             <br />
-                            Мінімальний крок: <label id="min-step">@Model.MinStep</label>
+                            Min step: <label id="min-step">@Model.MinStep</label>
                             <br />
                             <div>
-                                Залишилось часу: <label id="time-left">@Model.TimeLeft</label>
+                                Time left: <label id="time-left">@Model.TimeLeft</label>
                             </div>
                             <br />
                             @if (ViewBag.IsSeller != true)
@@ -67,10 +67,10 @@
                                     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                                     <input class="form-control input" type="number"
                                            onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                           placeholder="Введіть вашу ставку" value="@ViewBag.NextValue"
+                                           placeholder="Please enter your bid" value="@ViewBag.NextValue"
                                            min="@ViewBag.NextValue" name="NewBid" id="new-bid" />
-                                    <button type="submit" class="btn btn-success" style="margin-top: 10px">Зробити ставку</button>
-                                    <button type="button" onclick="BidMinimalStep();" class="btn btn-success" style="margin-top: 10px" id="set-next-bid">Поставити @ViewBag.NextValue</button>
+                                    <button type="submit" class="btn btn-success" style="margin-top: 10px">Make a bid</button>
+                                    <button type="button" onclick="BidMinimalStep();" class="btn btn-success" style="margin-top: 10px" id="set-next-bid">Bid @ViewBag.NextValue</button>
                                     <script>
                                         function BidMinimalStep() {
                                             var lastBid = parseInt($('#last-bid').text());
@@ -85,16 +85,16 @@
                         </div>
                     </div>
                     <div id="isFinished" style="display:none;">
-                        <h4>Аукціон завершено</h4>
+                        <h4>Auction has ended</h4>
                     </div>
                 }
                 else
                 {
                     <div>
-                        <h4>Аукціон завершено</h4>
-                        Остання ставка: @Model.LastBid
+                        <h4>Auction has ended</h4>
+                        Last bid: @Model.LastBid
                         <br />
-                        Покупець @Model.BuyerName
+                        Buyer @Model.BuyerName
                     </div>
                 }
                 <hr />
@@ -107,7 +107,7 @@
     </div>
 </div>
 <div>
-    @Html.ActionLink("На головну", "Index", "Home")
+    @Html.ActionLink("Main page", "Index", "Home")
 </div>
 
 <script>

@@ -10,13 +10,13 @@ namespace E_TRADING.Data.Entities
     {
         [Key, ForeignKey("User")]
         public override string Id { get; set; }
-        [DisplayName("Користувач")]
+        [DisplayName("User")]
         public virtual User User { get; set; }
 
-        [DisplayName("Замовлення")]
+        [DisplayName("Order")]
         public virtual ICollection<Order> Orders { get; set; }
 
-        [DisplayName("Кошик")]
+        [DisplayName("Shopping cart")]
         public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
 
         public bool IsDeleted { get; set; }

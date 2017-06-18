@@ -15,7 +15,7 @@
                         @if (order.Status == OrderStatus.InProccess)
                         {
                             <div style="float:right;">
-                                <a class="btn btn-danger" title="Відмінити замовлення" href="@Url.Action("Cancel", "Order", new { id = order.Id })">
+                                <a class="btn btn-danger" title="Cancel order" href="@Url.Action("Cancel", "Order", new { id = order.Id })">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </a>
                             </div>
@@ -55,7 +55,7 @@
                                     @Html.AntiForgeryToken()
                                     var id = order.Id;
                                     @Html.HiddenFor(model => id)
-                                    <button type="submit" class="btn btn-success">Підтвердити</button>
+                                    <button type="submit" class="btn btn-success">Confirm</button>
                                 }
                             }
                             @if (order.Status == OrderStatus.Paid)

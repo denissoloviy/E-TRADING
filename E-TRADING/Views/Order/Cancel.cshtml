@@ -1,14 +1,14 @@
 ﻿@model E_TRADING.Common.Models.OrderViewModel
 @{
-    ViewBag.Title = "Скачування замовлення";
+    ViewBag.Title = "Cancel order";
 }
 <div class="content">
     <div class="">
         <div class="panel-heading">
-            Впевнені?
+            Are you user?
         </div>
         <div class="panel-body">
-            Необхідно підтвердити відміну замовлення: № @Model.OrderNumberString
+            You have to confirm order cancelation: № @Model.OrderNumberString
             <br />
             <div>
                 <div class=''>
@@ -21,7 +21,7 @@
                 {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.Id)
-                    <button type="submit" class="btn btn-success">Підтвердити</button>
+                    <button type="submit" class="btn btn-success">Confirm</button>
                 }
                 @Html.ActionLink("Назад", "ActiveOrders", "Order", new { @class = "btn btn-danger" })
             </div>

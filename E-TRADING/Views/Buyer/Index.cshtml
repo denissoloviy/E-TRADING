@@ -1,13 +1,13 @@
 ﻿@model E_TRADING.Common.Models.BuyerViewEditViewModel
 @{
-    ViewBag.Title = "Особистий кабінет";
+    ViewBag.Title = "Private office";
 }
 @{Html.RenderPartial("_LeftMenu", Model.Helper);}
 <div class="content">
     <div class="col-md-12">
         <h2>@ViewBag.Title</h2>
-        @Html.ActionLink("Редагувати", "Edit", "Buyer", new { }, new { @class = "btn btn-default" })
-        @Html.ActionLink("Змінити пароль", "ChangePassword", "Manage", new { }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Edit", "Edit", "Buyer", new { }, new { @class = "btn btn-default" })
+        @Html.ActionLink("Change password", "ChangePassword", "Manage", new { }, new { @class = "btn btn-default" })
         <div>
             <hr />
             <dl class="dl-horizontal">

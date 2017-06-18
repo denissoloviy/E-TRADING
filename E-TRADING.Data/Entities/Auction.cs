@@ -7,39 +7,39 @@ namespace E_TRADING.Data.Entities
 {
     public class Auction : BaseEntity
     {
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
+        [Required(ErrorMessage = "This field is necessary")]
         [Key, ForeignKey("Product")]
         public override string Id { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Час старту аукціону")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Auction start time")]
         [DataType(DataType.DateTime)]
         public DateTime DateStart { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Час завершення аукціону")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Auction end time")]
         [DataType(DataType.DateTime)]
         public DateTime DateEnd { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Мінімальний крок")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Min step")]
         public decimal MinStep { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Початкова ціна")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Starting price")]
         public decimal StartPrice { get; set; }
 
-        [DisplayName("Остання ставка")]
+        [DisplayName("Last bid")]
         public decimal LastBid { get; set; }
 
-        [DisplayName("Покупець")]
+        [DisplayName("Buyer")]
         public string BuyerId { get; set; }
 
-        [DisplayName("Покупець")]
+        [DisplayName("Buyer")]
         [ForeignKey("BuyerId")]
         public virtual Buyer LastBuyer { get; set; }
 
-        [DisplayName("Товар")]
+        [DisplayName("Product")]
         public virtual Product Product { get; set; }
 
         public bool IsStarted { get; set; }

@@ -51,10 +51,10 @@
         <div class="navbar navbar-default" role="navigation">
             <div id="menu" class="navbar-collapse collapse sidebar-navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="@ViewContext.RouteIsActive("Index", "Buyer")"><a href="@Url.Action("Index", "Buyer")">Основні дані</a></li>
-                    <li class="@ViewContext.RouteIsActive("Index", "ShoppingCart")"><a href="@Url.Action("Index", "ShoppingCart")"><span>Корзина&nbsp;</span><span class="badge">@Model.ShoppingCartCount</span></a></li>
-                    <li class="@ViewContext.ActionIsActive("ActiveOrders")"><a href="@Url.Action("ActiveOrders", "Order")"><span>Активні замовлення&nbsp;</span><span class="badge">@Model.ActiveOrdersCount</span></a></li>
-                    <li class="@ViewContext.ActionIsActive("InactiveOrders")"><a href="@Url.Action("InactiveOrders", "Order")"><span>Архів замовлень&nbsp;</span><span class="badge">@Model.InactiveOrdersCount</span></a></li>
+                    <li class="@ViewContext.RouteIsActive("Index", "Buyer")"><a href="@Url.Action("Index", "Buyer")">Main data</a></li>
+                    <li class="@ViewContext.RouteIsActive("Index", "ShoppingCart")"><a href="@Url.Action("Index", "ShoppingCart")"><span>Shopping cart&nbsp;</span><span class="badge">@Model.ShoppingCartCount</span></a></li>
+                    <li class="@ViewContext.ActionIsActive("ActiveOrders")"><a href="@Url.Action("ActiveOrders", "Order")"><span>Active orders&nbsp;</span><span class="badge">@Model.ActiveOrdersCount</span></a></li>
+                    <li class="@ViewContext.ActionIsActive("InactiveOrders")"><a href="@Url.Action("InactiveOrders", "Order")"><span>Orders archive&nbsp;</span><span class="badge">@Model.InactiveOrdersCount</span></a></li>
                 </ul>
             </div>
         </div>

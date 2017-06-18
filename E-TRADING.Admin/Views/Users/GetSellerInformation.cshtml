@@ -19,34 +19,34 @@
                             <td style="border-top: none; text-align:center">@Model.User.UserName</td>
                         </tr>
                         <tr>
-                            <td class="col-lg-4">Ім'я:</td>
+                            <td class="col-lg-4">Name</td>
                             <td style="text-align:center">@Model.User.FirstName</td>
                         </tr>
                         <tr>
-                            <td class="col-lg-4">Прізвище:</td>
+                            <td class="col-lg-4">Last name:</td>
                             <td style="text-align:center">@Model.User.LastName</td>
                         </tr>
                         <tr>
-                            <td class="col-lg-5">Контактний телефон:</td>
+                            <td class="col-lg-5">Contact number:</td>
                             <td style="text-align:center">@Model.ContactPhone</td>
                         </tr>
                         <tr>
-                            <td class="col-lg-5">Телефон продавця:</td>
+                            <td class="col-lg-5">Phone number:</td>
                             <td style="text-align:center">@Model.User.PhoneNumber</td>
                         </tr>
                         <tr>
-                            <td class="col-lg-4">Користувач підтверджений:</td>
+                            <td class="col-lg-4">Is confirmed:</td>
                             <td style="text-align:center">@Model.IsConfirmed</td>
                         </tr>
                         <tr>
-                            <td class="col-lg-4">Текст помилки:</td>
+                            <td class="col-lg-4">Error text:</td>
                             <td style="text-align:center">@Model.ErrorText</td>
                         </tr>
                         <tr>
-                            <td class="col-lg-4">Адреса:</td>
+                            <td class="col-lg-4">Addres:</td>
                             <td style="text-align:center">
-                                Адреса продавця: @Model.User.Address<br />
-                                Адреса офісу: @Model.OfficeAddress
+                                Seller addres: @Model.User.Address<br />
+                                Office addres: @Model.OfficeAddress
                             </td>
                         </tr>
                     </table>
@@ -57,17 +57,17 @@
                 <hr />
             </div>
             <div class="col-lg-12">
-                <h1 style="text-align:center">Продукти</h1>
+                <h1 style="text-align:center">Products</h1>
                 <hr />
             </div>
             <table class="table margin-top-10">
                 <thead>
                     <tr>
-                        <th>Назва товару</th>
-                        <th>Код товару</th>
-                        <th>Кількість товару</th>
-                        <th>Ціна</th>
-                        <th>Категорія товару</th>
+                        <th>Product name</th>
+                        <th>Product code</th>
+                        <th>Amount</th>
+                        <th>Price</th>
+                        <th>Product category</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -88,7 +88,7 @@
                     {
                         <tr>
                             <td style="text-align:center" colspan="7">
-                                Продавець ще не виставив жодного товару
+                                This user didn't add any products
                             </td>
                         </tr>
                     }

@@ -53,7 +53,7 @@ namespace E_TRADING.Admin.Controllers
             if (result.Succeeded)
             {
                 _userManager.AddToRole(user.Id, UserRole.Administrator);
-                ViewBag.Succes = "Додано нового адміна!";
+                ViewBag.Succes = "New admin added!";
             }
             else
             {

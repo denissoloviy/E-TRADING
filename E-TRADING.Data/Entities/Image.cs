@@ -6,18 +6,18 @@ namespace E_TRADING.Data.Entities
 {
     public class Image : BaseEntity
     {
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Зображення")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Image")]
         public int Index{ get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Формат")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Format")]
         public string Extention { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Товар")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Product")]
         public string ProductId { get; set; }
-        [DisplayName("Товар")]
+        [DisplayName("Product")]
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
     }

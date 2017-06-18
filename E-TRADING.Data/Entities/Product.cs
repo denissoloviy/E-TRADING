@@ -7,46 +7,46 @@ namespace E_TRADING.Data.Entities
 {
     public class Product : BaseEntity, ISoftDelete
     {
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Назва")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Name")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Опис")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Description")]
         public string Description { get; set; }
 
-        [DisplayName("Код товару")]
+        [DisplayName("Product code")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ProductCode { get; set; }
 
         [NotMapped]
-        [DisplayName("Код товару")]
+        [DisplayName("Product code")]
         public string ProductCodeString { get { return ProductCode.ToString("D8"); } }
 
-        [DisplayName("Доступна к-сть")]
+        [DisplayName("Amoun available")]
         public int Amount { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Ціна")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Price")]
         public decimal Price { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Продавець")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Seller")]
         public string SellerId { get; set; }
-        [DisplayName("Продавець")]
+        [DisplayName("Seller")]
         [ForeignKey("SellerId")]
         public virtual Seller Seller { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Категорія")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Category")]
         public string CategoryId { get; set; }
-        [DisplayName("Категорія")]
+        [DisplayName("Category")]
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
 
-        [DisplayName("Замовлення")]
+        [DisplayName("Order")]
         public virtual ICollection<Order> Orders { get; set; }
-        [DisplayName("Зображення")]
+        [DisplayName("Image")]
         public virtual ICollection<Image> Images { get; set; }
 
         public bool IsDeleted { get; set; }

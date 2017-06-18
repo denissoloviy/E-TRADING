@@ -11,25 +11,25 @@ namespace E_TRADING.Common.Models
 
         public string TimeLeft { get; set; }
 
-        [DisplayName("Час старту аукціону")]
+        [DisplayName("Auction starting time")]
         public string DateStart { get; set; }
         
-        [DisplayName("Час завершення аукціону")]
+        [DisplayName("Actuion end time")]
         public string DateEnd { get; set; }
         
-        [DisplayName("Мінімальний крок")]
+        [DisplayName("Min step")]
         public decimal MinStep { get; set; }
         
-        [DisplayName("Початкова ціна")]
+        [DisplayName("Starting price")]
         public decimal StartPrice { get; set; }
 
-        [DisplayName("Остання ставка")]
+        [DisplayName("Last bid")]
         public decimal LastBid { get; set; }
 
-        [DisplayName("Покупець")]
+        [DisplayName("Buyer")]
         public string BuyerName { get; set; }
         
-        [DisplayName("Товар")]
+        [DisplayName("Product")]
         public string ProductName { get; set; }
 
         public ProductViewModel Product { get; set; }

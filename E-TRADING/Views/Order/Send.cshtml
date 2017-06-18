@@ -1,14 +1,14 @@
 ﻿@model E_TRADING.Common.Models.OrderViewModel
 @{
-    ViewBag.Title = "Відправка замовлення";
+    ViewBag.Title = "Send order";
 }
 <div class="content">
     <div class="">
         <div class="panel-heading">
-            Впевнені?
+            Are you sure?
         </div>
         <div class="panel-body">
-            Необхідно підтвердити відправку замовлення: № @Model.OrderNumberString
+            You have to confirm order dispatch: № @Model.OrderNumberString
             <div>
                 <div class=''>
                     <h1 class="panel-title">@Html.ActionLink(Model.Name, "Index", "Product", new { id = Model.ProductId }, new { style = "color:#337ab7;" }) x @Model.Amount</h1>
@@ -28,7 +28,7 @@
                     <br />
                 </div>
                 <div class="col-md-8">
-                    <button type="submit" class="btn btn-success">Підтвердити</button>
+                    <button type="submit" class="btn btn-success">Confirm</button>
                     @Html.ActionLink("Назад", "ActiveOrders", "Order", new { @class = "btn btn-danger" })
                 </div>
             }

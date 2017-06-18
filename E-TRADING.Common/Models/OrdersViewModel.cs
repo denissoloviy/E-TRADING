@@ -8,36 +8,36 @@ namespace E_TRADING.Common.Models
         public string Id { get; set; }        
         public string ProductId { get; set; }
 
-        [DisplayName("Ім'я")]
+        [DisplayName("Name")]
         public string Name { get; set; }
 
-        [DisplayName("Статус замовлення")]
+        [DisplayName("Order status")]
         public OrderStatus Status { get; set; }
 
         public OrderStatusType StatusType { get; set; }
 
-        [DisplayName("Номер замовлення")]
+        [DisplayName("Order number")]
         public string OrderNumberString { get; set; }
 
-        [DisplayName("Номер накладної")]
+        [DisplayName("Invoice number")]
         public string InvoiceNumber { get; set; }
 
-        [DisplayName("Кількість")]
+        [DisplayName("Amount")]
         public int Amount { get; set; }
 
-        [DisplayName("Загальна ціна")]
+        [DisplayName("Full price")]
         public decimal FullPrice { get; set; }
 
-        [DisplayName("Адреса доставки")]
+        [DisplayName("Delivery addres")]
         public string ShippingAddress { get; set; }
 
-        [DisplayName("Покупець")]
+        [DisplayName("Buyer")]
         public string Buyer { get; set; }
 
-        [DisplayName("Продавець")]
+        [DisplayName("Seller")]
         public string Seller { get; set; }
 
-        [DisplayName("Зображення")]
+        [DisplayName("Image")]
         public string MainImage { get; set; }
     }
 }

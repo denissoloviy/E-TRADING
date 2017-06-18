@@ -8,17 +8,17 @@ namespace E_TRADING.Data.Entities
     {
         public int Amount { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Покупець")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Buyer")]
         public string BuyerId { get; set; }
-        [DisplayName("Покупець")]
+        [DisplayName("Buyer")]
         [ForeignKey("BuyerId")]
         public virtual Buyer Buyer { get; set; }
 
-        [Required(ErrorMessage = "Поле обов'язкове для заповнення")]
-        [DisplayName("Товар")]
+        [Required(ErrorMessage = "This field is necessary")]
+        [DisplayName("Product")]
         public string ProductId { get; set; }
-        [DisplayName("Товар")]
+        [DisplayName("Product")]
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
     }
